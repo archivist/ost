@@ -1,0 +1,22 @@
+{
+  "server": {
+    "port": 5000,
+    "host": "localhost",
+    "wsUrl": "ws://localhost:5000",
+    "appUrl": "http://localhost:5000",
+    "publisherEndpoint": "/publisher",
+    "scholarEndpoint": "/"
+  },
+  "app": {
+    "protocol": "http",
+    "host": "localhost",
+    "port": 5000,
+    "defaultLanguage": "ru",
+    "mediaServer": "http://media.tastorona.su"
+  },
+  "mail": {
+    "transport": "",
+    "sender": "archivist@archivist"
+  },
+  "db_url": "postgres://archivist_user:archivist_pw@localhost:5432/archivist"
+}

@@ -1,0 +1,31 @@
+let config = require('config')
+let extend = require('lodash/extend')
+let ServerConfig = extend({}, config.get('server'), {env: config.util.getEnv('NODE_ENV')})
+let Database = require('./Database')
+let EnginePackage = require('../engine/package')
+var IndexerPackage = require('../indexer/package')
+let AuthServerPackage = require('archivist').AuthServerPackage
+let CollabServerPackage = require('archivist').CollabServerPackage
+let DocumentServerPackage = require('archivist').DocumentServerPackage
+let ResourceServerPackage = require('archivist').ResourceServerPackage
+let UserServerPackage = require('archivist').ResourceServerPackage
+
+let db = new Database()
+
+let InterviewPackage = require('../../dist/ost.cjs').InterviewPackage
+
+module.exports = {
+  name: 'ost-server',
+  configure: function(config) {
+    config.setAppConfig(ServerConfig)
+    config.setDBConnection(db)
+    config.import(InterviewPackage)
+    config.import(EnginePackage)
+    config.import(IndexerPackage)
+    config.import(DocumentServerPackage)
+    config.import(AuthServerPackage)
+    config.import(CollabServerPackage)
+    config.import(ResourceServerPackage)
+    config.import(UserServerPackage)
+  }
+}
