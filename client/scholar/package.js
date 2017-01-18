@@ -1,5 +1,6 @@
 import { ProseArticle } from 'substance'
 import ScholarPackage from '../../packages/scholar/package'
+import HeaderPackage from '../../packages/header/package'
 import ExplorerPackage from '../../packages/explorer/package'
 import SubjectsPackage from '../../packages/subjects/package'
 import ReaderPackage from '../../packages/reader/package'
@@ -25,6 +26,7 @@ export default {
   name: 'archivist-scholar',
   configure: function(config) {
     config.import(ScholarPackage)
+    config.import(HeaderPackage)
     config.import(ExplorerPackage)
     config.setDefaultLanguage(appConfig.defaultLanguage)
 
