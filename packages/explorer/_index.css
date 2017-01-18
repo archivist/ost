@@ -1,5 +1,14 @@
 .sc-explorer {
-  padding: 0px 10px;
+
+}
+
+.sc-explorer .se-explorer-layout {
+  height: 100%;
+  position: relative;
+  margin: 10px 0px 0px 0px;
+  height: 100%;
+  position: relative;
+  padding: 140px 20px 0px 20px;
 }
 
 .sc-explorer .sc-searchbar {
@@ -20,17 +29,21 @@
   border-radius: 3px;
 }
 
-.sc-explorer .se-explorer-layout {
-  height: 100%;
-  position: relative;
-  margin: 10px 0px 0px 0px;
-  height: 100%;
-  position: relative;
-  padding: 20px;
+.sc-explorer .se-results-pane {
+  padding-top: 30px;
 }
 
 .sc-explorer .se-explorer-layout > .sc-split-pane {
   padding: inherit;
+}
+
+.sc-explorer .sc-grid {
+  height: auto;
+  padding-bottom: 10px;
+  border: 1px solid #E0E4E4;
+  border-radius: 3px;
+  padding: 0px 20px;
+  margin-bottom: 10px;
 }
 
 .sc-explorer .sc-grid .se-row:hover {
@@ -89,4 +102,73 @@
   font-size: 18px;
   padding: 5px 0px;
   color: inherit;
+}
+
+.sc-document-item .se-photo {
+  padding: 15px 10px 15px 0px;
+}
+
+.sc-explorer .se-sidebar {
+  overflow: auto;
+}
+
+.sc-facets {
+  margin: 0px 0px 0px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+}
+
+.sc-facets .se-tree-node {
+  position: relative;
+  font-size: 13px;
+  font-weight: 400;
+  border-bottom: 1px solid #E0E4E4;
+  padding: 10px;
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+}
+
+.sc-facets .se-tree-node.level-1 { padding-left: 25px; }
+.sc-facets .se-tree-node.level-2 { padding-left: 41px; }
+.sc-facets .se-tree-node.level-3 { padding-left: 57px; }
+.sc-facets .se-tree-node.level-4 { padding-left: 73px; }
+.sc-facets .se-tree-node.level-5 { padding-left: 89px; }
+.sc-facets .se-tree-node.level-6 { padding-left: 105px; }
+
+.sc-facets .se-tree-node.sm-selected {
+  border-left: 4px solid #91bb04;
+  background: #fff;
+}
+
+.sc-facets .se-tree-node .se-tree-node-name {
+  padding-left: 20px;
+}
+
+.sc-facets .se-tree-node.se-tree-title .se-tree-node-name {
+  padding-left: 0px;
+  text-transform: capitalize;
+  font-size: 14px;
+  /* font-weight: 200; */
+  color: #000;
+}
+
+.sc-facets .se-tree-node .selection {
+  float: right;
+  font-size: 23px;
+  padding: 9px 20px;
+  top: 0px;
+  position: absolute;
+  right: 0px;
+}
+
+.sc-facets .se-tree-node .selection.fa-square-o {
+  padding: 9px 23px;
+}
+
+.sc-facets .se-tree-node .expansion {
+  font-size: 23px;
+  position: absolute;
+  top: 7px;
 }

@@ -5,20 +5,20 @@ let converters = []
 
 class SubjectsImporter extends HTMLImporter {
 
-  importDocument(subjectsData, reader) {
+  importDocument(subjectsData, reader, facets) {
     this.reset()
 
     let doc = this.generateDocument()
     each(subjectsData, function(subject) {
-
       if(reader) {
         doc.create({
           id: subject.entityId,
           type: 'subject',
           name: subject.name,
-          position: subject.position,
-          count: 0,
-          parent: subject.parent || 'root'
+          position: subject.position || subject.pos,
+          count: subject.cnt ? parseInt(subject.cnt, 10) : 0,
+          parent: subject.parent || 'root',
+          active: facets ? facets.indexOf(subject.entityId) > -1 : false
         })
       } else {
         doc.create({

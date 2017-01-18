@@ -1,6 +1,7 @@
 import Explorer from './Explorer'
 import SearchBar from './SearchBar'
 import DocumentItem from './DocumentItem'
+import Facets from './Facets'
 
 export default {
   name: 'archivist-explorer',
@@ -8,10 +9,19 @@ export default {
     config.addPage('explorer', Explorer)
     config.addComponent('searchbar', SearchBar)
     config.addComponent('document-item', DocumentItem)
+    config.addComponent('facets', Facets)
     config.addIcon('searchbar-search', {'fontawesome': 'fa-search'})
     config.addIcon('fragment-badge', {'fontawesome': 'fa-comments-o'})
     config.addIcon('video', {'fontawesome': 'fa-video-camera'})
     config.addIcon('audio', {'fontawesome': 'fa-volume-up'})
+    config.addIcon('collapsed', { 'fontawesome': 'fa-caret-right' })
+    config.addIcon('expanded', { 'fontawesome': 'fa-caret-down' })
+    config.addIcon('checked', { 'fontawesome': 'fa-check-square-o' })
+    config.addIcon('unchecked', { 'fontawesome': 'fa-square-o' })
+    config.addLabel('topic-facets', {
+      en: 'Topics',
+      ru: 'Темы'
+    })
     config.addLabel('searchbar-placeholder', {
       en: 'Enter search query',
       ru: 'Введите поисковой запрос'

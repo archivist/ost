@@ -1,6 +1,5 @@
-import { Component, FontAwesomeIcon as Icon, Grid, Layout, SplitPane } from 'substance'
-import { concat, each, findIndex, isEmpty } from 'lodash-es'
-import moment from 'moment'
+import { Component, Grid, Layout, SplitPane } from 'substance'
+import { concat, each, extend, findIndex, isEmpty, isEqual } from 'lodash-es'
 
 // Sample data for debugging
 // import DataSample from '../../data/docs'
@@ -18,6 +17,7 @@ class Explorer extends Component {
 
   didMount() {
     this._loadData()
+    this._loadTopics()
   }
 
   didUpdate(oldProps, oldState) {
@@ -26,9 +26,19 @@ class Explorer extends Component {
     }
   }
 
+  willUpdateState(state) {
+    let oldFilters = this.state.filters
+    let newFilters = state.filters
+
+    if(!isEqual(oldFilters, newFilters)) {
+      this._loadData(newFilters)
+      this._loadTopics(newFilters.topics)
+    }
+  }
+
   getInitialState() {
     return {
-      filters: {"meta->>'state'": "published"},
+      filters: {"meta->>'state'": "published", topics: []},
       search: '',
       perPage: 30,
       order: "meta->>'published_on'",
@@ -46,18 +56,20 @@ class Explorer extends Component {
       return el
     }
 
+    let Header = this.getComponent('header')
     let SearchBar = this.getComponent('searchbar')
+
+    el.append($$(Header))
 
     let layout = $$(Layout, {
       width: 'full',
-      textAlign: 'left',
-      noPadding: true
+      textAlign: 'left'
     }).addClass('se-explorer-layout')
 
     layout.append(
       $$(SplitPane, {splitType: 'horizontal'}).append(
         $$(SearchBar, {value: this.state.search}),
-        $$(SplitPane, {splitType: 'vertical', sizeB: '30%'}).append(
+        $$(SplitPane, {splitType: 'vertical', sizeB: '30%'}).addClass('se-results-pane').append(
           this.renderMainSection($$),
           this.renderSidebarSection($$)
         )
@@ -80,6 +92,11 @@ class Explorer extends Component {
 
   renderSidebarSection($$) {
     let el = $$('div').addClass('se-sidebar')
+    let Facets = this.getComponent('facets')
+    
+    if(this.state.topics) {
+      el.append($$(Facets, {topics: this.state.topics}))
+    }
 
     return el
   }
@@ -199,8 +216,8 @@ class Explorer extends Component {
   /*
     Loads documents
   */
-  _loadData() {
-    let filters = this.state.filters
+  _loadData(updatedFilters) {
+    let filters = updatedFilters || this.state.filters
     let pagination = this.state.pagination
     let perPage = this.state.perPage
     let options = {
@@ -231,6 +248,9 @@ class Explorer extends Component {
     }.bind(this))
   }
 
+  /*
+    Loads fts found fragments
+  */
   _loadFragments(documentId, index) {
     let searchValue = this.state.search
 
@@ -263,10 +283,67 @@ class Explorer extends Component {
     }
   }
 
+
+  _loadTopics(topics) {
+    let resourceClient = this.context.resourceClient
+    let mainConfigurator = this.context.configurator
+    let configurator = mainConfigurator.getConfigurator('archivist-subjects')
+    let filters = this.state.filters
+    let facets = topics || filters.topics
+
+    resourceClient.getSubjectsFacets(facets, (err, res) => {
+      if (err) {
+        console.error('ERROR', err)
+        return
+      }
+
+      let importer = configurator.createImporter('subjects')
+      let topics = importer.importDocument(res, true, facets)
+      topics.on('document:changed', this._onTopicsChanged, this)
+
+      this.extendState({
+        topics: topics
+      })
+    })
+  }
+
   _searchData(value) {
     this.extendState({
       search: value,
       pagination: false
+    })
+  }
+
+  /*
+    Called when something is changed on subjects model.
+    If some of subjects got active, then we will load
+    subjects again with new facets.
+  */
+  _onTopicsChanged(change) {
+    let facetChange = false
+    each(change.updated, function(val, key){
+      if(key.indexOf('active') > -1) {
+        facetChange = true
+      }
+    })
+
+    if(facetChange) this._applyFacets()
+  }
+
+  /*
+    Called when facets changed.
+    Will change filters and load new subjects facets again.
+  */
+  _applyFacets() {
+    let topics = this.state.topics
+    let filters = this.state.filters
+    let facets = topics.getActive()
+    topics.off(this)
+
+    this.extendState({
+      filters: extend({}, filters, {topics: facets}),
+      pagination: false,
+      documentItems: []
     })
   }
 }
