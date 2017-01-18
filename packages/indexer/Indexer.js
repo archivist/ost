@@ -14,6 +14,11 @@ class Indexer extends ArchivistIndexer {
     let offset = options.offset || 0
     let query, countQuery, args, where, searchQuery, language
 
+    if(filters.topics) {
+      filters['"references" ?&'] = filters.topics
+      delete filters.topics
+    }
+
     if(isTextSearch) {
       searchQuery = filters.query
       language = filters.language || 'english'
