@@ -2,6 +2,7 @@ let Err = require('substance').SubstanceError
 let ArchivistResourceEngine = require('archivist').ResourceEngine
 
 class ResourceEngine extends ArchivistResourceEngine {
+
   getResourcesTree(entityType) {
     let query = `
       SELECT "entityId", "name", data->'parent' AS parent, data->'position' AS position
