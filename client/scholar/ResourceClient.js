@@ -24,6 +24,14 @@ class ResourceClient {
   }
 
   /*
+    Get subjects facets data
+  */
+  getSubjectsFacets(facets, cb) {
+    let filtersRequest = encodeURIComponent(JSON.stringify(facets))
+    request('GET', '/api/entities/facets/subject?refs=' + filtersRequest, null, cb)
+  }
+
+  /*
     Read an entity
   */
   getEntity(entityId, cb) {
