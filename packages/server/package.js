@@ -3,11 +3,11 @@ let extend = require('lodash/extend')
 let ServerConfig = extend({}, config.get('server'), {env: config.util.getEnv('NODE_ENV')})
 let Database = require('./Database')
 let EnginePackage = require('../engine/package')
-var IndexerPackage = require('../indexer/package')
+let IndexerPackage = require('../indexer/package')
+let ResourceServerPackage = require('./resource/package')
 let AuthServerPackage = require('archivist').AuthServerPackage
 let CollabServerPackage = require('archivist').CollabServerPackage
 let DocumentServerPackage = require('archivist').DocumentServerPackage
-let ResourceServerPackage = require('archivist').ResourceServerPackage
 let UserServerPackage = require('archivist').ResourceServerPackage
 
 let db = new Database()
