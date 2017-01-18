@@ -8,6 +8,6 @@ module.exports = {
     config.import(require('archivist').AuthEnginePackage)
     config.import(require('archivist').SnapshotEnginePackage)
     config.import(require('archivist').DocumentEnginePackage)
-    config.import(require('archivist').ResourceEnginePackage)
+    config.import(require('./resource/package'))
   }
 }
