@@ -1,5 +1,10 @@
 let Err = require('substance').SubstanceError
 let ArchivistResourceEngine = require('archivist').ResourceEngine
+let isEmpty = require('lodash/isEmpty')
+
+// Massive internal libs
+let ArgTypes = require('../../../node_modules/massive/lib/arg_types')
+let Where = require('../../../node_modules/massive/lib/where')
 
 class ResourceEngine extends ArchivistResourceEngine {
 
@@ -24,20 +29,42 @@ class ResourceEngine extends ArchivistResourceEngine {
     })
   }
 
-  getResourcesTreeFacets(entityType, references) {
+  getResourcesTreeFacets(filters, entityType) {
+    if(filters.topics) {
+      filters['"references" ?&'] = filters.topics
+      delete filters.topics
+    }
+
+    let whereSearch
+    if(filters.query) {
+      let searchQuery = filters.query
+      let language = filters.language || 'english'
+      whereSearch = `tsv @@ plainto_tsquery('${language}', '${searchQuery}')`
+      delete filters.query
+      delete filters.language
+    }
+
+    let args = ArgTypes.findArgs(arguments, this)
+    let where = isEmpty(args.conditions) ? {} : Where.forTable(args.conditions)
+
+    let whereQuery = where.where ? where.where : ''
+    if(whereSearch) {
+      whereQuery += whereQuery ? ' \nAND ' + whereSearch : ' \nWHERE ' + whereSearch
+    }
+
     let query = `
       SELECT "entityId", entities.name, cnt, entities.data->'parent' AS parent, entities.data->'position' AS pos FROM (
         SELECT DISTINCT
           jsonb_object_keys(documents.references) AS anno,
           COUNT(*) OVER (PARTITION BY jsonb_object_keys(documents.references)) cnt
-        FROM documents WHERE meta->>'state'='published' AND "references" ?& $2
+        FROM documents ${whereQuery}
       ) AS docs INNER JOIN entities ON (docs.anno = entities."entityId")
-      WHERE "entityType" = $1
+      WHERE "entityType" = '${entityType}'
       ORDER BY pos ASC
     `
-
+    
     return new Promise((resolve, reject) => {
-      this.db.run(query, [entityType, references], (err, entities) => {
+      this.db.run(query, where.params, (err, entities) => {
         if (err) {
           return reject(new Err('ResourceEngine.GetResourcesTree', {
             cause: err

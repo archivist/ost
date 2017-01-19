@@ -1,5 +1,5 @@
 import { Component, Grid, Layout, SplitPane } from 'substance'
-import { concat, each, extend, findIndex, isEmpty, isEqual } from 'lodash-es'
+import { clone, concat, each, extend, findIndex, isEmpty, isEqual } from 'lodash-es'
 
 // Sample data for debugging
 // import DataSample from '../../data/docs'
@@ -20,19 +20,19 @@ class Explorer extends Component {
     this._loadTopics()
   }
 
-  didUpdate(oldProps, oldState) {
-    if(oldState.search !== this.state.search) {
-      this.searchData()
-    }
-  }
+  // didUpdate(oldProps, oldState) {
+  //   // if(oldState.search !== this.state.search) {
+  //   //   this.searchData()
+  //   // }
+  // }
 
   willUpdateState(state) {
     let oldFilters = this.state.filters
     let newFilters = state.filters
 
-    if(!isEqual(oldFilters, newFilters)) {
-      this._loadData(newFilters)
-      this._loadTopics(newFilters.topics)
+    if(!isEqual(oldFilters, newFilters) || !isEqual(this.state.search, state.search)) {
+      this.searchData(state)
+      this._loadTopics(newFilters, state.search)
     }
   }
 
@@ -161,15 +161,15 @@ class Explorer extends Component {
   /*
     Search documents
   */
-  searchData() {
-    let searchValue = this.state.search
+  searchData(newState) {
+    let filters = newState.filters || this.state.filters
+    let searchValue = newState.search || this.state.search
 
     if(isEmpty(searchValue)) {
-      return this._loadData()
+      return this._loadData(filters)
     }
 
     let language = 'russian'
-    let filters = this.state.filters
     let perPage = this.state.perPage
     let pagination = this.state.pagination
     let options = {
@@ -283,15 +283,21 @@ class Explorer extends Component {
     }
   }
 
-
-  _loadTopics(topics) {
+  _loadTopics(newFilters, search) {
     let resourceClient = this.context.resourceClient
     let mainConfigurator = this.context.configurator
     let configurator = mainConfigurator.getConfigurator('archivist-subjects')
-    let filters = this.state.filters
-    let facets = topics || filters.topics
+    let filters = newFilters || this.state.filters
+    let facets = filters.topics
+    let searchValue = search || this.state.search
+    let language = 'russian'
+    if(searchValue) {
+      filters = clone(filters)
+      filters.query = searchValue
+      filters.language = language
+    }
 
-    resourceClient.getSubjectsFacets(facets, (err, res) => {
+    resourceClient.getSubjectsFacets(filters, (err, res) => {
       if (err) {
         console.error('ERROR', err)
         return

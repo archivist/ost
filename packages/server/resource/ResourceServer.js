@@ -32,11 +32,12 @@ class ResourceServer extends ArchivistResourceServer {
   */
   _getResourcesFacetsTree(req, res, next) {
     let type = req.params.type
-    let refs = req.query.refs
+    let filters = req.query.filters
+    filters = filters ? JSON.parse(filters) : {}
 
-    refs = refs ? JSON.parse(refs) : []
+    ///refs = refs ? JSON.parse(refs) : []
     
-    this.engine.getResourcesTreeFacets(type, refs)
+    this.engine.getResourcesTreeFacets(filters, type)
       .then(function(entities) {
         res.json(entities)
       })
