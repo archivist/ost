@@ -56,6 +56,13 @@ class ResourceClient {
     request('GET', '/api/entities/search?query=' + query + '&language=' + language + '&filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
 
+  /*
+    Get list of all locations as geoJSON
+  */
+  getLocationsList(cb) {
+    request('GET', '/api/entities/locations', null, cb)
+  }
+
 }
 
 export default ResourceClient
