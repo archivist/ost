@@ -62,7 +62,8 @@ class Scholar extends AbstractApplication {
   getRouter() {
     return new ScholarRouter(this, {
       'documents': 'documentId',
-      'resources': 'resourceId'
+      'resources': 'resourceId',
+      'maps': 'resourceId'
     });
   }
 

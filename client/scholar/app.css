@@ -1,6 +1,8 @@
 /* Scholar styles */
 @import '../../node_modules/substance/dist/substance.next.css';
 @import '../../node_modules/plyr/dist/plyr.css';
+@import '../../node_modules/leaflet/dist/leaflet.css';
+@import '../../node_modules/leaflet.markercluster/dist/MarkerCluster.css';
 @import './scholar.css';
 
 body {
