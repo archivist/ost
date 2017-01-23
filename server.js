@@ -32,10 +32,13 @@ var config = configurator.getAppConfig();
 */
 app.use('/archivist', express.static(path.join(__dirname, '/dist/archivist')));
 app.use('/font-awesome', express.static(path.join(__dirname, '/dist/font-awesome')));
+app.use('/markercluster', express.static(path.join(__dirname, '/dist/markercluster')));
 app.use('/substance', express.static(path.join(__dirname, '/dist/substance')));
 app.use(config.publisherEndpoint, express.static(path.join(__dirname, '/dist/publisher')));
 app.use(config.scholarEndpoint, express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/documents/:id', express.static(path.join(__dirname, '/dist/scholar')));
+app.use('/maps', express.static(path.join(__dirname, '/dist/scholar')));
+app.use('/maps/:id', express.static(path.join(__dirname, '/dist/scholar')));
 
 // Error handling
 // We send JSON to the client so they can display messages in the UI.
