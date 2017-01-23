@@ -17,6 +17,10 @@ class ScholarDocumentClient extends DocumentClient {
     return this.listDocuments(filters, options, cb)
   }
 
+  getResourceDocuments(resourceId, cb) {
+    request('GET', '/api/documents/resource/' + resourceId, null, cb)
+  }
+
   searchDocuments(query, language, filters, options, cb) {
     let filtersRequest = encodeURIComponent(JSON.stringify(filters))
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
