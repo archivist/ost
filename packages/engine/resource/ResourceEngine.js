@@ -80,13 +80,12 @@ class ResourceEngine extends ArchivistResourceEngine {
 
   getLocationsList() {
     let query = `
-      SELECT "entityId", entities.name, entities."entityType", entities.data, cnt FROM (
-        SELECT DISTINCT
-          jsonb_object_keys(documents.references) AS anno,
-          COUNT(*) OVER (PARTITION BY jsonb_object_keys(documents.references)) cnt
-        FROM documents
-      ) AS docs INNER JOIN entities ON (docs.anno = entities."entityId")
-      WHERE "entityType" = 'prison' OR "entityType" = 'toponym'
+      SELECT "entityId", name, "entityType", data, 
+      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS cnt,
+      (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId") AS sum
+      FROM entities
+      WHERE ("entityType" = 'prison' OR "entityType" = 'toponym') 
+      AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
     `
 
     return new Promise((resolve, reject) => {
@@ -113,7 +112,7 @@ class ResourceEngine extends ArchivistResourceEngine {
           feature.properties.entityId = entity.entityId
           feature.properties.entityType = entity.entityType
           feature.properties.documents = entity.cnt
-          feature.properties.fragments = 5
+          feature.properties.fragments = entity.sum
 
           if(!isNull(entity.data.point)) geojson.features.push(feature)
         })
