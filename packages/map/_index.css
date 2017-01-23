@@ -89,7 +89,11 @@
   max-width: 140px; 
 }
 .sc-map-sidebar .se-location-meta .se-title {
-  padding-right: 140px; 
+  padding-right: 140px;
+}
+.sc-map-sidebar .se-location-meta.se-prison .se-title {
+  padding-top: 10px;
+  padding-right: 0px; 
 }
 .sc-map-sidebar .se-location-meta .se-stats {
   padding: 10px 0px;

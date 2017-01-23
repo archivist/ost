@@ -6,6 +6,7 @@ export default {
     config.addPage('maps', MapBrowser)
     config.addIcon('sidebar-click', {'fontawesome': 'fa-hand-o-up'})
     config.addIcon('sidebar-back', {'fontawesome': 'fa-hand-o-left'})
+    config.addIcon('sidebar-stats', {'fontawesome': 'fa-book'})
     config.addIcon('toponym-symbol', {'fontawesome': 'fa-globe'})
     config.addIcon('prison-symbol', {'fontawesome': 'fa-table'})
     config.addIcon('filter-visible', {'fontawesome': 'fa-eye'})

@@ -128,6 +128,10 @@ class Sidebar extends Component {
     el.append(
       $$('div').addClass('se-location').append(location),
       $$('div').addClass('se-title').append(node.name.toLowerCase() === 'неизвестно' ? this.getLabel('unknown-name') : node.name),
+      $$('div').attr({class: 'se-stats'}).append(
+        this.context.iconProvider.renderIcon($$, 'sidebar-stats'),
+        node.stats
+      ),
       $$('div').addClass('se-description').setInnerHTML(node.description)
     )
 
@@ -150,6 +154,10 @@ class Sidebar extends Component {
       $$('div').addClass('se-prison-type').append(prisonType),
       $$('div').addClass('se-title').append(node.name),
       $$('div').addClass('se-location').append(location),
+      $$('div').attr({class: 'se-stats'}).append(
+        this.context.iconProvider.renderIcon($$, 'sidebar-stats'),
+        node.stats
+      ),
       $$('div').addClass('se-description').setInnerHTML(node.description)
     )
 
