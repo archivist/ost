@@ -61,6 +61,10 @@
 
 .sc-map-sidebar .se-location-details {
   padding: 10px;
+  overflow: auto;
+  position: absolute;
+  top: 30px;
+  bottom: 78px;
 }
 
 .sc-map-sidebar .se-location-meta {
@@ -103,7 +107,6 @@
   color: inherit;
   font-size: 15px;
   border-top: 1px solid #ddd;
-  height: 100%;
   display: block;
   padding: 10px; 
 }
