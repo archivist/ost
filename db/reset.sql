@@ -142,6 +142,9 @@ CREATE TABLE "fragments" (
   markup text,
   -- array with annotations references
   annotations text[],
+  -- annotations references as key/value object 
+  -- (key is reference and value is number of references)
+  "references" jsonb,
   -- previous fragment reference
   prev text,
   -- next fragment reference
