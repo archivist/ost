@@ -57,6 +57,13 @@ class ResourceClient {
   }
 
   /*
+    Get top entity results for search query
+  */
+  searchTopResources(query, language, cb) {
+    request('GET', '/api/entities/search/top?query=' + query + '&language=' + language, null, cb)    
+  }
+
+  /*
     Get list of all locations as geoJSON
   */
   getLocationsList(cb) {

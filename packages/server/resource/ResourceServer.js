@@ -7,6 +7,7 @@ class ResourceServer extends ArchivistResourceServer {
 
   bind(app) {
     // search
+    app.get(this.path + '/entities/search/top', this._searchTopEntities.bind(this))
     app.get(this.path + '/entities/locations', this._getLocationsList.bind(this))
     super.bind(app)
     app.get(this.path + '/entities/tree/:type', this._getResourcesTree.bind(this))
@@ -54,6 +55,24 @@ class ResourceServer extends ArchivistResourceServer {
     this.engine.getLocationsList()
       .then(function(geojson) {
         res.json(geojson)
+      })
+      .catch(function(err) {
+        next(err)
+      })
+  }
+
+  /*
+    Get simple list of top search results
+  */
+  _searchTopEntities(req, res, next) {
+    let args = req.query
+
+    let search = "'" + args.query + "'"
+    let language = "'" + args.language + "'"
+
+    this.indexer.searchTopEntities(search, language)
+      .then(function(resp) {
+        res.json(resp)
       })
       .catch(function(err) {
         next(err)

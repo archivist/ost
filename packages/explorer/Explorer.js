@@ -32,6 +32,7 @@ class Explorer extends Component {
 
     if(!isEqual(oldFilters, newFilters) || !isEqual(this.state.search, state.search)) {
       this.searchData(state)
+      this.searchResources(state.search)
       this._loadTopics(newFilters, state.search)
     }
   }
@@ -92,7 +93,20 @@ class Explorer extends Component {
 
   renderSidebarSection($$) {
     let el = $$('div').addClass('se-sidebar')
+    let ResourceEntries = this.getComponent('resource-entries')
     let Facets = this.getComponent('facets')
+
+    if(this.state.total) {
+      el.append(
+        $$('div').addClass('se-total').append(
+          this.getLabel('total-results') + ': ' + this.state.total
+        )
+      )
+    }
+
+    if(this.state.search) {
+      el.append($$(ResourceEntries, {entries: this.state.entries}))
+    }
     
     if(this.state.topics) {
       el.append($$(Facets, {topics: this.state.topics}))
@@ -162,8 +176,8 @@ class Explorer extends Component {
     Search documents
   */
   searchData(newState) {
-    let filters = newState.filters || this.state.filters
-    let searchValue = newState.search || this.state.search
+    let filters = newState ? newState.filters : this.state.filters
+    let searchValue = newState ? newState.search : this.state.search
 
     if(isEmpty(searchValue)) {
       return this._loadData(filters)
@@ -201,6 +215,20 @@ class Explorer extends Component {
         details: details
       })
     }.bind(this))
+  }
+
+  searchResources(query) {
+    let searchQuery = query || this.props.query
+    let resourceClient = this.context.resourceClient
+    resourceClient.searchTopResources(searchQuery, 'russian', (err, entries) => {
+      if(err) {
+        console.err(err)
+        return
+      }
+      this.extendState({
+        entries: entries
+      })
+    })
   }
 
   /*

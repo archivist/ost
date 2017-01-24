@@ -5,13 +5,11 @@ class Facets extends Component {
 
   render($$) {
     let topics = this.props.topics
-    let el = $$('div').addClass('sc-facets')
+    let el = $$('div').addClass('sc-facets se-panel')
 
     if(!isEmpty(topics)) {
       el.append(
-        $$('div').addClass('se-tree-node se-tree-title').append(
-          $$('span').addClass('se-tree-node-name').append(this.getLabel('topic-facets'))
-        )
+        $$('div').addClass('se-tree-node se-title').append(this.getLabel('topic-facets'))
       )
       let childNodes = topics.getRoots()
       childNodes = map(childNodes, item => {return item})

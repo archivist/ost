@@ -1,6 +1,7 @@
 import Explorer from './Explorer'
 import SearchBar from './SearchBar'
 import DocumentItem from './DocumentItem'
+import ResourceEntries from './ResourceEntries'
 import Facets from './Facets'
 
 export default {
@@ -9,6 +10,7 @@ export default {
     config.addPage('explorer', Explorer)
     config.addComponent('searchbar', SearchBar)
     config.addComponent('document-item', DocumentItem)
+    config.addComponent('resource-entries', ResourceEntries)
     config.addComponent('facets', Facets)
     config.addIcon('searchbar-search', {'fontawesome': 'fa-search'})
     config.addIcon('fragment-badge', {'fontawesome': 'fa-comments-o'})
@@ -29,6 +31,14 @@ export default {
     config.addLabel('searchbar-submit', {
       en: 'Search',
       ru: 'Поиск'
+    })
+    config.addLabel('total-results', {
+      en: 'Found interviews',
+      ru: 'Найдено интервью'
+    })
+    config.addLabel('resource-suggestions', {
+      en: 'Resource suggestions',
+      ru: 'Словарные статьи'
     })
     config.addLabel('no-results', {
       en: 'No results',

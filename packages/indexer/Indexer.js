@@ -155,6 +155,35 @@ ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${of
       })
     }.bind(this))
   }
+
+  searchTopEntities(searchQuery, language) {
+    let limit = 10
+    language = language || 'russian'
+
+    let query = `SELECT 
+      "entityId", 
+      name, 
+      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS cnt, 
+      ts_rank_cd(entities.tsv, q) AS rank
+      FROM entities,
+      plainto_tsquery(${language}, ${searchQuery}) AS q
+      WHERE ts_rank_cd(entities.tsv, q) >= 1
+      ORDER BY rank DESC 
+      LIMIT ${limit}
+    `
+
+    return new Promise(function(resolve, reject) {
+      this.db.run(query, function(err, res) {
+        if(err) {
+          return reject(new Err('Indexer.SearchTopEntitiesError', {
+            cause: err
+          }))
+        }
+
+        resolve(res)
+      })
+    }.bind(this))
+  }
 }
 
 module.exports = Indexer
