@@ -98,8 +98,8 @@ class Sidebar extends Component {
         if(meta.record_type) {
           metaInfo.append($$('div').addClass('se-record-type').append(this.context.iconProvider.renderIcon($$, meta.record_type)))
         }
-        if(doc.cnt) {
-          metaInfo.append($$('div').addClass('se-fragments-count').append(doc.cnt + ' ' + this.getLabel('fragment-count')))
+        if(doc.count) {
+          metaInfo.append($$('div').addClass('se-fragments-count').append(doc.count + ' ' + this.getLabel('fragment-count')))
         }
 
         refItem.append(
