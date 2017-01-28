@@ -37,6 +37,7 @@ app.use('/substance', express.static(path.join(__dirname, '/dist/substance')));
 app.use(config.publisherEndpoint, express.static(path.join(__dirname, '/dist/publisher')));
 app.use(config.scholarEndpoint, express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/documents/:id', express.static(path.join(__dirname, '/dist/scholar')));
+app.use('/resources/:id', express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/maps', express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/maps/:id', express.static(path.join(__dirname, '/dist/scholar')));
 
