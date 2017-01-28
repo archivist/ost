@@ -2,18 +2,22 @@ import Explorer from './Explorer'
 import SearchBar from './SearchBar'
 import DocumentItem from './DocumentItem'
 import ResourceEntries from './ResourceEntries'
+import ResourceReference from './ResourceReference'
 import Facets from './Facets'
 
 export default {
   name: 'archivist-explorer',
   configure: function(config) {
     config.addPage('explorer', Explorer)
+    config.addPage('resources', Explorer)
     config.addComponent('searchbar', SearchBar)
     config.addComponent('document-item', DocumentItem)
     config.addComponent('resource-entries', ResourceEntries)
+    config.addComponent('resource-reference', ResourceReference)
     config.addComponent('facets', Facets)
     config.addIcon('searchbar-search', {'fontawesome': 'fa-search'})
     config.addIcon('fragment-badge', {'fontawesome': 'fa-comments-o'})
+    config.addIcon('location', {'fontawesome': 'fa-map-marker'})
     config.addIcon('video', {'fontawesome': 'fa-video-camera'})
     config.addIcon('audio', {'fontawesome': 'fa-volume-up'})
     config.addIcon('collapsed', { 'fontawesome': 'fa-caret-right' })

@@ -9,11 +9,19 @@ class ResourceEntries extends Component {
     if(entries) {
       el.append($$('div').addClass('se-title').append(this.getLabel('resource-suggestions')))
       forEach(entries, entry => {
-        el.append($$('span').addClass('se-entry').append(entry.name))
+        el.append(
+          $$('span').addClass('se-entry')
+            .append(entry.name)
+            .on('click', this._openResource.bind(this, entry.entityId))
+        )
       })
     }
 
     return el
+  }
+
+  _openResource(resourceId) {
+    this.send('openResource', resourceId)
   }
 }
 

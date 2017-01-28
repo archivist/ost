@@ -11,7 +11,9 @@ class Explorer extends Component {
     this.handleActions({
       'loadFragments': this._loadFragments,
       'loadMore': this._loadMore,
-      'search': this._searchData
+      'search': this._searchData,
+      'openResource': this._showResource,
+      'setTotal': this._setTotal
     })
   }
 
@@ -35,12 +37,34 @@ class Explorer extends Component {
       this.searchResources(state.search)
       this._loadTopics(newFilters, state.search)
     }
+
+    if(!this.state.topics && state.topics) {
+      this.refs.facets.extendProps({
+        topics: state.topics
+      })
+    }
+
+    if(this.state.resource && !state.resource) {
+      let urlHelper = this.context.urlHelper
+      urlHelper._writeRoute('/', {})
+    }
+
+    if(state.resource && this.state.resource !== state.resource) {
+      let urlHelper = this.context.urlHelper
+      urlHelper.writeRoute({page: 'resources', resourceId: state.resource})
+    }
+  }
+
+  shouldRerender(newProps, newState) {
+    if(!this.state.topics && newState.topics) return false
+    return true
   }
 
   getInitialState() {
     return {
       filters: {"meta->>'state'": "published", topics: []},
       search: '',
+      resource: this.props.resourceId,
       perPage: 30,
       order: "meta->>'published_on'",
       direction: 'desc',
@@ -100,7 +124,7 @@ class Explorer extends Component {
       el.append(
         $$('div').addClass('se-total').append(
           this.getLabel('total-results') + ': ' + this.state.total
-        )
+        ).ref('total')
       )
     }
 
@@ -108,9 +132,7 @@ class Explorer extends Component {
       el.append($$(ResourceEntries, {entries: this.state.entries}))
     }
     
-    if(this.state.topics) {
-      el.append($$(Facets, {topics: this.state.topics}))
-    }
+    el.append($$(Facets, {topics: this.state.topics}).ref('facets'))
 
     return el
   }
@@ -147,11 +169,17 @@ class Explorer extends Component {
   renderFull($$) {
     let items = this.state.items
     let total = this.state.total
+    let resource = this.state.resource
     let DocumentItem = this.getComponent('document-item')
     let Pager = this.getComponent('pager')
+    let ResourceReference = this.getComponent('resource-reference')
     let grid = $$(Grid)
 
-    if (items) {
+    if(resource) {
+      return $$(ResourceReference, {resource: resource})
+    }
+
+    if(items) {
       items.forEach((item, index) => {
         let active = this.state.details === index
         grid.append(
@@ -344,7 +372,8 @@ class Explorer extends Component {
   _searchData(value) {
     this.extendState({
       search: value,
-      pagination: false
+      pagination: false,
+      resource: false
     })
   }
 
@@ -377,8 +406,21 @@ class Explorer extends Component {
     this.extendState({
       filters: extend({}, filters, {topics: facets}),
       pagination: false,
+      resource: false,
       documentItems: []
     })
+  }
+
+  _showResource(resourceId) {
+    this.extendState({
+      resource: resourceId
+    })
+  }
+
+  _setTotal(total) {
+    this.refs.total.setInnerHTML(
+      this.getLabel('total-results') + ': ' + total
+    )
   }
 }
 

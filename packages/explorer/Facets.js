@@ -5,9 +5,11 @@ class Facets extends Component {
 
   render($$) {
     let topics = this.props.topics
-    let el = $$('div').addClass('sc-facets se-panel')
+    let el = $$('div').addClass('sc-facets')
 
     if(!isEmpty(topics)) {
+      el.addClass('se-panel')
+
       el.append(
         $$('div').addClass('se-tree-node se-title').append(this.getLabel('topic-facets'))
       )
@@ -23,35 +25,6 @@ class Facets extends Component {
 
     return el
   }
-
-  // renderChildren($$, node, level) {
-  //   let editorSession = this.context.editorSession
-  //   let subjects = editorSession.subjects
-  //   let isActive = node.active
-  //   let childNodes = subjects.getChildren(node.id)
-  //   childNodes = sortBy(childNodes, ['position'])
-  //   let childrenEls = []
-
-  //   if(isActive) {
-  //     childrenEls = map(childNodes, function(сhildNode) {
-  //       return this.renderChildren($$, сhildNode, level + 1)
-  //     }.bind(this))
-    
-  //     let el = $$('a').addClass('se-tree-node se-level-' + level)
-  //     .attr("href", '#topic=' + node.id)
-  //     .append(node.name)
-  //     .ref(node.id)
-
-  //     if(node.id === this.props.topic) {
-  //       el.addClass('sm-active')
-  //     }
-
-  //     return concat(el, childrenEls);
-  //   } else {
-  //     return []
-  //   }
-  // }
-
 
   renderChildren($$, node, level) {
     let topics = this.props.topics
@@ -92,12 +65,9 @@ class Facets extends Component {
     if(isSelected) el.addClass('sm-selected')
     el.append(
       this.context.iconProvider.renderIcon($$, selectedIcon).addClass('selection')
-        .on('click', this._toggleFacet.bind(this, node.id))
+        .on('click', this._toggleFacet.bind(this, node.id)),
+      $$('span').addClass('se-tree-node-name').append(node.name + ' (' + node.count.toString() + ')')
     )
-    
-    //el.on('click', this._toggleFacet.bind(this, node.id))
-    el.append($$('span').addClass('se-tree-node-name').append(node.name + ' (' + node.count.toString() + ')'))
-    //el.append($$('span').addClass('se-tree-node-counter').append(node.count.toString()))
 
     return concat(el, childrenEls)
   }

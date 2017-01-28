@@ -12,6 +12,7 @@ class DocumentItem extends Component {
     
     let urlHelper = this.context.urlHelper
     let url = urlHelper.openDocument(item.documentId)
+    if(this.props.resource) url = urlHelper.openDocument(item.documentId, this.props.resource)
     let title = $$('a')
       .addClass('se-document-title')
       .attr({href: url, target: '_blank'})
