@@ -70,6 +70,14 @@ class ResourceClient {
     request('GET', '/api/entities/locations', null, cb)
   }
 
+  /*
+    Get list of all global persons
+  */
+  getPersonsList(options, cb) {
+    let optionsRequest = encodeURIComponent(JSON.stringify(options))
+    request('GET', '/api/entities/persons?options=' + optionsRequest, null, cb)
+  }
+
 }
 
 export default ResourceClient
