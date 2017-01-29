@@ -2,6 +2,7 @@ import { ProseArticle } from 'substance'
 import ScholarPackage from '../../packages/scholar/package'
 import HeaderPackage from '../../packages/header/package'
 import ExplorerPackage from '../../packages/explorer/package'
+import PersonIndexPackage from '../../packages/person-index/package'
 import MapPackage from '../../packages/map/package'
 import SubjectsPackage from '../../packages/subjects/package'
 import ReaderPackage from '../../packages/reader/package'
@@ -29,6 +30,7 @@ export default {
     config.import(ScholarPackage)
     config.import(HeaderPackage)
     config.import(ExplorerPackage)
+    config.import(PersonIndexPackage)
     config.import(MapPackage)
     config.setDefaultLanguage(appConfig.defaultLanguage)
 
