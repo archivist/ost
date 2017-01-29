@@ -121,6 +121,55 @@ class ResourceEngine extends ArchivistResourceEngine {
       })
     })
   }
+
+  getPersonsList(options) {
+    let offset = options.offset || 0
+    let limit = options.limit || 100
+
+    let countQuery = `
+      SELECT COUNT(*) 
+      FROM entities
+      WHERE "entityType" = 'person' 
+      AND entities.data->'global' = 'true'
+    `
+
+    let query = `
+      SELECT "entityId", name, description, 
+      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS count,
+      (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId") AS fragments
+      FROM entities
+      WHERE "entityType" = 'person' 
+      AND entities.data->'global' = 'true'
+      AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
+      ORDER BY name ASC
+      LIMIT ${limit} OFFSET ${offset}
+    `
+
+    return new Promise((resolve, reject) => {
+      this.db.run(countQuery, (err, count) => {
+        if (err) {
+          return reject(new Err('ResourceEngine.CountPersonsList', {
+            cause: err
+          }))
+        }
+
+        this.db.run(query, (err, entities) => {
+          if (err) {
+            return reject(new Err('ResourceEngine.GetPersonsList', {
+              cause: err
+            }))
+          }
+
+          let results = {
+            total: count[0].count,
+            records: entities
+          }
+          
+          resolve(results)
+        })
+      })
+    })
+  }
 }
 
 module.exports = ResourceEngine

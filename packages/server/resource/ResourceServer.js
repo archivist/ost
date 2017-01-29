@@ -9,6 +9,7 @@ class ResourceServer extends ArchivistResourceServer {
     // search
     app.get(this.path + '/entities/search/top', this._searchTopEntities.bind(this))
     app.get(this.path + '/entities/locations', this._getLocationsList.bind(this))
+    app.get(this.path + '/entities/persons', this._getPersonsList.bind(this))
     super.bind(app)
     app.get(this.path + '/entities/tree/:type', this._getResourcesTree.bind(this))
     app.get(this.path + '/entities/facets/:type', this._getResourcesFacetsTree.bind(this))
@@ -55,6 +56,22 @@ class ResourceServer extends ArchivistResourceServer {
     this.engine.getLocationsList()
       .then(function(geojson) {
         res.json(geojson)
+      })
+      .catch(function(err) {
+        next(err)
+      })
+  }
+
+  /*
+    Get list of all global person
+  */
+  _getPersonsList(req, res, next) {
+    let options = req.query.options
+    options = options ? JSON.parse(options) : {}
+    
+    this.engine.getPersonsList(options)
+      .then(function(persons) {
+        res.json(persons)
       })
       .catch(function(err) {
         next(err)
