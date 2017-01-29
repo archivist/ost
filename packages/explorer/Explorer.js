@@ -160,7 +160,7 @@ class Explorer extends Component {
         $$('h2').html(
           'Loading...'
         )
-      );
+      )
     }
 
     return layout;
