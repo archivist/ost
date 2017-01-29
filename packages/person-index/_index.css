@@ -1,0 +1,57 @@
+.sc-persons-index .se-persons-layout {
+  padding-top: 80px;
+}
+
+.sc-persons-index .se-loader {
+  text-align: center;
+}
+
+.sc-persons-index .sc-grid {
+  border: 1px solid #E0E4E4;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  padding-bottom: 120px;
+}
+
+.sc-persons-index .se-total {
+  padding: 10px 0px;
+}
+
+.sc-person-item {
+  padding: 15px 10px;
+  margin: 0px 10px;
+  font-size: 13px;
+}
+
+.sc-person-item.se-row:hover {
+  background: inherit;
+}
+
+.sc-person-item .se-name {
+  font-size: 18px;
+  padding-bottom: 5px;
+}
+
+.sc-person-item .se-stats {
+  padding-top: 10px;
+  font-style: italic;
+}
+
+.sc-person-item .se-documents {
+  border: none;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  height: auto;
+}
+
+.sc-person-item .se-documents .sc-document-item {
+  cursor: default;
+}
+
+.sc-person-item .se-documents .sc-document-item:last-child {
+  border: none;
+}
+
+.sc-person-item .se-documents .sc-document-item:hover {
+  background: inherit;
+}
