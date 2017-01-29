@@ -14,7 +14,7 @@ class PersonContextItem extends Component {
     let resourceLink = $$('a')
       .addClass('se-resource-external-link se-person-link')
       .attr({
-        href: urlHelper.openPerson(this.props.entityId),
+        href: urlHelper.openResource(this.props.entityId),
         target: '_blank',
         title: this.getLabel('person-link')
       })
