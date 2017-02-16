@@ -1,8 +1,8 @@
 'use strict';
 
-var Database = require('./packages/common/Database');
-var Configurator = require('./packages/common/ServerConfigurator');
-var StorePackage = require('./packages/store/package');
+var Database = require('./packages/server/Database')
+var Configurator = require('archivist').ServerConfigurator
+var StorePackage = require('archivist').ArchivistStorePackage
 
 var db = new Database();
 var configurator = new Configurator().import(StorePackage);
