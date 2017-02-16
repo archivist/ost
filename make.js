@@ -14,12 +14,12 @@ b.task('assets', function() {
 
 // this optional task makes it easier to work on Substance core
 b.task('substance', function() {
-  b.make('substance', 'clean', 'browser', 'server')
+  b.make('substance', 'browser', 'server')
   b.copy('node_modules/substance/dist', './dist/substance')
 })
 
 b.task('archivist', function() {
-  b.make('archivist')
+  b.make('archivist', 'build')
   b.copy('node_modules/archivist/dist', './dist/archivist')
 })
 
@@ -43,9 +43,11 @@ function buildApp(app, core) {
           'node_modules/leaflet.markercluster/dist/leaflet.markercluster-src.js'
         ] 
       },
-      dest: './dist/' + app + '/app.js',
-      format: 'umd',
-      moduleName: app
+      targets: [{
+        dest: './dist/' + app + '/app.js',
+        format: 'umd',
+        moduleName: app
+      }]
     })
     b.custom('injecting config', {
       src: './dist/' + app + '/app.js',
@@ -68,12 +70,14 @@ function _ostJS() {
     external: ['substance', 'archivist'],
     targets: [{
       dest: 'dist/ost.cjs.js',
-      format: 'cjs', sourceMapRoot: __dirname, sourceMapPrefix: 'ost'
+      format: 'cjs', 
+      sourceMapRoot: __dirname, 
+      sourceMapPrefix: 'ost'
     }]
   })
 }
 
-b.task('deps', ['clean', 'substance', 'assets', 'archivist'])
+b.task('deps', ['substance', 'assets', 'archivist'])
 b.task('ost', _ostJS())
 b.task('publisher', buildApp('publisher'))
 b.task('scholar', buildApp('scholar'))
@@ -81,7 +85,7 @@ b.task('scholar', buildApp('scholar'))
 b.task('client', ['publisher', 'scholar'])
 
 // build all
-b.task('default', ['client'])
+b.task('default', ['deps', 'client', 'ost'])
 
 // starts a server when CLI argument '-s' is set
 b.setServerPort(5001)
