@@ -12,11 +12,11 @@ let map = require('lodash/map')
 let uniq = require('lodash/uniq')
 let JSONConverter = require('substance').JSONConverter
 let documentHelpers = require('substance').documentHelpers
-let Database = require('../packages/common/Database')
-let Configurator = require('../packages/common/ServerConfigurator')
-let EnginePackage = require('../packages/engine/package')
-let IndexerPackage = require('../packages/indexer/package')
-let InterviewPackage = require('ost.cjs').InterviewPackage
+let Database = require('./packages/server/Database')
+let Configurator = require('archivist').ServerConfigurator
+let EnginePackage = require('./packages/engine/package')
+let IndexerPackage = require('./packages/indexer/package')
+let InterviewPackage = require('./dist/ost.cjs').InterviewPackage
 
 let args = process.argv.slice(2)
 let config = {}
@@ -287,19 +287,47 @@ function importDocuments() {
     })
 
     forEach(doc.nodes, function(node) {
+      if(node.startOffset < 0 || node.endOffset < 0) {
+        console.log(doc._id['$oid'], ' must be fixed')
+        return
+      }
       if(node.type === 'strong') {
         node.id = 'strong-' + sIndex
         node.path[0] = paragraphsMap[node.path[0]]
+        node.start = {
+          offset: node.startOffset,
+          path: node.path
+        }
+        node.end = {
+          offset: node.endOffset,
+          path: node.path
+        }
         documentData.nodes.push(node)
         sIndex++
       } else if (node.type === 'emphasis') {
         node.id = 'emphasis-' + eIndex
         node.path[0] = paragraphsMap[node.path[0]]
+        node.start = {
+          offset: node.startOffset,
+          path: node.path
+        }
+        node.end = {
+          offset: node.endOffset,
+          path: node.path
+        }
         documentData.nodes.push(node)
         eIndex++
       } else if (node.type === 'timecode') {
         node.id = 'timecode-' + tIndex
         node.path[0] = paragraphsMap[node.path[0]]
+        node.start = {
+          offset: node.startOffset,
+          path: node.path
+        }
+        node.end = {
+          offset: node.endOffset,
+          path: node.path
+        }
         documentData.nodes.push(node)
         tIndex++
       } else if (node.type === 'subject_reference') {
@@ -307,16 +335,20 @@ function importDocuments() {
           id: 'subject-' + subjectIndex,
           containerId: 'body',
           type: 'subject',
-          startPath: [
-            paragraphsMap[node.startPath[0]],
-            'content'
-          ],
-          startOffset: node.startOffset,
-          endPath: [
-            paragraphsMap[node.endPath[0]],
-            'content'
-          ],
-          endOffset: node.endOffset,
+          start: {
+            path: [
+              paragraphsMap[node.startPath[0]],
+              'content'
+            ],
+            offset: node.startOffset
+          },
+          end: {
+            path: [
+              paragraphsMap[node.endPath[0]],
+              'content'
+            ],
+            offset: node.endOffset
+          },
           reference: node.target
         }
         forEach(node.target, function(subject) {
@@ -335,16 +367,20 @@ function importDocuments() {
           containerId: 'body',
           content: node.content,
           type: 'comment',
-          startPath: [
-            paragraphsMap[node.startPath[0]],
-            'content'
-          ],
-          startOffset: node.startOffset,
-          endPath: [
-            paragraphsMap[node.endPath[0]],
-            'content'
-          ],
-          endOffset: node.endOffset,
+          start: {
+            path: [
+              paragraphsMap[node.startPath[0]],
+              'content'
+            ],
+            offset: node.startOffset
+          },
+          end: {
+            path: [
+              paragraphsMap[node.endPath[0]],
+              'content'
+            ],
+            offset: node.endOffset
+          },
           author: defaultUser,
           createdAt: node.created_at
         }
@@ -354,12 +390,20 @@ function importDocuments() {
         let entityType = entitiesTypesMap[node.target]
         let entity = {
           id: entityType + '-' + entityIndexes[entityType],
-          endOffset: node.endOffset,
-          startOffset: node.startOffset,
-          path: [
-            paragraphsMap[node.path[0]],
-            'content'
-          ],
+          end: {
+            offset: node.endOffset,
+            path: [
+              paragraphsMap[node.path[0]],
+              'content'
+            ]
+          },
+          start: {
+            offset: node.startOffset,
+            path: [
+              paragraphsMap[node.path[0]],
+              'content'
+            ]
+          },
           reference: node.target,
           type: entityType
         }
