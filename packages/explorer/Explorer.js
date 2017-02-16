@@ -180,12 +180,11 @@ class Explorer extends Component {
     }
 
     if(items) {
-      items.forEach((item, index) => {
+      items.forEach(function(item, index) {
         let active = this.state.details === index
-        grid.append(
-          $$(DocumentItem, {item: item, index: index, active: active}).ref(item.documentId)
-        )
-      })
+        let di = $$(DocumentItem, {item: item, index: index, active: active})
+        grid.append(di)
+      }.bind(this))
     }
 
     if(total > this.state.perPage) {
@@ -418,7 +417,7 @@ class Explorer extends Component {
   }
 
   _setTotal(total) {
-    this.refs.total.setInnerHTML(
+    this.refs.total.el.setInnerHTML(
       this.getLabel('total-results') + ': ' + total
     )
   }

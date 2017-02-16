@@ -60,6 +60,10 @@ class SubjectIndex extends NodeIndex {
   clone() {
     return new SubjectIndex(this.doc)
   }
+
+  _clear() {
+    this.index.clear()
+  }
 }
 
 export default SubjectIndex

@@ -19,6 +19,7 @@
 
 .sc-explorer .sc-searchbar .se-search-input {
   max-width: 100%;
+  border: 1px solid #E0E4E4;
 }
 
 .sc-explorer .sc-searchbar .se-search-submit {

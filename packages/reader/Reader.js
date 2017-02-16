@@ -1,5 +1,5 @@
 import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane } from 'substance'
-import { forEach, map, orderBy } from 'lodash-es'
+import { forEach, map, orderBy, uniq } from 'lodash-es'
 import ReaderContext from './ReaderContext'
 
 class Reader extends ProseEditor {
@@ -103,7 +103,8 @@ class Reader extends ProseEditor {
         let refs = entityIndex.get(entityId)
         forEach(refs, ref => {
           let entityType = ref.type
-          highlights[entityType] = highlights[entityType].concat(doc.getPathRange(ref.startPath[0], ref.endPath[0]))
+          highlights[entityType] = highlights[entityType].concat(doc.getPathRange(ref.start.path[0], ref.end.path[0]))
+          highlights[entityType] = uniq(highlights[entityType])
         })
       } else {
         let refs = entityIndex.get(entityId)
@@ -146,7 +147,7 @@ class Reader extends ProseEditor {
     let paragraphs = []
     forEach(topics, topic => {
       let refs = entityIndex.get(topic)
-      let paras = map(refs, n => {return n.startPath[0]})
+      let paras = map(refs, n => {return n.start.path[0]})
       paragraphs = paragraphs.concat(paras)
     })
     let firstPara = doc.getFirst(paragraphs)
