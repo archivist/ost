@@ -74,7 +74,11 @@ class Subjects extends Document {
   // Get all root nodes
   getRoots() {
     let index = this.getIndex('subjects').index
-    return index.root.subject
+    if(index.root) {
+      return index.root.subject
+    } else {
+      return []
+    }
   }
 
   // Get ids of all active nodes
