@@ -20,10 +20,9 @@ class DocumentItem extends Component {
 
     // Photo badge
     let photo = config.mediaServer + '/photos/' + meta.interviewee_photo
+    if(!meta.interviewee_photo) photo = config.protocol + '://' + config.host + ':' + config.port + '/assets/profile.jpg'
     let photoEl = $$('div').addClass('se-document-photo')
-    if(meta.interviewee_photo) {
-      photoEl.css({'background-image': 'url(' + photo + ')'})
-    }
+    photoEl.css({'background-image': 'url(' + photo + ')'})
 
     let el = $$('div').addClass('sc-document-item se-row').append(
       $$(Grid.Cell, {columns: 2}).addClass('se-photo').append(photoEl),
