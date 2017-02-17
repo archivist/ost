@@ -91,6 +91,7 @@ CREATE TABLE "documents" (
 );
 
 CREATE UNIQUE INDEX document_id_index ON documents("documentId");
+CREATE INDEX anno_refs ON documents USING gin("references");
 
 -- Documents search index
 CREATE INDEX tsv_documents_idx ON documents USING gin(tsv);
