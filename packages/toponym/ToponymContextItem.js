@@ -28,7 +28,7 @@ class ToponymContextItem extends Component {
     let mapLink = $$('a')
       .addClass('se-resource-external-link se-map-link')
       .attr({
-        href: urlHelper.openResource(this.props.entityId),
+        href: urlHelper.openMap(this.props.entityId),
         target: '_blank',
         title: this.getLabel('map-link')
       })
