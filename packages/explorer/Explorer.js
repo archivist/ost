@@ -1,5 +1,5 @@
 import { Component, Grid, Layout, SplitPane } from 'substance'
-import { clone, concat, each, extend, findIndex, isEmpty, isEqual } from 'lodash-es'
+import { clone, concat, each, extend, findIndex, isEmpty, isEqual, map } from 'lodash-es'
 
 // Sample data for debugging
 // import DataSample from '../../data/docs'
@@ -66,8 +66,7 @@ class Explorer extends Component {
       search: '',
       resource: this.props.resourceId,
       perPage: 30,
-      order: "meta->>'published_on'",
-      direction: 'desc',
+      order: "meta->>'published_on' desc, \"documentId\" desc",
       pagination: false,
       items: []
     }
@@ -180,11 +179,12 @@ class Explorer extends Component {
     }
 
     if(items) {
-      items.forEach(function(item, index) {
+      items.forEach((item, index) => {
         let active = this.state.details === index
-        let di = $$(DocumentItem, {item: item, index: index, active: active})
-        grid.append(di)
-      }.bind(this))
+        grid.append(
+          $$(DocumentItem, {item: item, index: index, active: active}).ref(item.documentId)
+        )
+      })
     }
 
     if(total > this.state.perPage) {
@@ -276,7 +276,7 @@ class Explorer extends Component {
     let pagination = this.state.pagination
     let perPage = this.state.perPage
     let options = {
-      order: this.state.order + ' ' + this.state.direction,
+      order: this.state.order,
       limit: perPage, 
       offset: pagination ? this.state.items.length : 0
     }
