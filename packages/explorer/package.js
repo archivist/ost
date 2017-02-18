@@ -2,6 +2,7 @@ import Explorer from './Explorer'
 import SearchBar from './SearchBar'
 import DocumentItem from './DocumentItem'
 import ResourceEntries from './ResourceEntries'
+import TopicEntries from './TopicEntries'
 import ResourceReference from './ResourceReference'
 import Facets from './Facets'
 
@@ -13,6 +14,7 @@ export default {
     config.addComponent('searchbar', SearchBar)
     config.addComponent('document-item', DocumentItem)
     config.addComponent('resource-entries', ResourceEntries)
+    config.addComponent('topic-entries', TopicEntries)
     config.addComponent('resource-reference', ResourceReference)
     config.addComponent('facets', Facets)
     config.addIcon('searchbar-search', {'fontawesome': 'fa-search'})
@@ -43,6 +45,10 @@ export default {
     config.addLabel('resource-suggestions', {
       en: 'Resource suggestions',
       ru: 'Словарные статьи'
+    })
+    config.addLabel('topic-suggestions', {
+      en: 'Topics',
+      ru: 'Сюжеты'
     })
     config.addLabel('no-results', {
       en: 'No results',
