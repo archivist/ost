@@ -5,6 +5,7 @@ let Database = require('./Database')
 let EnginePackage = require('../engine/package')
 let IndexerPackage = require('../indexer/package')
 let ResourceServerPackage = require('./resource/package')
+let ConverterServerPackage = require('./converter/package')
 let AuthServerPackage = require('archivist').AuthServerPackage
 let CollabServerPackage = require('archivist').CollabServerPackage
 let DocumentServerPackage = require('archivist').DocumentServerPackage
@@ -27,5 +28,6 @@ module.exports = {
     config.import(CollabServerPackage)
     config.import(ResourceServerPackage)
     config.import(UserServerPackage)
+    config.import(ConverterServerPackage)
   }
 }
