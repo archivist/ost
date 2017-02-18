@@ -131,8 +131,8 @@ class Explorer extends Component {
     }
 
     if(this.state.search) {
-      el.append($$(TopicEntries, {entries: this.state.foundTopics}))
-      el.append($$(ResourceEntries, {entries: this.state.entries}))
+      if(!isEmpty(this.state.foundTopics)) el.append($$(TopicEntries, {entries: this.state.foundTopics}))
+      if(!isEmpty(this.state.entries)) el.append($$(ResourceEntries, {entries: this.state.entries}))
     }
     
     el.append($$(Facets, {topics: this.state.topics}).ref('facets'))
