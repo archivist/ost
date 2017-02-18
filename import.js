@@ -584,8 +584,10 @@ importUsers()
   .then(function() {
     console.log('Documents has been reindexed!')
     db.shutdown()
+    process.exit()
   })
   .catch(function(error) {
     console.error(error)
     db.shutdown()
+    process.exit(1)
   })
