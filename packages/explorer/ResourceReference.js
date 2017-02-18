@@ -74,6 +74,8 @@ class ResourceReference extends Component {
 
   renderDocumentList($$) {
     let items = this.state.documents
+    let resource = this.state.resource
+    let isTopic = resource ? resource.entityType === 'subject' : false
     let DocumentItem = this.getComponent('document-item')
     let grid = $$(Grid)
 
@@ -81,7 +83,7 @@ class ResourceReference extends Component {
       items.forEach((item, index) => {
         let active = this.state.details === index
         grid.append(
-          $$(DocumentItem, {item: item, index: index, active: active, resource: this.props.resource})
+          $$(DocumentItem, {item: item, index: index, active: active, resource: this.props.resource, topic: isTopic})
             .ref(item.documentId)
         )
       })
