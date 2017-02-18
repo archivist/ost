@@ -18,7 +18,7 @@ class ScholarDocumentClient extends DocumentClient {
   }
 
   getResourceDocuments(resourceId, cb) {
-    request('GET', '/api/documents/resource/' + resourceId, null, cb)
+    request('GET', '/api/documents/resource/' + resourceId + '?public=true', null, cb)
   }
 
   searchDocuments(query, language, filters, options, cb) {
