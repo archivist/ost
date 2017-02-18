@@ -124,7 +124,8 @@
   width: 270px;
 }
 
-.sc-explorer .se-sidebar .sc-resource-entries .se-entry {
+.sc-explorer .se-sidebar .sc-resource-entries .se-entry,
+.sc-explorer .se-sidebar .sc-topic-entries .se-entry {
   display: inline-block;
   padding: 5px;
   margin: 5px;

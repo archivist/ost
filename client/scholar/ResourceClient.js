@@ -64,6 +64,13 @@ class ResourceClient {
   }
 
   /*
+    Get topic results for search query
+  */
+  searchTopics(query, language, cb) {
+    request('GET', '/api/entities/search/topics?query=' + query + '&language=' + language, null, cb)    
+  }
+
+  /*
     Get list of all locations as geoJSON
   */
   getLocationsList(cb) {

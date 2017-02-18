@@ -1,5 +1,5 @@
 import { Component, Grid, Layout, SplitPane } from 'substance'
-import { clone, concat, each, extend, findIndex, isEmpty, isEqual, map } from 'lodash-es'
+import { clone, concat, each, extend, findIndex, isEmpty, isEqual } from 'lodash-es'
 
 // Sample data for debugging
 // import DataSample from '../../data/docs'
@@ -13,6 +13,7 @@ class Explorer extends Component {
       'loadMore': this._loadMore,
       'search': this._searchData,
       'openResource': this._showResource,
+      'openTopic': this._showResource,
       'setTotal': this._setTotal
     })
   }
@@ -35,6 +36,7 @@ class Explorer extends Component {
     if(!isEqual(oldFilters, newFilters) || !isEqual(this.state.search, state.search)) {
       this.searchData(state)
       this.searchResources(state.search)
+      this.searchTopics(state.search)
       this._loadTopics(newFilters, state.search)
     }
 
@@ -117,6 +119,7 @@ class Explorer extends Component {
   renderSidebarSection($$) {
     let el = $$('div').addClass('se-sidebar')
     let ResourceEntries = this.getComponent('resource-entries')
+    let TopicEntries = this.getComponent('topic-entries')
     let Facets = this.getComponent('facets')
 
     if(this.state.total) {
@@ -128,6 +131,7 @@ class Explorer extends Component {
     }
 
     if(this.state.search) {
+      el.append($$(TopicEntries, {entries: this.state.foundTopics}))
       el.append($$(ResourceEntries, {entries: this.state.entries}))
     }
     
@@ -249,11 +253,25 @@ class Explorer extends Component {
     let resourceClient = this.context.resourceClient
     resourceClient.searchTopResources(searchQuery, 'russian', (err, entries) => {
       if(err) {
-        console.err(err)
+        console.error(err)
         return
       }
       this.extendState({
         entries: entries
+      })
+    })
+  }
+
+  searchTopics(query) {
+    let searchQuery = query || this.props.query
+    let resourceClient = this.context.resourceClient
+    resourceClient.searchTopics(searchQuery, 'russian', (err, topics) => {
+      if(err) {
+        console.error(err)
+        return
+      }
+      this.extendState({
+        foundTopics: topics
       })
     })
   }
