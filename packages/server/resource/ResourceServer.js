@@ -8,6 +8,7 @@ class ResourceServer extends ArchivistResourceServer {
   bind(app) {
     // search
     app.get(this.path + '/entities/search/top', this._searchTopEntities.bind(this))
+    app.get(this.path + '/entities/search/topics', this._searchTopics.bind(this))
     app.get(this.path + '/entities/locations', this._getLocationsList.bind(this))
     app.get(this.path + '/entities/persons', this._getPersonsList.bind(this))
     super.bind(app)
@@ -88,6 +89,24 @@ class ResourceServer extends ArchivistResourceServer {
     let language = "'" + args.language + "'"
 
     this.indexer.searchTopEntities(search, language)
+      .then(function(resp) {
+        res.json(resp)
+      })
+      .catch(function(err) {
+        next(err)
+      })
+  }
+
+  /*
+    Get list of topics related to search query
+  */
+  _searchTopics(req, res, next) {
+    let args = req.query
+
+    let search = "'" + args.query + "'"
+    let language = "'" + args.language + "'"
+
+    this.indexer.searchTopics(search, language)
       .then(function(resp) {
         res.json(resp)
       })

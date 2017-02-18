@@ -167,7 +167,7 @@ ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${of
       ts_rank_cd(entities.tsv, q) AS rank
       FROM entities,
       plainto_tsquery(${language}, ${searchQuery}) AS q
-      WHERE ts_rank_cd(entities.tsv, q) >= 1
+      WHERE ts_rank_cd(entities.tsv, q) >= 1 AND "entityType" != 'subject'
       ORDER BY rank DESC 
       LIMIT ${limit}
     `
@@ -176,6 +176,35 @@ ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${of
       this.db.run(query, function(err, res) {
         if(err) {
           return reject(new Err('Indexer.SearchTopEntitiesError', {
+            cause: err
+          }))
+        }
+
+        resolve(res)
+      })
+    }.bind(this))
+  }
+
+  searchTopics(searchQuery, language) {
+    let limit = 30
+    language = language || 'russian'
+
+    let query = `SELECT 
+      "entityId", 
+      name, 
+      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS cnt, 
+      ts_rank_cd(entities.tsv, q) AS rank
+      FROM entities,
+      plainto_tsquery(${language}, ${searchQuery}) AS q
+      WHERE ts_rank_cd(entities.tsv, q) >= 1 AND "entityType" = 'subject'
+      ORDER BY rank DESC 
+      LIMIT ${limit}
+    `
+
+    return new Promise(function(resolve, reject) {
+      this.db.run(query, function(err, res) {
+        if(err) {
+          return reject(new Err('Indexer.SearchTopicsError', {
             cause: err
           }))
         }
