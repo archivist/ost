@@ -37,6 +37,9 @@ node_modules
 config/production.json
 ecosystem.json
 
+# Conversion data
+ost-data
+
 dist
 dist/doc
 uploads
