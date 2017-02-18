@@ -1,5 +1,5 @@
 import { Component, Grid, Layout, SplitPane } from 'substance'
-import { clone, concat, each, extend, findIndex, isEmpty, isEqual } from 'lodash-es'
+import { clone, concat, each, extend, findIndex, isEmpty, isEqual, isUndefined } from 'lodash-es'
 
 // Sample data for debugging
 // import DataSample from '../../data/docs'
@@ -362,7 +362,8 @@ class Explorer extends Component {
     let configurator = mainConfigurator.getConfigurator('archivist-subjects')
     let filters = newFilters || this.state.filters
     let facets = filters.topics
-    let searchValue = search || this.state.search
+    let searchValue = search 
+    if(isUndefined(search)) searchValue = this.state.search
     let language = 'russian'
     if(searchValue) {
       filters = clone(filters)
