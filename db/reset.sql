@@ -141,6 +141,8 @@ CREATE TABLE "fragments" (
   content text,
   -- xml version
   markup text,
+  -- time annotation
+  "time" text,
   -- array with annotations references
   annotations text[],
   -- annotations references as key/value object 
