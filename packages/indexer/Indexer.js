@@ -1,7 +1,6 @@
 let Err = require('substance').SubstanceError
 let ArchivistIndexer = require('archivist').Indexer
 let findIndex = require('lodash/findIndex')
-let each = require('lodash/each')
 let isEmpty = require('lodash/isEmpty')
 
 // Massive internal libs
@@ -115,6 +114,13 @@ ORDER BY count DESC limit ${limit} offset ${offset}`
     let offset = options.offset || 0
     let query, args, where
 
+    if(!isEmpty(filters.resources)) {
+      filters['references ?&'] = filters.resources
+      delete filters.resources
+    } else {
+      delete filters.resources
+    }
+
     if(isTextSearch) {
       let searchQuery = filters.query
       let language = filters.language || 'english'
@@ -135,7 +141,6 @@ ORDER BY count DESC limit ${limit} offset ${offset}`
         plainto_tsquery(${language}, ${searchQuery}) AS q ${whereQuery} 
         ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${offset}
       `
-
     } else {
       args = ArgTypes.findArgs(arguments, this)
       where = isEmpty(args.conditions) ? {} : Where.forTable(args.conditions)
