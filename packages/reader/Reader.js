@@ -21,6 +21,9 @@ class Reader extends ProseEditor {
     if(entityId) {
       this._showReferences(entityId, true)
     }
+    if(parent.props.fragment) {
+      this.refs.contentPanel.scrollTo(parent.props.fragment)
+    }
   }
 
   dispose() {
