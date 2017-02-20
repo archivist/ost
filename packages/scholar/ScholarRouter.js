@@ -17,6 +17,11 @@ class ScholarRouter extends Router {
     return url
   }
 
+  openFragment(documentId, fragmentId) {
+    let url = '/documents/' + documentId + '#fragment=' + fragmentId
+    return url
+  }
+
   openResource(entityId) {
     return '/resources/' + entityId
   }

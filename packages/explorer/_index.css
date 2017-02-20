@@ -62,7 +62,9 @@
 }
 
 .sc-explorer .se-document-fragment {
+  display: block;
   clear: both;
+  color: inherit;
 }
 
 .sc-explorer .se-document-fragment > .se-cell {

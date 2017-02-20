@@ -37,12 +37,15 @@ class DocumentItem extends Component {
     if(this.props.active && item.fragments) {
       el.addClass('sm-expanded')
       item.fragments.forEach(fragment => {
+        let fragmentUrl = urlHelper.openFragment(item.documentId, fragment.fragmentId)
         let fragmentIcon = this.renderIcon($$, 'fragment-badge')
         el.append(
-          $$(Grid.Row).addClass('se-document-fragment').append(
-            $$(Grid.Cell, {columns: 1}).addClass('se-badge').append(fragmentIcon),
-            $$(Grid.Cell, {columns: 11}).addClass('se-fragment').append($$('p').setInnerHTML(fragment.content))
-          )
+          $$('a').addClass('se-document-fragment se-row')
+            .attr({href: fragmentUrl, target: '_blank'})
+            .append(
+              $$(Grid.Cell, {columns: 1}).addClass('se-badge').append(fragmentIcon),
+              $$(Grid.Cell, {columns: 11}).addClass('se-fragment').append($$('p').setInnerHTML(fragment.content))
+            )
         )
       })
     }
