@@ -67,6 +67,10 @@
   color: inherit;
 }
 
+.sc-explorer .sc-document-item .se-document-fragment:first-of-type {
+  border-top: 1px solid #e6e6e6;
+}
+
 .sc-explorer .se-document-fragment > .se-cell {
   display: table-cell;
   float: none;
