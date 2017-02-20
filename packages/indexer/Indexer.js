@@ -1,6 +1,7 @@
 let Err = require('substance').SubstanceError
 let ArchivistIndexer = require('archivist').Indexer
 let findIndex = require('lodash/findIndex')
+let each = require('lodash/each')
 let isEmpty = require('lodash/isEmpty')
 
 // Massive internal libs
@@ -125,12 +126,15 @@ ORDER BY count DESC limit ${limit} offset ${offset}`
 
       let whereQuery = where.where ? where.where + ' \nAND (tsv @@ q)' : '\nWHERE (tsv @@ q)'
 
-      query = `SELECT 
-"fragmentId",
-ts_headline(${language}, content, q, 'StartSel=<strong>, StopSel=</strong>, HighlightAll=TRUE') as content
-FROM fragments,
-plainto_tsquery(${language}, ${searchQuery}) AS q ${whereQuery} 
-ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${offset}`
+      query = `
+        SELECT 
+        "fragmentId",
+        ts_headline(${language}, content, q, 'StartSel=<strong>, StopSel=</strong>, HighlightAll=TRUE') as content,
+        time
+        FROM fragments,
+        plainto_tsquery(${language}, ${searchQuery}) AS q ${whereQuery} 
+        ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${offset}
+      `
 
     } else {
       args = ArgTypes.findArgs(arguments, this)
@@ -138,11 +142,14 @@ ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${of
 
       let whereQuery = where.where
 
-      query = `SELECT 
-"fragmentId",
-content
-FROM fragments ${whereQuery} 
-ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${offset}`
+      query = `
+        SELECT 
+        "fragmentId",
+        content,
+        time
+        FROM fragments ${whereQuery} 
+        ORDER BY SUBSTRING("fragmentId", '([0-9]+)')::int ASC limit ${limit} offset ${offset}
+      `
     }
 
     return new Promise(function(resolve, reject) {
