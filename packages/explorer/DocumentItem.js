@@ -43,7 +43,10 @@ class DocumentItem extends Component {
           $$('a').addClass('se-document-fragment se-row')
             .attr({href: fragmentUrl, target: '_blank'})
             .append(
-              $$(Grid.Cell, {columns: 1}).addClass('se-badge').append(fragmentIcon),
+              $$(Grid.Cell, {columns: 1}).addClass('se-badge').append(
+                fragmentIcon,
+                $$('div').addClass('se-timecode').append(fragment.time)
+              ),
               $$(Grid.Cell, {columns: 11}).addClass('se-fragment').append($$('p').setInnerHTML(fragment.content))
             )
         )

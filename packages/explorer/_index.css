@@ -76,6 +76,11 @@
 .sc-explorer .se-document-fragment .se-badge {
   background: #fafafa;
   text-align: center;
+  min-width: 60px;
+}
+
+.sc-explorer .se-document-fragment .se-badge .se-timecode {
+  font-size: 10px;
 }
 
 .sc-explorer .se-document-fragment:before,
