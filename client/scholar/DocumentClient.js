@@ -32,6 +32,12 @@ class ScholarDocumentClient extends DocumentClient {
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
     request('GET', '/api/documents/' + documentId + '/search?query=' + query + '&language=' + language + '&filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
+
+  loadFragments(documentId, filters, options, cb) {
+    let filtersRequest = encodeURIComponent(JSON.stringify(filters))
+    let optionsRequest = encodeURIComponent(JSON.stringify(options))
+    request('GET', '/api/documents/' + documentId + '/search?filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
+  }
 }
 
 export default ScholarDocumentClient

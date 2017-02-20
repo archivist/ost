@@ -1,6 +1,14 @@
 import { Component, Grid } from 'substance'
 
 class ResourceReference extends Component {
+
+  constructor(...args) {
+    super(...args)
+
+    this.handleActions({
+      'loadResourceFragments': this._loadResourceFragments
+    })
+  }
   
   didMount() {
     this._loadResourceData()
@@ -122,6 +130,40 @@ class ResourceReference extends Component {
         documents: docs
       })
     })
+  }
+
+  /*
+    Loads resource related fragments
+  */
+  _loadResourceFragments(documentId, index) {
+    if(!this.state.resource) {
+      return
+    }
+
+    let filters = {
+      "resources": [this.props.resource]
+    }
+    let options = {}
+    let documentClient = this.context.documentClient
+    let items = this.state.documents
+
+    if(!items[index].fragments) {
+      documentClient.loadFragments(documentId, filters, options, function(err, fragments) {
+        if (err) {
+          console.error('Search results could not be loaded', err)
+          return
+        }
+
+        items[index].fragments = fragments
+
+        this.extendState({
+          documents: items,
+          details: index 
+        })
+      }.bind(this))
+    } else {
+      this.extendState({details: index})
+    }
   }
 }
 

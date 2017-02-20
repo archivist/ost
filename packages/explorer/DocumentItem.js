@@ -32,7 +32,12 @@ class DocumentItem extends Component {
         title,
         meta.short_summary
       )
-    ).on('click', this._loadFragments.bind(this, item.documentId, index))
+    )
+    if(this.props.resource) {
+      el.on('click', this._loadResourceFragments.bind(this, item.documentId, index))
+    } else {
+      el.on('click', this._loadFragments.bind(this, item.documentId, index))
+    }
 
     if(this.props.active && item.fragments) {
       el.addClass('sm-expanded')
@@ -91,6 +96,10 @@ class DocumentItem extends Component {
 
   _loadFragments(documentId, index) {
     this.send('loadFragments', documentId, index)
+  }
+
+  _loadResourceFragments(documentId, index) {
+    this.send('loadResourceFragments', documentId, index)
   }
 }
 
