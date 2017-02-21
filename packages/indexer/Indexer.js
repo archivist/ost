@@ -1,6 +1,7 @@
 let Err = require('substance').SubstanceError
 let ArchivistIndexer = require('archivist').Indexer
 let findIndex = require('lodash/findIndex')
+let forEach = require('lodash/forEach')
 let isEmpty = require('lodash/isEmpty')
 
 // Massive internal libs
@@ -14,11 +15,10 @@ class Indexer extends ArchivistIndexer {
     let offset = options.offset || 0
     let query, countQuery, args, where, searchQuery, language
 
-    if(!isEmpty(filters.topics)) {
-      filters['"references" ?&'] = filters.topics
-      delete filters.topics
-    } else {
-      delete filters.topics
+    let topics = filters.topics ? filters.topics : []
+    delete filters.topics
+    if(!isEmpty(topics)) {
+      filters['"references" ?&'] = topics
     }
 
     if(isTextSearch) {
@@ -31,13 +31,18 @@ class Indexer extends ArchivistIndexer {
       where = isEmpty(args.conditions) ? {} : Where.forTable(args.conditions)
 
       let whereQuery = where.where ? where.where + ' \nAND (tsv @@ q)' : '\nWHERE (tsv @@ q)'
+      let fragmentsWhereQuery = whereQuery
+
+      // TODO: find a better solution
+      // we don't want to count fts fragments inside topics fragments
+      if(!isEmpty(topics)) fragmentsWhereQuery = whereQuery.replace('AND "references" ?& $2', '')
 
       countQuery = `SELECT COUNT(*) FROM documents, plainto_tsquery(${language}, ${searchQuery}) AS q ${whereQuery}`
 
       query = `SELECT 
-"documentId", title, meta,
+"documentId", title, meta, "references",
 (SELECT COUNT(*) 
-  FROM fragments ${whereQuery} 
+  FROM fragments ${fragmentsWhereQuery} 
   AND "documentId" = documents."documentId"
 ) AS count,
 ts_rank_cd(documents.tsv, q) AS rank FROM documents, plainto_tsquery(${language}, ${searchQuery}) AS q ${whereQuery} 
@@ -52,7 +57,7 @@ ORDER BY rank DESC limit ${limit} offset ${offset}`
       countQuery = `SELECT COUNT(*) FROM documents ${whereQuery}`
 
       query = `SELECT 
-"documentId", title, meta,
+"documentId", title, meta, "references",
 (SELECT COUNT(*) 
   FROM fragments ${whereQuery} 
   AND "documentId" = documents."documentId"
@@ -79,6 +84,16 @@ ORDER BY count DESC limit ${limit} offset ${offset}`
               cause: err
             }))
           }
+
+          forEach(res, (doc, i) => {
+            let docTopics = {}
+            forEach(topics, topic => {
+              docTopics[topic] = doc.references[topic]
+            })
+            res[i].topics = docTopics
+            delete doc.references
+          })
+
           let first = findIndex(res, function(doc) {
             return doc.count > 0
           })
