@@ -1,19 +1,21 @@
 let ArchivistDocumentEngine = require('archivist').DocumentEngine
 let Err = require('substance').SubstanceError
+let forEach = require('lodash/forEach')
 let isEmpty = require('lodash/isEmpty')
 
 class DocumentEngine extends ArchivistDocumentEngine {
 
   listDocuments(args, cb) {
     let filters = !isEmpty(args.filters) ? JSON.parse(args.filters) : {}
-    let options = !isEmpty(args.options) ? JSON.parse(args.options) : {}  
+    let options = !isEmpty(args.options) ? JSON.parse(args.options) : {} 
     let results = {}
     
-    if(!options.columns) options.columns = ['"documentId"', '"schemaName"', '"schemaVersion"', "meta", "title", "language", '"updatedAt"', '"updatedBy"', '"userId"']
+    if(!options.columns) options.columns = ['"documentId"', '"schemaName"', '"schemaVersion"', "meta", "title", "language", '"updatedAt"', '"updatedBy"', '"userId"', '"references"']
 
-    if(filters.topics) {
-      filters['"references" ?&'] = filters.topics
-      delete filters.topics
+    let topics = filters.topics ? filters.topics : []
+    delete filters.topics
+    if(!isEmpty(topics)) {
+      filters['"references" ?&'] = topics
     }
 
     this.documentStore.countDocuments(filters, function(err, count) {
@@ -29,6 +31,15 @@ class DocumentEngine extends ArchivistDocumentEngine {
             cause: err
           }))
         }
+        forEach(docs, (doc, i) => {
+          let docTopics = {}
+          forEach(topics, topic => {
+            docTopics[topic] = doc.references[topic]
+          })
+          docs[i].topics = docTopics
+          delete doc.references
+        })
+
         results.records = docs
         
         cb(null, results)
