@@ -186,7 +186,7 @@ class Explorer extends Component {
       items.forEach((item, index) => {
         let active = this.state.details === index
         grid.append(
-          $$(DocumentItem, {item: item, index: index, active: active}).ref(item.documentId)
+          $$(DocumentItem, {item: item, index: index, active: active, topics: this.state.topics}).ref(item.documentId)
         )
       })
     }

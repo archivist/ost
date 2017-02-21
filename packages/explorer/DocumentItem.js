@@ -1,4 +1,5 @@
 import { Component, Grid } from 'substance'
+import { forEach, isEmpty } from 'lodash-es'
 import moment from 'moment'
 
 class DocumentItem extends Component {
@@ -30,7 +31,8 @@ class DocumentItem extends Component {
       $$(Grid.Cell, {columns: 10}).addClass('se-metadata').append(
         this.renderMetaInfo($$),
         title,
-        meta.short_summary
+        meta.short_summary,
+        this.renderTopicBadges($$)
       )
     )
     if(this.props.resource) {
@@ -84,6 +86,32 @@ class DocumentItem extends Component {
 
     if(item.count) {
       el.append($$('div').addClass('se-fragments-count').append(item.count + ' ' + this.getLabel('fragment-count')))
+    }
+
+    return el
+  }
+
+  renderTopicBadges($$) {
+    let item = this.props.item
+    let topicsTree = this.props.topics
+    let topics = item.topics
+    let urlHelper = this.context.urlHelper
+    let el = $$('div').addClass('se-topic-badges')
+
+    if(!isEmpty(topics)) {
+      forEach(topics, (counter, topic) => {
+        let url = urlHelper.openDocument(item.documentId, false, topic)
+        let name = topicsTree.get([topic, 'name'])
+        el.append(
+          $$('a')
+            .addClass('se-topic-badge')
+            .attr({href: url, target: '_blank'})
+            .append(
+              this.renderIcon($$, 'topic-badge'),
+              name + ' (' + counter + ')'
+            ) 
+        )
+      })
     }
 
     return el

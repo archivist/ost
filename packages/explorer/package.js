@@ -19,6 +19,7 @@ export default {
     config.addComponent('facets', Facets)
     config.addIcon('searchbar-search', {'fontawesome': 'fa-search'})
     config.addIcon('fragment-badge', {'fontawesome': 'fa-comments-o'})
+    config.addIcon('topic-badge', {'fontawesome': 'fa-tag'})
     config.addIcon('location', {'fontawesome': 'fa-map-marker'})
     config.addIcon('video', {'fontawesome': 'fa-video-camera'})
     config.addIcon('audio', {'fontawesome': 'fa-volume-up'})

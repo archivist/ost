@@ -53,6 +53,28 @@
   background: none;
 }
 
+.sc-explorer .sc-document-item .se-topic-badges {
+  padding-top: 10px;
+}
+
+.sc-explorer .sc-document-item .se-topic-badge {
+  background: rgba(194, 234, 35, 0.16);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  color: #888;
+  display: inline-block;
+  padding: 3px 5px;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 3px;
+}
+
+.sc-explorer .sc-document-item .se-topic-badge i {
+  margin-right: 5px;
+}
+
 .sc-explorer .sc-grid .sc-grid {
   overflow: inherit;
 }
