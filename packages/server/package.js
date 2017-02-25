@@ -6,9 +6,9 @@ let EnginePackage = require('../engine/package')
 let IndexerPackage = require('../indexer/package')
 let ResourceServerPackage = require('./resource/package')
 let ConverterServerPackage = require('./converter/package')
+let DocumentServerPackage = require('./document/package')
 let AuthServerPackage = require('archivist').AuthServerPackage
 let CollabServerPackage = require('archivist').CollabServerPackage
-let DocumentServerPackage = require('archivist').DocumentServerPackage
 let UserServerPackage = require('archivist').ResourceServerPackage
 
 let db = new Database()
