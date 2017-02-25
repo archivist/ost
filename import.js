@@ -430,6 +430,7 @@ function importDocuments() {
           conductor: node.conductor,
           record_type: node.record_type,
           project_name: node.project_name,
+          project: node.project,
           published_on: '2016-11-16',
           short_summary: node.short_summary,
           short_summary_translation: node.short_summary_en,
@@ -440,11 +441,19 @@ function importDocuments() {
           interviewee_bio_translation_second: node.interviewee_bio_de,
           persons_present: node.persons_present,
           project_location: node.project_location,
-          interviewee_photo: node.interviewee_photo,
           interview_duration: parseInt(node.interview_duration, 10),
           interview_location: node.interview_location,
+          interviewee_photo: node.interviewee_photo,
           interviewee_category: node.interviewee_category,
-          interviewee_forced_labor_type: node.interviewee_forced_labor_type
+          interviewee_detention_place_type: node.forced_labor_type,
+          interviewee_forced_labor_type: node.detention_place_type,
+          interviewee_state: node.person_state,
+          interviewee_military_service: node.military_service || 'false',
+          interviewee_sex: node.sex || 'мужчина',
+          interviewee_place_of_birth: node.place_of_birth,
+          interviewee_year_of_birth: node.year_of_birth,
+          interviewee_enslaving_year: node.enslaving_year,
+          interviewee_homecoming_year: node.homecoming_year
         }
 
         try {
