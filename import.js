@@ -430,7 +430,7 @@ function importDocuments() {
           conductor: node.conductor,
           record_type: node.record_type,
           project_name: node.project_name,
-          project: node.project,
+          project: node.project || 'Международный проект документации рабского и принудительного труда',
           published_on: '2016-11-16',
           short_summary: node.short_summary,
           short_summary_translation: node.short_summary_en,
