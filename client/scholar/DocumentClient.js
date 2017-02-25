@@ -38,6 +38,11 @@ class ScholarDocumentClient extends DocumentClient {
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
     request('GET', '/api/documents/' + documentId + '/search?filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
+
+  loadMetaOptionValues(options, cb) {
+    let optionsRequest = encodeURIComponent(JSON.stringify(options))
+    request('GET', '/api/documents/options/values?props=' + optionsRequest, null, cb)
+  }
 }
 
 export default ScholarDocumentClient
