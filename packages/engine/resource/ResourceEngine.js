@@ -3,6 +3,7 @@ let ArchivistResourceEngine = require('archivist').ResourceEngine
 let each = require('lodash/each')
 let isEmpty = require('lodash/isEmpty')
 let isNull = require('lodash/isNull')
+let isUndefined = require('lodash/isUndefined')
 
 // Massive internal libs
 let ArgTypes = require('../../../node_modules/massive/lib/arg_types')
@@ -122,9 +123,12 @@ class ResourceEngine extends ArchivistResourceEngine {
     })
   }
 
-  getPersonsList(options) {
+  getPersonsList(letter, options) {
     let offset = options.offset || 0
     let limit = options.limit || 100
+
+    let letterCondition = ''
+    if(letter != 'undefined') letterCondition = 'AND lower(LEFT(name, 1)) = \'' + letter + '\''
 
     let countQuery = `
       SELECT COUNT(*) 
@@ -139,7 +143,7 @@ class ResourceEngine extends ArchivistResourceEngine {
       (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId") AS fragments
       FROM entities
       WHERE "entityType" = 'person' 
-      AND entities.data->'global' = 'true'
+      AND entities.data->'global' = 'true' ${letterCondition}
       AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
       ORDER BY name ASC
       LIMIT ${limit} OFFSET ${offset}
@@ -167,6 +171,27 @@ class ResourceEngine extends ArchivistResourceEngine {
           
           resolve(results)
         })
+      })
+    })
+  }
+
+  getPersonsStats() {
+    let query = `
+      SELECT lower(LEFT(name, 1)) AS letter, COUNT(*) AS cnt
+      FROM entities
+      WHERE "entityType" = 'person' AND data->>'global' = 'false'
+      GROUP BY letter
+    `
+
+    return new Promise((resolve, reject) => {
+      this.db.run(query, (err, stats) => {
+        if (err) {
+          return reject(new Err('ResourceEngine.GetPersonsList', {
+            cause: err
+          }))
+        }
+        
+        resolve(stats)
       })
     })
   }

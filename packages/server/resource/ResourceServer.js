@@ -12,6 +12,7 @@ class ResourceServer extends ArchivistResourceServer {
     app.get(this.path + '/entities/locations', this._getLocationsList.bind(this))
     app.get(this.path + '/entities/persons', this._getPersonsList.bind(this))
     super.bind(app)
+    app.get(this.path + '/entities/persons/stats', this._getPersonsStats.bind(this))
     app.get(this.path + '/entities/tree/:type', this._getResourcesTree.bind(this))
     app.get(this.path + '/entities/facets/:type', this._getResourcesFacetsTree.bind(this))
   }
@@ -64,15 +65,30 @@ class ResourceServer extends ArchivistResourceServer {
   }
 
   /*
-    Get list of all global person
+    Get list of all global persons
   */
   _getPersonsList(req, res, next) {
+    let letter = req.query.letter
     let options = req.query.options
     options = options ? JSON.parse(options) : {}
     
-    this.engine.getPersonsList(options)
+    this.engine.getPersonsList(letter, options)
       .then(function(persons) {
         res.json(persons)
+      })
+      .catch(function(err) {
+        next(err)
+      })
+  }
+
+
+  /*
+    Get list of person first letters with counters
+  */
+  _getPersonsStats(req, res, next) {
+    this.engine.getPersonsStats()
+      .then(function(stats) {
+        res.json(stats)
       })
       .catch(function(err) {
         next(err)

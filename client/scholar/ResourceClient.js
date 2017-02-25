@@ -80,9 +80,16 @@ class ResourceClient {
   /*
     Get list of all global persons
   */
-  getPersonsList(options, cb) {
+  getPersonsList(letter, options, cb) {
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
-    request('GET', '/api/entities/persons?options=' + optionsRequest, null, cb)
+    request('GET', '/api/entities/persons?letter=' + letter + '&options=' + optionsRequest, null, cb)
+  }
+
+  /*
+    Get list of person first letters with counters 
+  */
+  getPersonsStats(cb) {
+    request('GET', '/api/entities/persons/stats', null, cb)
   }
 
 }
