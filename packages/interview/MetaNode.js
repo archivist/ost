@@ -19,6 +19,7 @@ MetaNode.define({
   state: { type: 'string', default: '' },
 
   // Project data
+  project: { type: 'string', default: '' },
   project_name: { type: 'string', default: '' },
   project_location: { type: 'string', default: '' },
   conductor: { type: 'string', default: '' },
@@ -36,8 +37,16 @@ MetaNode.define({
   interviewee_bio_translation: { type: 'string', default: '' },
   interviewee_bio_translation_second: { type: 'string', default: '' },
   interviewee_category: { type: 'string', default: '' },
-  interviewee_forced_labor_type: { type: 'string', default: '' },
-  interviewee_photo: { type: 'string', default: '' }
+  interviewee_photo: { type: 'string', default: '' },
+  interviewee_detention_place_type: { type: 'array', default: [] },
+  interviewee_forced_labor_type: { type: 'array', default: [] },
+  interviewee_state: { type: 'string', default: '' },
+  interviewee_military_service: { type: 'boolean', default: false },
+  interviewee_sex: { type: 'string', default: '' },
+  interviewee_place_of_birth: { type: 'string', default: '' },
+  interviewee_year_of_birth: { type: 'string', default: '' },
+  interviewee_enslaving_year: { type: 'string', default: '' },
+  interviewee_homecoming_year: { type: 'string', default: '' }
 
   // TODO: waypoints
   //interviewee_waypoints: { type: ['waypoint'], default: [] }
