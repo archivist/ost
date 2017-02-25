@@ -1,5 +1,5 @@
 import { Component, Grid, Layout, SplitPane } from 'substance'
-import { clone, concat, each, extend, findIndex, isEmpty, isEqual, isUndefined } from 'lodash-es'
+import { clone, concat, each, extend, findIndex, findLastIndex, isEmpty, isEqual, isUndefined } from 'lodash-es'
 
 // Sample data for debugging
 // import DataSample from '../../data/docs'
@@ -14,7 +14,10 @@ class Explorer extends Component {
       'search': this._searchData,
       'openResource': this._showResource,
       'openTopic': this._showResource,
-      'setTotal': this._setTotal
+      'setTotal': this._setTotal,
+      'applyMetaFilter': this._applyMetaFilter,
+      'applyDateRangeFilter': this._applyDateRangeFilter,
+      'resetMetaFilter': this._resetMetaFilter
     })
   }
 
@@ -65,6 +68,7 @@ class Explorer extends Component {
   getInitialState() {
     return {
       filters: {"meta->>'state'": "published", topics: []},
+      metaFilters: {},
       search: '',
       resource: this.props.resourceId,
       perPage: 30,
@@ -120,6 +124,7 @@ class Explorer extends Component {
     let el = $$('div').addClass('se-sidebar')
     let ResourceEntries = this.getComponent('resource-entries')
     let TopicEntries = this.getComponent('topic-entries')
+    let MetaFilters = this.getComponent('meta-filters')
     let Facets = this.getComponent('facets')
 
     if(this.state.total) {
@@ -135,7 +140,10 @@ class Explorer extends Component {
       if(!isEmpty(this.state.entries)) el.append($$(ResourceEntries, {entries: this.state.entries}))
     }
     
-    el.append($$(Facets, {topics: this.state.topics}).ref('facets'))
+    el.append(
+      $$(MetaFilters, {filters: this.state.metaFilters}).ref('filters'),
+      $$(Facets, {topics: this.state.topics}).ref('facets')
+    )
 
     return el
   }
@@ -426,6 +434,52 @@ class Explorer extends Component {
       pagination: false,
       resource: false,
       documentItems: []
+    })
+  }
+
+  _applyMetaFilter(id, value, op) {
+    let filters = this.state.filters
+    let metaFilters = this.state.metaFilters
+    let metaFilter = {}
+    let prop = 'meta->>' + id
+    if(op) prop += op
+    metaFilter[prop] = value
+    metaFilters[id] = value
+    if(op === ' ~~') metaFilter[prop] = '%' + value + '%'
+    this.extendState({
+      filters: extend({}, filters, metaFilter),
+      metaFilters: metaFilters
+    })
+  }
+
+  _applyDateRangeFilter(id, value) {
+    let range = value.split(',')
+    let filters = this.state.filters
+    let metaFilters = this.state.metaFilters
+    let metaFilter = {}
+    let propMin = 'meta->>' + id + ' >='
+    let propMax = 'meta->>' + id + ' <='
+    metaFilter[propMin] = range[0] + '-01-01'
+    metaFilter[propMax] = range[1] + '-12-31'
+    metaFilters[id] = value
+    this.extendState({
+      filters: extend({}, filters, metaFilter),
+      metaFilters: metaFilters
+    })
+  }
+
+  _resetMetaFilter(id) {
+    let filters = clone(this.state.filters)
+    let metaFilters = this.state.metaFilters
+    let filterKeys = Object.keys(filters)
+    let filterKey = findIndex(filterKeys, function(f) { return f.indexOf(id) > -1 })
+    let filterKey2 = findLastIndex(filterKeys, function(f) { return f.indexOf(id) > -1 })
+    delete metaFilters[id]
+    delete filters[filterKeys[filterKey]]
+    if(filterKey2) delete filters[filterKeys[filterKey2]]
+    this.extendState({
+      filters: extend({}, filters),
+      metaFilters: metaFilters
     })
   }
 
