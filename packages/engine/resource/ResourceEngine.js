@@ -128,19 +128,19 @@ class ResourceEngine extends ArchivistResourceEngine {
     let limit = options.limit || 100
 
     let letterCondition = ''
-    if(letter != 'undefined') letterCondition = 'AND lower(LEFT(name, 1)) = \'' + letter + '\''
+    if(letter !== 'undefined') letterCondition = 'AND lower(LEFT(name, 1)) = \'' + letter + '\''
 
     let countQuery = `
       SELECT COUNT(*) 
       FROM entities
       WHERE "entityType" = 'person' 
-      AND entities.data->'global' = 'true'
+      AND entities.data->'global' = 'true' ${letterCondition}
     `
 
     let query = `
       SELECT "entityId", name, description, 
-      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS count,
-      (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId") AS fragments
+      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published') AS count,
+      (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published') AS fragments
       FROM entities
       WHERE "entityType" = 'person' 
       AND entities.data->'global' = 'true' ${letterCondition}
@@ -179,7 +179,9 @@ class ResourceEngine extends ArchivistResourceEngine {
     let query = `
       SELECT lower(LEFT(name, 1)) AS letter, COUNT(*) AS cnt
       FROM entities
-      WHERE "entityType" = 'person' AND data->>'global' = 'false'
+      WHERE "entityType" = 'person'
+      AND data->>'global' = 'true'
+      AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
       GROUP BY letter
     `
 
