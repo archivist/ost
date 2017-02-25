@@ -8,7 +8,7 @@ export default {
     config.addComponent('person-item', PersonItem)
     config.addLabel('mentioned-person', {
       en: 'Number of mentioned persons',
-      ru: 'Всего персон'
+      ru: 'Все персоны'
     })
   }
 }

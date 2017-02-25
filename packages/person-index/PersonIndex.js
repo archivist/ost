@@ -13,7 +13,7 @@ class PersonIndex extends Component {
 
   didMount() {
     this._loadPersonsStats()
-    this._loadData()
+    this._loadData(true)
   }
 
   getInitialState() {
@@ -38,8 +38,14 @@ class PersonIndex extends Component {
     }).addClass('se-persons-layout')
 
     if(this.state.total) {
+      let total = $$('div').addClass('se-total').append(this.getLabel('mentioned-person') + ' (' + this.state.totalPersons + ')')
+      if(!this.state.letter) {
+        total.addClass('sm-active')
+      } else {
+        total.on('click', this._setLetterFilter.bind(this, undefined))
+      }
       layout.append(
-        $$('div').addClass('se-total').append(this.getLabel('mentioned-person') + ': ' + this.state.total),
+        total,
         this.renderLetterFilter($$),
         this.renderList($$)
       )
@@ -133,7 +139,7 @@ class PersonIndex extends Component {
     this._loadData()
   }
 
-  _loadData() {
+  _loadData(init) {
     let resourceClient = this.context.resourceClient
     let letter = this.state.letter
     let pagination = this.state.pagination
@@ -157,10 +163,14 @@ class PersonIndex extends Component {
         items = persons.records
       }
 
-      this.extendState({
+      let state = {
         items: items,
-        total: parseInt(persons.total, 10)
-      })
+        total: parseInt(persons.total, 10),
+      }
+
+      if(init) state.totalPersons = state.total
+
+      this.extendState(state)
     })
   }
 
@@ -198,7 +208,8 @@ class PersonIndex extends Component {
   }
 
   _setLetterFilter(letter) {
-    this.extendState({letter: letter})
+    if(this.state.letter === letter) letter = undefined
+    this.extendState({letter: letter, pagination: false})
     this._loadData()
   }
 }

@@ -10,11 +10,18 @@
   border: 1px solid #E0E4E4;
   border-radius: 3px;
   margin-bottom: 10px;
-  padding-bottom: 120px;
+  padding-bottom: 115px;
 }
 
 .sc-persons-index .se-total {
+  font-size: 13px;
   padding-top: 10px;
+  float: right;
+  cursor: pointer;
+}
+
+.sc-persons-index .se-total.sm-active {
+  border-bottom: 1px dashed rgba(0,0,0,0.75); 
 }
 
 .sc-persons-index .se-letter-filter {
