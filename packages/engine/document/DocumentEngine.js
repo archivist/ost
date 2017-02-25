@@ -1,7 +1,9 @@
 let ArchivistDocumentEngine = require('archivist').DocumentEngine
 let Err = require('substance').SubstanceError
+let filter = require('lodash/filter')
 let forEach = require('lodash/forEach')
 let isEmpty = require('lodash/isEmpty')
+let map = require('lodash/map')
 
 class DocumentEngine extends ArchivistDocumentEngine {
 
@@ -45,6 +47,31 @@ class DocumentEngine extends ArchivistDocumentEngine {
         cb(null, results)
       })
     }.bind(this))
+  }
+
+  /*
+    Get list of dictinct values for metadata property
+  */
+  getMetaDataOptions(prop) {
+    let query = `
+      SELECT DISTINCT ON (meta->$1) meta->$1 AS value
+      FROM documents
+    `
+
+    return new Promise((resolve, reject) => {
+      this.db.run(query, [prop], (err, options) => {
+        if (err) {
+          return reject(new Err('DocumentEngine.GetMetaDataOptions', {
+            cause: err
+          }))
+        }
+
+        let filtered = filter(options, o => { return !isEmpty(o.value) && o.value !== null })
+        let values = map(filtered, opt => { return opt.value })
+        
+        resolve(values)
+      })
+    })
   }
 }
 
