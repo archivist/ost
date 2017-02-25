@@ -12,12 +12,12 @@ class PersonIndex extends Component {
   }
 
   didMount() {
+    this._loadPersonsStats()
     this._loadData()
   }
 
   getInitialState() {
     return {
-      filters: {'"entityType"': 'person', "data->>'global'": "false"},
       perPage: 30,
       order: "name",
       direction: 'asc',
@@ -40,6 +40,7 @@ class PersonIndex extends Component {
     if(this.state.total) {
       layout.append(
         $$('div').addClass('se-total').append(this.getLabel('mentioned-person') + ': ' + this.state.total),
+        this.renderLetterFilter($$),
         this.renderList($$)
       )
     } else {
@@ -92,6 +93,36 @@ class PersonIndex extends Component {
     return grid
   }
 
+  renderLetterFilter($$) {
+    let stats = this.state.stats
+    let el = $$('div').addClass('se-letter-filter')
+
+    if(stats) {
+      let sorted = stats.sort(function(a, b){
+        if(a.letter < b.letter) return -1
+        if(a.letter > b.letter) return 1
+        return 0
+      })
+
+      sorted.forEach((item, i) => {
+        let letterEl = $$('div')
+          .addClass('se-letter-item')
+          .append(
+            item.letter,
+            $$('span').addClass('se-letter-counter').append('(' + item.cnt + ')')
+          )
+          .ref('letter_' + i)
+          .on('click', this._setLetterFilter.bind(this, item.letter))
+
+        if(this.state.letter === item.letter) letterEl.addClass('sm-active')
+
+        el.append(letterEl)
+      })
+    }
+
+    return el
+  }
+
   /*
     Load more data
   */
@@ -104,6 +135,7 @@ class PersonIndex extends Component {
 
   _loadData() {
     let resourceClient = this.context.resourceClient
+    let letter = this.state.letter
     let pagination = this.state.pagination
     let perPage = this.state.perPage
     let options = {
@@ -113,9 +145,9 @@ class PersonIndex extends Component {
     }
     let items = []
 
-    resourceClient.getPersonsList(options, (err, persons) => {
+    resourceClient.getPersonsList(letter, options, (err, persons) => {
       if(err) {
-        console.log(err)
+        console.error(err)
         return
       }
 
@@ -132,12 +164,26 @@ class PersonIndex extends Component {
     })
   }
 
+  _loadPersonsStats() {
+    let resourceClient = this.context.resourceClient
+    resourceClient.getPersonsStats((err, stats) => {
+      if(err) {
+        console.error(err)
+        return
+      }
+
+      this.extendState({
+        stats: stats
+      })
+    })
+  }
+
   _loadResourceDocuments(resourceId, index) {
     let documentClient = this.context.documentClient
 
     documentClient.getResourceDocuments(resourceId, (err, docs) => {
       if(err) {
-        console.err(err)
+        console.error(err)
         return
       }
 
@@ -149,6 +195,11 @@ class PersonIndex extends Component {
         details: index
       })
     })
+  }
+
+  _setLetterFilter(letter) {
+    this.extendState({letter: letter})
+    this._loadData()
   }
 }
 
