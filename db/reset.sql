@@ -53,7 +53,7 @@ CREATE INDEX entities_created_idx ON entities(created);
 -- Entities search index
 CREATE INDEX tsv_entities_idx ON entities USING gin(tsv);
 -- Entity name first letter index
-CREATE INDEX entity_name_first_letter ON entities USING btree (lower(cast(name AS varchar(1))))
+CREATE INDEX entity_name_first_letter ON entities USING btree (lower(cast(name AS varchar(1))));
 
 CREATE OR REPLACE FUNCTION arr2text(text[]) 
   RETURNS text LANGUAGE sql IMMUTABLE AS 'SELECT $1::text';
