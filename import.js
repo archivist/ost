@@ -447,7 +447,7 @@ function importDocuments() {
           interviewee_category: node.interviewee_category,
           interviewee_detention_place_type: node.forced_labor_type,
           interviewee_forced_labor_type: node.detention_place_type,
-          interviewee_state: node.person_state,
+          interviewee_state: node.person_state || 'военнопленный',
           interviewee_military_service: node.military_service || false,
           interviewee_sex: node.sex || 'мужчина',
           interviewee_place_of_birth: node.place_of_birth,
