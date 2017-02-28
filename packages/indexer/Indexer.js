@@ -220,7 +220,8 @@ ORDER BY count DESC limit ${limit} offset ${offset}`
 
     let query = `SELECT 
       "entityId", 
-      name, 
+      name,
+      description,
       (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS cnt, 
       ts_rank_cd(entities.tsv, q) AS rank
       FROM entities,
