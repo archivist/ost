@@ -141,8 +141,8 @@ class Explorer extends Component {
     }
     
     el.append(
-      $$(MetaFilters, {filters: this.state.metaFilters}).ref('filters'),
-      $$(Facets, {topics: this.state.topics}).ref('facets')
+      $$(Facets, {topics: this.state.topics}).ref('facets'),
+      $$(MetaFilters, {filters: this.state.metaFilters}).ref('filters')
     )
 
     return el
