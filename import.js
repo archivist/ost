@@ -600,15 +600,15 @@ importUsers()
   })
   .then(function() {
     console.log('Documents has been imported!')
-    return reindexEntities()
-  })
-  .then(function() {
-    console.log('Entities has been reindexed!')
     let indexer = configurator.getEngine('indexer')
     return indexer.indexAll()
   })
   .then(function() {
     console.log('Documents has been reindexed!')
+    return reindexEntities()
+  })
+  .then(function() {
+    console.log('Entities has been reindexed!')
     db.shutdown()
     process.exit()
   })
