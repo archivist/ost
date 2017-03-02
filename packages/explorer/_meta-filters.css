@@ -19,7 +19,7 @@
   margin-bottom: 6px;
 }
 
-.sc-meta-filters .se-filter .se-reset {
+.sc-meta-filters .se-reset {
   position: absolute;
   right: 0px;
   top: 20px;
@@ -27,7 +27,12 @@
   cursor: pointer;
 }
 
-.sc-meta-filters .se-filter .se-reset i {
+.sc-meta-filters > .se-reset {
+  top: 12px;
+  right: 10px;
+}
+
+.sc-meta-filters .se-reset i {
   margin-left: 3px;
 }
 

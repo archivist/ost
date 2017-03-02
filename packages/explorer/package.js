@@ -74,6 +74,10 @@ export default {
       en: 'reset',
       ru: 'сбросить'
     })
+    config.addLabel('reset-all-filters', {
+      en: 'reset all filters',
+      ru: 'сбросить фильтры'
+    })
     config.addLabel('select-option', {
       en: 'Select your option',
       ru: 'Выберите вариант'

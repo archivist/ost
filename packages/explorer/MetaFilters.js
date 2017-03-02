@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import { forEach, isUndefined } from 'lodash-es'
+import { forEach, isEmpty, isUndefined } from 'lodash-es'
 
 class MetaFilters extends Component {
   didMount() {
@@ -66,7 +66,18 @@ class MetaFilters extends Component {
   render($$) {
     let filters = this.props.filters
     let el = $$('div').addClass('sc-meta-filters se-panel')
-    el.append($$('div').addClass('se-title').append(this.getLabel('meta-filters-title')))
+    el.append($$('div').addClass('se-title').append(
+      this.getLabel('meta-filters-title')
+    ))
+
+    if(!isEmpty(filters)) {
+      el.append(
+        $$('div').addClass('se-reset').append(
+          this.getLabel('reset-all-filters'),
+          this.context.iconProvider.renderIcon($$, 'reset-filter')
+        ).on('click', this._resetAllFilters.bind(this))
+      )
+    }
 
     let detentionPlaceTypeFilter = this.renderSelectList($$, this.state.detentionPlaceTypes, 'interviewee_detention_place_type', 'detention_place_type', 'array')
       .ref('detentionPlaceTypeFilter')
@@ -255,6 +266,10 @@ class MetaFilters extends Component {
 
   _resetFilter(id) {
     this.send('resetMetaFilter', id)
+  }
+
+  _resetAllFilters() {
+    this.send('resetAllMetaFilters')
   }
 }
 

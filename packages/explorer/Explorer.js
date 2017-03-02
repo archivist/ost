@@ -17,7 +17,8 @@ class Explorer extends Component {
       'setTotal': this._setTotal,
       'applyMetaFilter': this._applyMetaFilter,
       'applyDateRangeFilter': this._applyDateRangeFilter,
-      'resetMetaFilter': this._resetMetaFilter
+      'resetMetaFilter': this._resetMetaFilter,
+      'resetAllMetaFilters': this._resetAllMetaFilters
     })
   }
 
@@ -477,6 +478,23 @@ class Explorer extends Component {
     delete metaFilters[id]
     delete filters[filterKeys[filterKey]]
     if(filterKey2) delete filters[filterKeys[filterKey2]]
+    this.extendState({
+      filters: extend({}, filters),
+      metaFilters: metaFilters
+    })
+  }
+
+  _resetAllMetaFilters() {
+    let filters = clone(this.state.filters)
+    let metaFilters = this.state.metaFilters
+    let filterKeys = Object.keys(filters)
+    each(metaFilters, (filter, id) => {
+      let filterKey = findIndex(filterKeys, function(f) { return f.indexOf(id) > -1 })
+      let filterKey2 = findLastIndex(filterKeys, function(f) { return f.indexOf(id) > -1 })
+      delete metaFilters[id]
+      delete filters[filterKeys[filterKey]]
+      if(filterKey2) delete filters[filterKeys[filterKey2]]
+    })
     this.extendState({
       filters: extend({}, filters),
       metaFilters: metaFilters

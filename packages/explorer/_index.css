@@ -173,6 +173,7 @@
   border: 1px solid var(--border-color);
   border-radius: 3px;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .sc-explorer .se-panel .se-title {
