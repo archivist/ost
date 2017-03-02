@@ -551,7 +551,7 @@ function importDocuments() {
 
 function reindexEntities() {
   return new Promise(function(resolve) {
-    db.run("REINDEX INDEX anno_refs", function(err, res) {
+    db.connection.run("REINDEX INDEX anno_refs", function(err, res) {
       if (err) {
         console.error('Entity reindexing error', err)
       }
