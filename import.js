@@ -7,6 +7,7 @@
 
 let process = require('process')
 let fs = require('fs')
+let Promise = require('bluebird')
 let forEach = require('lodash/forEach')
 let map = require('lodash/map')
 let uniq = require('lodash/uniq')
@@ -548,6 +549,18 @@ function importDocuments() {
     })
 }
 
+function reindexEntities() {
+  return new Promise(function(resolve) {
+    db.run("REINDEX INDEX anno_refs", function(err, res) {
+      if (err) {
+        console.error('Entity reindexing error', err)
+      }
+
+      resolve(res)
+    })
+  })
+}
+
 function _fileExists(path) {
   try {
     fs.accessSync(path, fs.F_OK)
@@ -587,6 +600,10 @@ importUsers()
   })
   .then(function() {
     console.log('Documents has been imported!')
+    return reindexEntities()
+  })
+  .then(function() {
+    console.log('Entities has been reindexed!')
     let indexer = configurator.getEngine('indexer')
     return indexer.indexAll()
   })
