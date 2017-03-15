@@ -1,5 +1,5 @@
 import { Component } from 'substance'
-import filter from 'lodash/filter'
+import { filter } from 'lodash-es'
 
 class EntitiesContext extends Component {
 
