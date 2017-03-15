@@ -22,7 +22,7 @@ class DocumentItem extends Component {
 
     // Photo badge
     let photo = config.mediaServer + '/photos/' + meta.interviewee_photo
-    if(!meta.interviewee_photo) photo = config.protocol + '://' + config.host + ':' + config.port + '/assets/profile.jpg'
+    if(!meta.interviewee_photo) photo = config.protocol + '://' + config.host + ':' + config.port + '/assets/default.png'
     let photoEl = $$('div').addClass('se-document-photo')
     photoEl.css({'background-image': 'url(' + photo + ')'})
 

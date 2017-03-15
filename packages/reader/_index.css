@@ -1,3 +1,7 @@
+.sc-read-document .se-spinner {
+  margin: 100px auto 0px;
+}
+
 .sc-reader .sc-layout {
   padding: 40px;
 }

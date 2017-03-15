@@ -42,6 +42,15 @@ app.use('/maps', express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/maps/:id', express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/persons', express.static(path.join(__dirname, '/dist/scholar')));
 
+/*
+  Handle other paths
+*/
+
+app.get('/archivist', function(req, res) {
+  res.redirect('http://archivist.tastorona.su/archivist');
+});
+
+
 // Error handling
 // We send JSON to the client so they can display messages in the UI.
 

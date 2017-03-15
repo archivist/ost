@@ -1,4 +1,4 @@
-import { Component, EditorSession, JSONConverter, SplitPane, series } from 'substance'
+import { Component, EditorSession, JSONConverter, Layout, series } from 'substance'
 import Reader from './Reader'
 
 let converter = new JSONConverter()
@@ -53,7 +53,21 @@ class ReaderLayout extends Component {
     let el = $$('div').addClass('sc-read-document')
     let Header = this.getComponent('header')
     el.append($$(Header))
-    let main = $$('div')
+    let main = $$(Layout, {
+      width: 'medium',
+      textAlign: 'center'
+    }).append(
+      $$('div').addClass('se-spinner').append(
+        $$('div').addClass('se-rect1'),
+        $$('div').addClass('se-rect2'),
+        $$('div').addClass('se-rect3'),
+        $$('div').addClass('se-rect4'),
+        $$('div').addClass('se-rect5')
+      ),
+      $$('h2').html(
+        'Loading...'
+      )
+    )
 
     this._updateLayout()
 
