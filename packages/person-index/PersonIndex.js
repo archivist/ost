@@ -114,8 +114,8 @@ class PersonIndex extends Component {
         let letterEl = $$('div')
           .addClass('se-letter-item')
           .append(
-            item.letter,
-            $$('span').addClass('se-letter-counter').append('(' + item.cnt + ')')
+            item.letter
+            //$$('span').addClass('se-letter-counter').append('(' + item.cnt + ')')
           )
           .ref('letter_' + i)
           .on('click', this._setLetterFilter.bind(this, item.letter))

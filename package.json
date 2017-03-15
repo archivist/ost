@@ -3,7 +3,7 @@
   "description": "",
   "main": "dist/ost.cjs.js",
   "dependencies": {
-    "archivist": "archivist/archivist#2e0ad6a593eebc12428470bef866445a93b0f20a",
+    "archivist": "archivist/archivist#5e7ba4ce583f802468aa5308fd2b3891c99147ac",
     "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
@@ -14,19 +14,20 @@
     "massive": "^2.5.0",
     "moment": "^2.17.1",
     "plyr": "^2.0.11",
-    "substance": "substance/substance#f58da437fb780f631122d089b0c2a1d04d0e6a4b",
+    "substance": "substance/substance#5dd96de2170c56f9b7535bab27dc4dc80bc032c1",
     "ws": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^3.5.0",
     "font-awesome": "^4.6.3",
-    "substance-bundler": "^0.7.0",
+    "substance-bundler": "^0.15.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
-    "uglify-js": "^2.7.3"
+    "uglify-js": "^2.7.3",
+    "uglify-js-harmony": "^2.7.5"
   },
   "scripts": {
-    "bundle": "node make",
+    "bundle": "node make production",
     "dev": "node make -s -w & node server",
     "start": "node server",
     "test": "gulp test"

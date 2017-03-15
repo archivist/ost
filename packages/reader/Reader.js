@@ -106,7 +106,7 @@ class Reader extends ProseEditor {
         let refs = entityIndex.get(entityId)
         forEach(refs, ref => {
           let entityType = ref.type
-          highlights[entityType] = highlights[entityType].concat(doc.getPathRange(ref.start.path[0], ref.end.path[0]))
+          highlights[entityType] = highlights[entityType].concat(ref.id + '-bracket')
           highlights[entityType] = uniq(highlights[entityType])
         })
       } else {
@@ -157,8 +157,8 @@ class Reader extends ProseEditor {
     this.refs.contentPanel.scrollTo(firstPara)
 
     setTimeout(function(){
-      this.highlightReferences(topics, true)
       this.refs.brackets.highlight(topics)
+      this.highlightReferences(topics, true)
     }.bind(this), 10)
   }
 

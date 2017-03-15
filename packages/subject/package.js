@@ -1,4 +1,4 @@
-import {ContainerAnnotation} from 'substance'
+import { AnnotationTool, ContainerAnnotation, ContainerAnnotationCommand } from 'substance'
 import SubjectReference from './SubjectReference'
 import SubjectTool from './SubjectTool'
 import SubjectCommand from './SubjectCommand'
@@ -8,9 +8,9 @@ export default {
   name: 'subject',
   configure: function(config) {
     config.addNode(SubjectReference)
-    config.addTool(SubjectReference.type, SubjectTool)
-    config.addCommand(SubjectReference.type, SubjectCommand, { nodeType: SubjectReference.type })
-    //config.addComponent(Subject.type, ContainerAnnotation)
+    config.addTool(SubjectReference.type, SubjectTool, { toolGroup: 'default' })
+    config.addCommand(SubjectReference.type, ContainerAnnotationCommand, { nodeType: SubjectReference.type })
+    //config.addComponent(SubjectReference.type, ContainerAnnotation)
     config.addIcon(SubjectReference.type, {'fontawesome': 'fa-tag'})
   }
 }
