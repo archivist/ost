@@ -2,6 +2,10 @@
   padding: 40px;
 }
 
+.sc-reader .sc-split-pane {
+  top: 75px;
+}
+
 .sc-reader .sc-text-property {
   white-space: pre-wrap;
 }

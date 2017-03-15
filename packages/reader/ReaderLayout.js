@@ -51,6 +51,8 @@ class ReaderLayout extends Component {
 
   render($$) {
     let el = $$('div').addClass('sc-read-document')
+    let Header = this.getComponent('header')
+    el.append($$(Header))
     let main = $$('div')
 
     this._updateLayout()
