@@ -1,16 +1,17 @@
-.sc-persons-index .se-persons-layout {
-  padding-top: 80px;
+.sc-persons-index .se-persons-pane {
+  margin: 80px auto 0px;
+  width: 960px;
 }
 
 .sc-persons-index .se-loader {
+  margin-top: 100px;
   text-align: center;
 }
 
 .sc-persons-index .sc-grid {
   border: 1px solid #E0E4E4;
   border-radius: 3px;
-  margin-bottom: 10px;
-  padding-bottom: 115px;
+  padding-bottom: 0px;
 }
 
 .sc-persons-index .se-total {

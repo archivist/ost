@@ -1,4 +1,4 @@
-import { Component, Grid, Layout } from 'substance'
+import { Component, Grid, Layout, SplitPane } from 'substance'
 import { concat } from 'lodash-es'
 
 class PersonIndex extends Component {
@@ -32,11 +32,6 @@ class PersonIndex extends Component {
 
     el.append($$(Header))
 
-    let layout = $$(Layout, {
-      width: 'large',
-      textAlign: 'left'
-    }).addClass('se-persons-layout')
-
     if(this.state.total) {
       let total = $$('div').addClass('se-total').append(this.getLabel('mentioned-person') + ' (' + this.state.totalPersons + ')')
       if(!this.state.letter) {
@@ -44,13 +39,17 @@ class PersonIndex extends Component {
       } else {
         total.on('click', this._setLetterFilter.bind(this, undefined))
       }
-      layout.append(
-        total,
-        this.renderLetterFilter($$),
-        this.renderList($$)
+      el.append(
+        $$(SplitPane, {splitType: 'horizontal'}).addClass('se-persons-pane').append(
+          $$('div').addClass('se-person-filters').append(
+            total,
+            this.renderLetterFilter($$)
+          ),
+          this.renderList($$)
+        )
       )
     } else {
-      layout.append(
+      el.append(
         $$('div').addClass('se-loader').append(
           $$('div').addClass('se-spinner').append(
             $$('div').addClass('se-rect1'),
@@ -65,8 +64,6 @@ class PersonIndex extends Component {
         )
       )
     }
-
-    el.append(layout)
 
     return el
   }

@@ -98,12 +98,10 @@ class Explorer extends Component {
     }).addClass('se-explorer-layout')
 
     layout.append(
-      $$(SplitPane, {splitType: 'horizontal'}).append(
-        $$(SearchBar, {value: this.state.search}),
-        $$(SplitPane, {splitType: 'vertical', sizeB: '30%'}).addClass('se-results-pane').append(
-          this.renderMainSection($$),
-          this.renderSidebarSection($$)
-        )
+      $$(SearchBar, {value: this.state.search}),
+      $$(SplitPane, {splitType: 'vertical', sizeB: '30%'}).addClass('se-results-pane').append(
+        this.renderMainSection($$),
+        this.renderSidebarSection($$)
       )
     )
 
