@@ -1,10 +1,6 @@
 @import './_meta-filters.css';
 @import './_resources.css';
 
-.sc-explorer {
-
-}
-
 .sc-explorer .se-explorer-layout {
   height: 100%;
   position: relative;
@@ -16,6 +12,7 @@
 
 .sc-explorer .sc-searchbar {
   position: relative;
+  z-index: 10;
 }
 
 .sc-explorer .sc-searchbar .se-search-input {
@@ -39,6 +36,7 @@
 
 .sc-explorer .se-explorer-layout > .sc-split-pane {
   padding: inherit;
+  margin-top: 70px;
 }
 
 .sc-explorer .sc-grid {

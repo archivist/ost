@@ -71,10 +71,16 @@ class ResourceReference extends Component {
         )
       }
 
-      el.append(
-        $$('div').addClass('se-title').setInnerHTML(title),
-        $$('div').addClass('se-description').setInnerHTML(resource.description)
-      )
+      if(resource.entityType === 'subject') {
+        el.append(
+          $$('div').addClass('se-title').setInnerHTML(resource.description || title)
+        )
+      } else {
+        el.append(
+          $$('div').addClass('se-title').setInnerHTML(title),
+          $$('div').addClass('se-description').setInnerHTML(resource.description)
+        )
+      }
     }
 
     return el
