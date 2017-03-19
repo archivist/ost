@@ -2,6 +2,11 @@
   margin: 100px auto 0px;
 }
 
+.sc-reader .se-title {
+  font-size: 23px;
+  margin-bottom: 10px;
+}
+
 .sc-reader .sc-layout {
   padding: 40px;
 }
