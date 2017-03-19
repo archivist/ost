@@ -1,4 +1,4 @@
-import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane } from 'substance'
+import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane, TextPropertyEditor } from 'substance'
 import { forEach, map, orderBy, uniq } from 'lodash-es'
 import ReaderContext from './ReaderContext'
 
@@ -75,6 +75,11 @@ class Reader extends ProseEditor {
     
     layout.append(
       $$(Brackets).ref('brackets'),
+      $$(TextPropertyEditor, {
+        name: 'title',
+        path: ["meta", "title"],
+        disabled: true
+      }).addClass('se-title'),
       $$(ContainerEditor, {
         disabled: 'true',
         editorSession: this.editorSession,
