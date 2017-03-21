@@ -45,8 +45,8 @@ export default {
     // Add subconfigurators
     let EditorConfigurator = new ArchivistSubConfigurator()
     EditorConfigurator.import(PublisherPackage)
-    EditorConfigurator.import(EntityPackage)
     EditorConfigurator.import(InterviewPackage)
+    EditorConfigurator.import(EntityPackage)
     EditorConfigurator.setDefaultLanguage(appConfig.defaultLanguage)
     config.addConfigurator('archivist-interview-editor', EditorConfigurator)
 
