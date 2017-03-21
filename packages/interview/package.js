@@ -2,7 +2,7 @@ import Interview from './Interview'
 import MetaNode from './MetaNode'
 import InterviewSeed from './InterviewSeed'
 
-import { ParagraphPackage, HeadingPackage, BlockquotePackage, LinkPackage, EmphasisPackage, StrongPackage} from 'substance'
+import { BasePackage, ParagraphPackage, PersistencePackage, HeadingPackage, BlockquotePackage, LinkPackage, EmphasisPackage, StrongPackage} from 'substance'
 import { CommentPackage, MarkPackage, TimecodePackage } from 'archivist'
 import SubjectPackage from '../subject/package'
 import DefinitionPackage from '../definition/package'
@@ -22,6 +22,8 @@ export default {
     config.addSeed(InterviewSeed)
 
     // Import Substance Core packages
+    config.import(BasePackage)
+    config.import(PersistencePackage)
     config.import(ParagraphPackage)
     config.import(HeadingPackage)
     config.import(BlockquotePackage)
