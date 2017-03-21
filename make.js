@@ -25,6 +25,13 @@ b.task('archivist', function() {
   b.minify('./dist/archivist/archivist.js', './dist/archivist/archivist.min.js')
 })
 
+function buildArchivistDev() {
+  return function() {
+    b.make('archivist', 'dev')
+    b.copy('node_modules/archivist/dist', './dist/archivist')
+  }
+}
+
 function buildApp(app, production) {
   return function() {
     if(production) {
@@ -85,6 +92,7 @@ b.task('deps', ['substance', 'assets', 'archivist'])
 b.task('ost', _ostJS())
 
 // dev
+b.task('archivist-dev', buildArchivistDev())
 b.task('publisher', buildApp('publisher'))
 b.task('scholar', buildApp('scholar'))
 // production
@@ -96,7 +104,7 @@ b.task('client-min', ['scholar-min'])
 
 // build all
 b.task('default', ['deps', 'client', 'ost'])
-
+b.task('dev', ['substance', 'assets', 'archivist-dev', 'client', 'ost'])
 b.task('production', ['deps', 'client-min', 'ost'])
 
 // starts a server when CLI argument '-s' is set
