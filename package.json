@@ -1,5 +1,5 @@
 {
-  "name": "ost-archivist",
+  "name": "ost",
   "description": "",
   "main": "dist/ost.cjs.js",
   "dependencies": {
