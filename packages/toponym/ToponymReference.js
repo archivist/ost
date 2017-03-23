@@ -1,6 +1,15 @@
 import { Fragmenter, PropertyAnnotation } from 'substance'
 
-class ToponymReference extends PropertyAnnotation {}
+class ToponymReference extends PropertyAnnotation {
+  /**
+    If this annotation is a Resource Reference.
+    Resource References are annotations with a reference property.
+    @returns {Boolean}
+  */
+  isResourceReference() {
+    return true
+  }
+}
 
 ToponymReference.define({
   type: "toponym",

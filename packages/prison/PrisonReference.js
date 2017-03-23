@@ -1,6 +1,15 @@
 import { Fragmenter, PropertyAnnotation } from 'substance'
 
-class PrisonReference extends PropertyAnnotation {}
+class PrisonReference extends PropertyAnnotation {
+  /**
+    If this annotation is a Resource Reference.
+    Resource References are annotations with a reference property.
+    @returns {Boolean}
+  */
+  isResourceReference() {
+    return true
+  }
+}
 
 PrisonReference.define({
   type: "prison",
