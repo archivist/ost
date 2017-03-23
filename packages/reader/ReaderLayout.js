@@ -85,12 +85,7 @@ class ReaderLayout extends Component {
       }).ref('reader')
     }
 
-    el.append(
-      main
-      // $$(SplitPane, {splitType: 'horizontal'}).append(
-      //   main
-      // ).ref('splitPane')
-    )
+    el.append(main)
 
     return el
   }
@@ -161,7 +156,7 @@ class ReaderLayout extends Component {
         let importer = configurator.createImporter('subjects')
         let subjects = importer.importDocument(res, true)
 
-        session.subjects=subjects
+        session.subjects = subjects
         cb()
       })
     }.bind(this)
