@@ -42,6 +42,13 @@ class ResourceClient {
     request('GET', '/api/entities/search?query=' + query + '&language=' + language + '&filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
 
+  /*
+    Read all document resources
+  */
+  getDocumentResources(documentId, cb) {
+    request('GET', '/api/entities/document/' + documentId, null, cb)
+  }
+
 }
 
 export default ResourceClient

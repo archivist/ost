@@ -1,12 +1,13 @@
 import { ProseArticle } from 'substance'
-import { ArchivistPackage, DocumentsPackage, UsersPackage, PublisherPackage, ArchivistSubConfigurator } from 'archivist'
+import { ArchivistPackage, ArchivistSubConfigurator, DocumentsPackage, ResourcesPackage, UsersPackage } from 'archivist'
 import InterviewPackage from '../../packages/interview/package'
 import DefinitionManagerPackage from '../../packages/definition-manager/package'
 import PersonManagerPackage from '../../packages/person-manager/package'
 import PrisonManagerPackage from '../../packages/prison-manager/package'
+import OstPublisherPackage from '../../packages/ost-publisher/package'
 import ToponymManagerPackage from '../../packages/toponym-manager/package'
 import SubjectManagerPackage from '../../packages/subject-manager/package'
-import EntityPackage from '../../packages/entity/package'
+import SubjectsContextPackage from '../../packages/subjects-context/package'
 import AuthenticationClient from './AuthenticationClient'
 import DocumentClient from './DocumentClient'
 import FileClient from './FileClient'
@@ -44,9 +45,10 @@ export default {
 
     // Add subconfigurators
     let EditorConfigurator = new ArchivistSubConfigurator()
-    EditorConfigurator.import(PublisherPackage)
+    EditorConfigurator.import(OstPublisherPackage)
+    EditorConfigurator.import(ResourcesPackage)
     EditorConfigurator.import(InterviewPackage)
-    EditorConfigurator.import(EntityPackage)
+    EditorConfigurator.import(SubjectsContextPackage)
     EditorConfigurator.setDefaultLanguage(appConfig.defaultLanguage)
     config.addConfigurator('archivist-interview-editor', EditorConfigurator)
 

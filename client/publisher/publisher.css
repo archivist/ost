@@ -2,5 +2,6 @@
 @import '../../packages/definition/_index.css';
 @import '../../packages/person/_index.css';
 @import '../../packages/prison/_index.css';
+@import '../../packages/subject/_index.css';
 @import '../../packages/subject-manager/_index.css';
 @import '../../packages/toponym/_index.css';
