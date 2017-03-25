@@ -49,6 +49,13 @@ class ResourceClient {
     request('GET', '/api/entities/document/' + documentId, null, cb)
   }
 
+  /*
+    Get subjects data
+  */
+  getSubjects(cb) {
+    request('GET', '/api/entities/tree/subject', null, cb)
+  }
+
 }
 
 export default ResourceClient

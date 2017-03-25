@@ -7,7 +7,7 @@ import PrisonManagerPackage from '../../packages/prison-manager/package'
 import OstPublisherPackage from '../../packages/ost-publisher/package'
 import ToponymManagerPackage from '../../packages/toponym-manager/package'
 import SubjectManagerPackage from '../../packages/subject-manager/package'
-import SubjectsContextPackage from '../../packages/subjects-context/package'
+import SubjectsContextPackage from '../../packages/subjects-editor-context/package'
 import AuthenticationClient from './AuthenticationClient'
 import DocumentClient from './DocumentClient'
 import FileClient from './FileClient'
@@ -46,9 +46,17 @@ export default {
     // Add subconfigurators
     let EditorConfigurator = new ArchivistSubConfigurator()
     EditorConfigurator.import(OstPublisherPackage)
+    EditorConfigurator.import(SubjectsContextPackage)
     EditorConfigurator.import(ResourcesPackage)
     EditorConfigurator.import(InterviewPackage)
-    EditorConfigurator.import(SubjectsContextPackage)
+    EditorConfigurator.setContextMapping({
+      'subject': 'subjects',
+      'definition': 'resources',
+      'person': 'resources',
+      'prison': 'resources',
+      'toponym': 'resources',
+      'comment': 'comments'
+    })
     EditorConfigurator.setDefaultLanguage(appConfig.defaultLanguage)
     config.addConfigurator('archivist-interview-editor', EditorConfigurator)
 
