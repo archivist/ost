@@ -3,6 +3,31 @@ import { Component } from 'substance'
 class PrisonContextItem extends Component {
 
   render($$) {
+    let isEditor = this.context.readerContext === undefined
+    if(isEditor) {
+      return this.renderEditorItem($$)
+    } else {
+      return this.renderReaderItem($$)
+    }
+  }
+
+  renderEditorItem($$) {
+    let node = this.props.data
+
+    let el = $$('div')
+      .attr("data-id", this.props.entityId)
+      .addClass('sc-entity-entry se-prison')
+      //.on('click', this.handleClick)
+
+    el.append(
+      $$('div').addClass('se-title').append(node.name),
+      $$('div').addClass('se-description').setInnerHTML(node.description)
+    )
+
+    return el
+  }
+
+  renderReaderItem($$) {
     let urlHelper = this.context.urlHelper
     let node = this.props.data
 
