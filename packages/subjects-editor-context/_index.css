@@ -1,0 +1,57 @@
+.sc-subjects-panel .se-content {
+  font-size: 12px;
+  padding: 10px;
+  line-height: 24px;
+}
+
+.sc-subjects-panel .se-tree-node {
+  padding: 2px 0px;
+  display: block;
+  font-weight: 600;
+  color: #999;
+}
+
+.sc-subjects-panel .se-tree-node.sm-active {
+  color: #333;
+}
+
+.sc-subjects-panel .se-tree-node:hover {
+  color: #333;
+  cursor: pointer;
+}
+
+.sc-subjects-panel .se-level-1 {
+  padding-left: 20px;
+}
+
+.sc-subjects-panel .se-level-2 {
+  padding-left: 40px;
+}
+
+.sc-subjects-panel .se-level-3 {
+  padding-left: 60px;
+}
+
+.sc-subjects-panel .se-level-4 {
+  padding-left: 80px;
+}
+
+.sc-subjects-panel .se-level-5 {
+  padding-left: 100px;
+}
+
+.sc-subjects-panel .se-level-6 {
+  padding-left: 120px;
+}
+
+.sc-subjects-panel .se-level-7 {
+  padding-left: 140px;
+}
+
+.sc-subjects-panel .se-level-8 {
+  padding-left: 160px;
+}
+
+.sc-subjects-panel .se-level-9 {
+  padding-left: 180px;
+}
