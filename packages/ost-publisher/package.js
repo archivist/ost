@@ -7,6 +7,6 @@ export default {
     config.import(BracketsPackage)
     config.import(TabbedContextPackage)
     config.addComponent('editor', OstPublisherLayout)
-    config.addToolGroup('references')
+    //config.addToolGroup('references')
   }
 }

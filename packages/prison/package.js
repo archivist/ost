@@ -8,7 +8,7 @@ export default {
   name: 'prison',
   configure: function(config) {
     config.addNode(PrisonReference)
-    config.addTool(PrisonReference.type, PrisonTool, {toolGroup: 'references'})
+    //config.addTool(PrisonReference.type, PrisonTool, {toolGroup: 'references'})
     config.addCommand(PrisonReference.type, PrisonCommand, { nodeType: PrisonReference.type })
     config.addIcon(PrisonReference.type, {'fontawesome': 'fa-th'})
     config.addComponent('prison', PrisonComponent)

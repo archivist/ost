@@ -8,7 +8,7 @@ export default {
   name: 'person',
   configure: function(config) {
     config.addNode(PersonReference)
-    config.addTool(PersonReference.type, PersonTool, {toolGroup: 'references'})
+    //config.addTool(PersonReference.type, PersonTool, {toolGroup: 'references'})
     config.addCommand(PersonReference.type, PersonCommand, { nodeType: PersonReference.type })
     config.addIcon(PersonReference.type, {'fontawesome': 'fa-address-book-o'})
     config.addComponent('person', PersonComponent)
