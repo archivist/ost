@@ -11,6 +11,6 @@ export default {
     config.addTool(SubjectReference.type, SubjectTool, { toolGroup: 'default' })
     config.addCommand(SubjectReference.type, ContainerAnnotationCommand, { nodeType: SubjectReference.type })
     config.addComponent('container-annotation-fragment', SubjectComponent)
-    config.addIcon(SubjectReference.type, {'fontawesome': 'fa-tag'})
+    config.addIcon(SubjectReference.type, {'fontawesome': 'fa-tags'})
   }
 }
