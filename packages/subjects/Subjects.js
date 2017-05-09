@@ -138,6 +138,19 @@ class Subjects extends Document {
       }
     }.bind(this))
   }
+
+  resetTree() {
+    let nodes = this.getNodes()
+    each(nodes, node => {
+      if(node.active) {
+        this.set([node.id, 'active'], false)
+      }
+
+      if(node.expanded) {
+        this.set([node.id, 'expanded'], false)
+      }
+    })
+  }
 }
 
 export default Subjects
