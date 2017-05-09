@@ -1,9 +1,14 @@
 import { CollabSession, JSONConverter, series, substanceGlobals } from 'substance'
 import { PublisherLayout } from 'archivist'
+import OstPublisher from './OstPublisher'
 
 let converter = new JSONConverter()
 
 class OstPublisherLayout extends PublisherLayout {
+
+  _getEditorClass() {
+    return OstPublisher
+  }
 
   /*
     Loads a document and initializes a Document Session
