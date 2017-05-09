@@ -1,4 +1,4 @@
-import { EditorSession, JSONConverter, series, substanceGlobals } from 'substance'
+import { CollabSession, JSONConverter, series, substanceGlobals } from 'substance'
 import { PublisherLayout } from 'archivist'
 
 let converter = new JSONConverter()
@@ -10,6 +10,7 @@ class OstPublisherLayout extends PublisherLayout {
   */
   _loadDocument(documentId) {
     let configurator = this.props.configurator
+    let collabClient = this.collabClient
     let documentClient = this.context.documentClient
 
     documentClient.getDocument(documentId, (err, docRecord) => {
@@ -21,14 +22,21 @@ class OstPublisherLayout extends PublisherLayout {
       let document = configurator.createArticle()
       let doc = converter.importDocument(document, docRecord.data)
 
-      let session = new EditorSession(doc, {
-        configurator: configurator
+      let session = new CollabSession(doc, {
+        configurator: configurator,
+        documentId: documentId,
+        version: docRecord.version,
+        collabClient: collabClient
       })
 
       if (substanceGlobals.DEBUG_RENDERING) {
         window.doc = doc
         window.session = session
       }
+
+      // Listen for errors and sync start events for error reporting
+      session.on('error', this._onCollabSessionError, this)
+      session.on('sync', this._onCollabSessionSync, this)
 
       series([
         this._loadResources(documentId, session),
