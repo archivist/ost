@@ -55,3 +55,91 @@
 .sc-subjects-panel .se-level-9 {
   padding-left: 180px;
 }
+
+.sc-subject-selector .sc-panel-header {
+  font-size: 12px;
+  line-height: 40px;
+  font-weight: 600;
+  overflow: hidden;
+  height: 40px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.sc-subject-selector .sc-panel-header .fa {
+  margin-right: 5px;
+}
+
+.sc-subject-selector .sc-panel-header .sc-goback-action {
+  padding: 0px 20px;
+  float: left;
+  cursor: pointer;
+}
+
+.sc-subject-selector .sc-panel-header .sc-actions {
+  overflow: hidden;
+  float: right;
+}
+
+.sc-subject-selector .sc-panel-header .sc-actions > div {
+  display: block;
+  float: left;
+  padding: 0px 4px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.sc-subject-selector .se-subject-tree {
+  top: 40px;
+}
+
+.sc-subject-selector .se-content {
+  padding: 0px;
+}
+
+.sc-subject-selector .se-tree-node {
+  position: relative;
+  font-size: 13px;
+  font-weight: 400;
+  border-bottom: 1px solid #E0E4E4;
+  padding: 10px 50px 10px 10px;
+  background: #fafafa;
+  border-bottom: 1px solid #ddd;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+}
+
+.sc-subject-selector .se-tree-node.level-1 { padding-left: 25px; }
+.sc-subject-selector .se-tree-node.level-2 { padding-left: 41px; }
+.sc-subject-selector .se-tree-node.level-3 { padding-left: 57px; }
+.sc-subject-selector .se-tree-node.level-4 { padding-left: 73px; }
+.sc-subject-selector .se-tree-node.level-5 { padding-left: 89px; }
+.sc-subject-selector .se-tree-node.level-6 { padding-left: 105px; }
+
+.sc-subject-selector .se-tree-node.sm-selected {
+  border-left: 4px solid #91bb04;
+  background: #fff;
+}
+
+.sc-subject-selector .se-tree-node .se-tree-node-name {
+  padding-left: 20px;
+}
+
+.sc-subject-selector .se-tree-node .selection {
+  float: right;
+  font-size: 23px;
+  padding: 9px 20px;
+  top: 0px;
+  position: absolute;
+  right: 0px;
+}
+
+.sc-subject-selector .se-tree-node .selection.fa-square-o {
+  padding: 9px 23px;
+}
+
+.sc-subject-selector .se-tree-node .expansion {
+  font-size: 23px;
+  position: absolute;
+  top: 7px;
+}

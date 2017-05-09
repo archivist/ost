@@ -1,7 +1,16 @@
 import { Component, ScrollPane } from 'substance'
 import { concat, filter, flattenDeep, map, sortBy } from 'lodash-es'
+import SubjectSelector from './SubjectSelector'
 
 class SubjectsContext extends Component {
+
+  constructor(...args) {
+    super(...args)
+
+    this.handleActions({
+      'showList': this._showList
+    })
+  }
   
   didMount() {
     this.buildTree()
@@ -14,9 +23,34 @@ class SubjectsContext extends Component {
     if(newProps.topic !== this.props.topic && newProps.topic !== undefined) {
       this.highlightNodes(newProps.topic)
     }
+    if(newProps.mode !== this.props.mode) {
+      this.buildTree()
+    }
   }
 
   render($$) {
+    let mode = this.props.mode
+
+    if(mode === 'list') {
+      return this.renderList($$)
+    } else if (mode === 'edit') {
+      return this.renderSubjectSelector($$)
+    } else {
+      //return this.renderItem($$)
+    }
+  }
+
+  renderSubjectSelector($$) {
+    let el = $$('div').addClass('sc-subjects-panel')
+    
+    el.append(
+      $$(SubjectSelector, {configurator: this.props.configurator, node: this.props.item})
+    )
+
+    return el
+  }
+
+  renderList($$) {
     let subjects = this.state.subjects
     let subjectsPanel = $$(ScrollPane).ref('panelEl')
     let el = $$('div').addClass('sc-context-panel sc-subjects-panel').append(
@@ -87,6 +121,12 @@ class SubjectsContext extends Component {
     } else {
       return []
     }
+  }
+
+  _showList() {
+    this.extendProps({
+      mode: 'list'
+    })
   }
 }
 
