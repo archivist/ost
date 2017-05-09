@@ -9,6 +9,7 @@ import DefinitionPackage from '../definition/package'
 import PersonPackage from '../person/package'
 import PrisonPackage from '../prison/package'
 import ToponymPackage from '../toponym/package'
+import EntityReferencePackage from '../entity-reference/package'
 
 export default {
   name: 'archivist-interview',
@@ -40,5 +41,6 @@ export default {
     config.import(PersonPackage)
     config.import(PrisonPackage)
     config.import(ToponymPackage)
+    config.import(EntityReferencePackage)
   }
 }
