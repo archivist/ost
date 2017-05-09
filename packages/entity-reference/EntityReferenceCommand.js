@@ -5,7 +5,7 @@ class EntityReferenceCommand extends AnnotationCommand {
     let annos = this._getAnnotationsForSelection(params)
     this._checkPrecondition(params, annos, this.canCreate)
     let editorSession = this._getEditorSession(params)
-    editorSession.emit('createEntityReference', params)
+    editorSession.emit('createInlineEntityReference', params)
     return {
       
     }
