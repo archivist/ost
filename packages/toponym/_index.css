@@ -20,6 +20,7 @@
   border-left: 2px solid rgb(139, 195, 74);
 }
 
+.se-entity-entries .sc-entity-entry.se-toponym.se-focused,
 .se-entity-entries .sc-entity-entry.se-toponym:hover {
   border-left: 2px solid rgba(139, 195, 74, 0.3);
 }

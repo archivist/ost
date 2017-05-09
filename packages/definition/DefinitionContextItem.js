@@ -19,6 +19,10 @@ class DefinitionContextItem extends Component {
       .addClass('sc-entity-entry se-definition')
       //.on('click', this.handleClick)
 
+    if(this.props.focus) {
+      el.addClass('se-focused')
+    }
+
     el.append(
       $$('div').addClass('se-title').append(node.name),
       $$('div').addClass('se-description').setInnerHTML(node.description)

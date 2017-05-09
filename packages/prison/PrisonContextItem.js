@@ -18,6 +18,10 @@ class PrisonContextItem extends Component {
       .attr("data-id", this.props.entityId)
       .addClass('sc-entity-entry se-prison')
       //.on('click', this.handleClick)
+    
+    if(this.props.focus) {
+      el.addClass('se-focused')
+    }
 
     el.append(
       $$('div').addClass('se-title').append(node.name),
