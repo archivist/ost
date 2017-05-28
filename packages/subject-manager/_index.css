@@ -1,36 +1,41 @@
-.se-level-1 {
+.sc-subjects-page .se-entity-layout {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.se-cell.se-level-1 {
   padding-left: 20px;
 }
 
-.se-level-2 {
+.se-cell.se-level-2 {
   padding-left: 50px;
 }
 
-.se-level-3 {
+.se-cell.se-level-3 {
   padding-left: 80px;
 }
 
-.se-level-4 {
+.se-cell.se-level-4 {
   padding-left: 110px;
 }
 
-.se-level-5 {
+.se-cell.se-level-5 {
   padding-left: 140px;
 }
 
-.se-level-6 {
+.se-cell.se-level-6 {
   padding-left: 170px;
 }
 
-.se-level-7 {
+.se-cell.se-level-7 {
   padding-left: 200px;
 }
 
-.se-level-8 {
+.se-cell.se-level-8 {
   padding-left: 230px;
 }
 
-.se-level-9 {
+.se-cell.se-level-9 {
   padding-left: 260px;
 }
 
