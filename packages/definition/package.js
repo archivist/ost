@@ -17,5 +17,9 @@ export default {
       en: 'Definitions',
       ru: 'Реалии'
     })
+    config.addLabel('definition', {
+      en: 'Definition',
+      ru: 'Дефиниция'
+    })
   }
 }

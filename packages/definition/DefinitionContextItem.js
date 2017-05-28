@@ -17,15 +17,18 @@ class DefinitionContextItem extends Component {
     let el = $$('div')
       .attr("data-id", this.props.entityId)
       .addClass('sc-entity-entry se-definition')
-      //.on('click', this.handleClick)
+      .on('click', this.handleEditorClick)
 
     if(this.props.focus) {
       el.addClass('se-focused')
     }
 
     el.append(
+      $$('div').addClass('se-type').append(this.getLabel('definition')),
       $$('div').addClass('se-title').append(node.name),
-      $$('div').addClass('se-description').setInnerHTML(node.description)
+      $$('div').addClass('se-description').setInnerHTML(node.description),
+      $$('div').addClass('se-edit-entity').append(this.context.iconProvider.renderIcon($$, 'editEntity'))
+        .on('click', this.editEntity)
     )
 
     return el
@@ -56,6 +59,15 @@ class DefinitionContextItem extends Component {
     )
 
     return el
+  }
+
+  editEntity() {
+    this.send('editEntity', this.props.entityId)
+  }
+
+  handleEditorClick() {
+    this.send('focusEntity', this.props.entityId)
+    this.send('showReferences', this.props.entityId)
   }
 
   handleClick() {

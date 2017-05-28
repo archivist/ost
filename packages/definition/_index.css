@@ -34,6 +34,11 @@
   margin-right: 0px;
 }
 
+.se-entity-entries .sc-entity-entry.se-definition .se-type,
+.se-reference-item.se-definition .se-type {
+  background: rgba(11, 36, 217, 0.7);
+}
+
 .sc-entity-entry.se-definition .se-resource-link {
   right: 20px;
 }
