@@ -12,4 +12,6 @@ SubjectReference.define({
   reference: {type: ["string"], default: []}
 })
 
+SubjectReference.prototype.isBracketReference = true
+
 export default SubjectReference
