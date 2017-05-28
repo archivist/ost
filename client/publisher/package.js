@@ -1,5 +1,5 @@
 import { ProseArticle } from 'substance'
-import { ArchivistPackage, ArchivistSubConfigurator, DocumentsPackage, ResourcesPackage, UsersPackage } from 'archivist'
+import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, DocumentsPackage, ResourcesPackage, UsersPackage } from 'archivist'
 import InterviewPackage from '../../packages/interview/package'
 import DefinitionManagerPackage from '../../packages/definition-manager/package'
 import PersonManagerPackage from '../../packages/person-manager/package'
@@ -48,6 +48,7 @@ export default {
     EditorConfigurator.import(OstPublisherPackage)
     EditorConfigurator.import(SubjectsContextPackage)
     EditorConfigurator.import(ResourcesPackage)
+    EditorConfigurator.import(CommentsPackage)
     EditorConfigurator.import(InterviewPackage)
     EditorConfigurator.setContextMapping({
       'subject': 'subjects',
@@ -98,13 +99,13 @@ export default {
     config.setResourceClient(ResourceClient)
 
     config.setMenuItems([
-      {label: 'Documents', action: 'archive'},
-      {label: 'Subjects', action: 'subjects'},
-      {label: 'Persons', action: 'persons'},
-      {label: 'Prisons', action: 'prisons'},
-      {label: 'Toponyms', action: 'toponyms'},
-      {label: 'Definitions', action: 'definitions'},
-      {label: 'Users', action: 'users'}
+      {icon: 'fa-file-text', label: 'Documents', action: 'archive'},
+      {icon: 'fa-tags', label: 'Subjects', action: 'subjects'},
+      {icon: 'fa-users', label: 'Persons', action: 'persons'},
+      {icon: 'fa-th', label: 'Prisons', action: 'prisons'},
+      {icon: 'fa-globe', label: 'Toponyms', action: 'toponyms'},
+      {icon: 'fa-book', label: 'Definitions', action: 'definitions'},
+      {icon: 'fa-id-badge', label: 'Users', action: 'users'}
     ])
   }
 }
