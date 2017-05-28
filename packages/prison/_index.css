@@ -25,6 +25,11 @@
   border-left: 2px solid rgba(255, 87, 34, 0.3);
 }
 
+.se-entity-entries .sc-entity-entry.se-prison .se-type,
+.se-reference-item.se-prison .se-type {
+  background: rgba(255, 87, 34, 0.7);
+}
+
 .se-entity-entries .sc-entity-entry.se-prison .se-title {
   margin-top: 30px;
   margin-bottom: 10px;

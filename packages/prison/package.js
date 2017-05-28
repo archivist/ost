@@ -17,5 +17,9 @@ export default {
       en: 'Prisons',
       ru: 'Места заключения'
     })
+    config.addLabel('prison', {
+      en: 'Prison',
+      ru: 'Место заключения'
+    })
   }
 }
