@@ -34,6 +34,11 @@
   margin-right: 0px;
 }
 
+.se-entity-entries .sc-entity-entry.se-person .se-type,
+.se-reference-item.se-person .se-type {
+  background: rgba(11, 157, 217, 0.7);
+}
+
 .sc-entity-entry.se-person .se-person-link {
   right: 20px;
 }

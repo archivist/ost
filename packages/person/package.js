@@ -17,5 +17,9 @@ export default {
       en: 'Persons',
       ru: 'Персоналии'
     })
+    config.addLabel('person', {
+      en: 'Person',
+      ru: 'Персоналия'
+    })
   }
 }
