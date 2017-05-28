@@ -112,6 +112,7 @@ class SubjectsContext extends Component {
       .attr("href", '#topic=' + node.id)
       .append(node.name)
       .ref(node.id)
+      .on('click', this.highlightNodes.bind(this, node.id))
 
       if(node.id === this.props.topic) {
         el.addClass('sm-active')
