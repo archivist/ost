@@ -1,4 +1,4 @@
-import { Button, Component, FontAwesomeIcon as Icon, Grid, Input, Layout, Modal, SubstanceError as Err } from 'substance'
+import { Button, Component, FontAwesomeIcon as Icon, Grid, Input, Layout, Modal, SplitPane, SubstanceError as Err } from 'substance'
 import { concat, delay, each, findIndex, flattenDeep, isEmpty, sortBy, map} from 'lodash-es'
 import moment from 'moment'
 
@@ -37,18 +37,25 @@ class SubjectsPage extends Component {
   render($$) {
     let items = this.state.items
     let el = $$('div').addClass('sc-subjects-page')
+    let main = $$('div').addClass('se-entity-layout')
 
     let header = this.renderHeader($$)
-    el.append(header)
 
     let toolbox = this.renderToolbox($$)
-    el.append(toolbox)
+    main.append(toolbox)
 
-    if (isEmpty(items)) {
-      el.append(this.renderEmpty($$))
+    if (!isEmpty(items)) {
+      main.append(this.renderFull($$))
     } else {
-      el.append(this.renderFull($$))
+      main.append(this.renderEmpty($$))
     }
+
+    el.append(
+      $$(SplitPane, {splitType: 'vertical', sizeA: '40px'}).append(
+        header,
+        main
+      )
+    )
 
     return el
   }
@@ -113,17 +120,10 @@ class SubjectsPage extends Component {
         $$('p').html('Sorry, no subjects matches your query')
       )
     } else {
+      let Spinner = this.getComponent('spinner')
+
       layout.append(
-        $$('div').addClass('se-spinner').append(
-          $$('div').addClass('se-rect1'),
-          $$('div').addClass('se-rect2'),
-          $$('div').addClass('se-rect3'),
-          $$('div').addClass('se-rect4'),
-          $$('div').addClass('se-rect5')
-        ),
-        $$('h2').html(
-          'Loading...'
-        )
+        $$(Spinner, {message: 'spinner-loading'})
       )
     }
 
