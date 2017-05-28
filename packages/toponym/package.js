@@ -17,5 +17,9 @@ export default {
       en: 'Geography',
       ru: 'География'
     })
+    config.addLabel('toponym', {
+      en: 'Toponym',
+      ru: 'Топоним'
+    })
   }
 }
