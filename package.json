@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "eslint": "^3.5.0",
-    "font-awesome": "^4.6.3",
+    "font-awesome": "^4.7.0",
     "substance-bundler": "^0.15.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
