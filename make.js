@@ -10,6 +10,8 @@ b.task('clean', function() {
 b.task('assets', function() {
   b.copy('node_modules/font-awesome', './dist/font-awesome')
   b.copy('node_modules/leaflet.markercluster/dist', './dist/markercluster')
+  b.copy('node_modules/leaflet/dist/images', './dist/publisher/images')
+  b.copy('node_modules/leaflet-control-geocoder/dist/images', './dist/publisher/images')
 })
 
 // this optional task makes it easier to work on Substance core
@@ -50,7 +52,8 @@ function buildApp(app, production) {
           'node_modules/moment/moment.js', 
           'node_modules/plyr/src/js/plyr.js', 
           'node_modules/leaflet/dist/leaflet-src.js',
-          'node_modules/leaflet.markercluster/dist/leaflet.markercluster-src.js'
+          'node_modules/leaflet.markercluster/dist/leaflet.markercluster-src.js',
+          'node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js'
         ] 
       },
       targets: [{

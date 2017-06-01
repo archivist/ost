@@ -1,5 +1,7 @@
 /* Publisher Component styles */
 @import '../../node_modules/substance/dist/substance.next.css';
+@import '../../node_modules/leaflet/dist/leaflet.css';
+@import '../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css';
 @import './publisher.css';
 body { overflow: hidden; -webkit-font-smoothing: antialiased; }
 .sc-publisher { position: absolute; left: 0px; right: 0px; bottom: 0px; top: 0px; }
