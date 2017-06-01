@@ -27,7 +27,17 @@ class Toponym extends DocumentNode {
   // Get entity synonyms
   getSynonyms() {
     let synonyms = this.synonyms
-    synonyms.push(this.name, this.currentName)
+
+    let name = this.getName()
+    if(synonyms.indexOf(name) < 0) {
+      synonyms.push(name)
+    }
+
+    let locality = this.currentName
+    if(synonyms.indexOf(locality) < 0) {
+      synonyms.push(locality)
+    }
+
     return synonyms
   }
 
@@ -36,11 +46,11 @@ class Toponym extends DocumentNode {
 Toponym.type = 'toponym'
 
 Toponym.define({
-  name: { type: 'string', default: 'Unknown toponym', field: { type: "text", dataType: "text", placeholder: "Enter toponym's name" }},
-  currentName: { type: 'string', default: '', field: { type: "text", dataType: "text", placeholder: "Enter current name of toponym" }},
-  synonyms: {type: ['string'], default: [], field: { type: "multiple", placeholder: "Enter synonyms of toponym" }},
-  country: { type: 'string', default: '', field: { type: "text", dataType: "text", placeholder: "Enter toponym's country" }},
   point: { type: ['number'], default: [], field: { type: "map", dataType: "point", placeholder: "Place toponym location on map" }},
+  name: { type: 'string', default: 'Unknown toponym', field: { type: "geocoded", dataType: "text", placeholder: "Enter toponym's name" }},
+  currentName: { type: 'string', default: '', field: { type: "geocoded", dataType: "text", placeholder: "Enter current name of toponym" }},
+  synonyms: {type: ['string'], default: [], field: { type: "tags", placeholder: "Enter synonyms of toponym" }},
+  country: { type: 'string', default: '', field: { type: "text", dataType: "text", placeholder: "Enter toponym's country" }},
   description: { type: 'string', default: '', field: { type: "prose", placeholder: "Enter toponym's description" }}
 })
 

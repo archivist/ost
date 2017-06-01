@@ -14,7 +14,7 @@ class Definition extends DocumentNode {
   
   // Get entity name
   getName() {
-    return this.title
+    return this.name
   }
 
   // Get entity description
@@ -25,7 +25,10 @@ class Definition extends DocumentNode {
   // Get entity synonyms
   getSynonyms() {
     let synonyms = this.synonyms
-    synonyms.push(this.title)
+    let name = this.getName()
+    if(synonyms.indexOf(name) < 0) {
+      synonyms.push(name)
+    }
     return synonyms
   }
 }
@@ -34,8 +37,8 @@ Definition.type = 'definition'
 
 Definition.define({
   name: { type: 'string', default: 'Unknown definition', field: { type: "text", dataType: "text", placeholder: "Enter definition's title" }},
-  synonyms: {type: ['string'], default: [], field: { type: "multiple", placeholder: "Enter synonyms of a definition" }},
-  definitionType: { type: 'string', default: '', field: { type: "select", options: ['общий комментарий', 'лагерная реалия', 'сокращение', 'языковой комментарий'], placeholder: "Select a definition type" }},
+  synonyms: {type: ['string'], default: [], field: { type: "tags", placeholder: "Enter synonyms of a definition" }},
+  definitionType: { type: 'string', default: '', field: { type: "miltiple", options: ['общий комментарий', 'лагерная реалия', 'сокращение', 'языковой комментарий'], placeholder: "Select a definition type" }},
   description: { type: 'string', default: '', field: { type: "prose", placeholder: "Enter definition's description" }}
 })
 
