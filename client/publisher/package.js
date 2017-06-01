@@ -1,6 +1,7 @@
 import { ProseArticle } from 'substance'
 import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, DocumentsPackage, ResourcesPackage, UsersPackage } from 'archivist'
 import InterviewPackage from '../../packages/interview/package'
+import FormsPackage from '../../packages/forms/package'
 import DefinitionManagerPackage from '../../packages/definition-manager/package'
 import PersonManagerPackage from '../../packages/person-manager/package'
 import PrisonManagerPackage from '../../packages/prison-manager/package'
@@ -29,7 +30,8 @@ export default {
     // Use the default Archivist package
     config.import(ArchivistPackage)
     config.import(DocumentsPackage)
-
+    // Override Archivist form package 
+    config.import(FormsPackage)
     // Manage person entity type
     config.import(PersonManagerPackage)
     // Manage prison entity type
