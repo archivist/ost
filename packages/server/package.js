@@ -10,6 +10,7 @@ let DocumentServerPackage = require('./document/package')
 let AuthServerPackage = require('archivist').AuthServerPackage
 let CollabServerPackage = require('archivist').CollabServerPackage
 let UserServerPackage = require('archivist').ResourceServerPackage
+let InspectorPackage = require('archivist').InspectorPackage
 
 let db = new Database()
 
@@ -23,6 +24,7 @@ module.exports = {
     config.import(InterviewPackage)
     config.import(EnginePackage)
     config.import(IndexerPackage)
+    config.import(InspectorPackage)
     config.import(DocumentServerPackage)
     config.import(AuthServerPackage)
     config.import(CollabServerPackage)
