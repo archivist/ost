@@ -33,24 +33,24 @@ class OstPublisher extends Publisher {
       let changeInfo = editorSession.getChangeInfo()
       // Fetch resource after remote update
       if(changeInfo.remote) {
+        // Look for updated references with new resources
+        Object.keys(change.updated).forEach(prop => {
+          let index = prop.indexOf('reference')
+          if(index > -1) {
+            let doc = editorSession.getDocument()
+            let nodeId = prop.slice(0, index - 1)
+            let node = doc.get(nodeId)
+            let reference = node.reference
+
+            this._addResource(editorSession, reference)
+          }
+        })
+        // Look for a new references with new resources
         Object.keys(change.created).forEach(id => {
           let node = change.created[id]
           let reference = node.reference
 
-          if(reference) {
-            let resources = editorSession.resources
-            let entity = find(resources, item => { return item.entityId === reference })
-            if(!entity) {
-              let resourceClient = this.context.resourceClient
-              resourceClient.getEntity(reference, (err, entity) => {
-                if (err) {
-                  console.error(err)
-                } else {
-                  resources.push(entity)
-                }
-              })
-            }
-          }
+          this._addResource(editorSession, reference)
         })
       }
 
