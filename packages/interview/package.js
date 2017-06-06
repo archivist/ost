@@ -3,7 +3,7 @@ import MetaNode from './MetaNode'
 import InterviewSeed from './InterviewSeed'
 
 import { BasePackage, ParagraphPackage, PersistencePackage, HeadingPackage, BlockquotePackage, LinkPackage, EmphasisPackage, StrongPackage} from 'substance'
-import { CommentPackage, MarkPackage, TimecodePackage } from 'archivist'
+import { CommentPackage, TimecodePackage } from 'archivist'
 import SubjectPackage from '../subject/package'
 import DefinitionPackage from '../definition/package'
 import PersonPackage from '../person/package'
@@ -34,7 +34,6 @@ export default {
 
     // Import archivist specific packages
     config.import(CommentPackage)
-    config.import(MarkPackage)
     config.import(TimecodePackage)
     config.import(SubjectPackage)
     config.import(DefinitionPackage)
