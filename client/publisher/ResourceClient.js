@@ -30,6 +30,24 @@ class ResourceClient {
     request('PUT', '/api/entities/' + entityId, entityData, cb)
   }
 
+  /*
+    Remove an entity
+  */
+  deleteEntity(entityId, cb) {
+    request('DELETE', '/api/entities/' + entityId, null, cb)
+  }
+
+  /*
+    Merge two entities
+  */
+  mergeEntity(entityId, mergeEntityId, cb) {
+    let entityData = {
+      mergeEntity: entityId,
+      targetEntity: mergeEntityId
+    }
+    request('POST', '/api/entities/merge', entityData, cb)
+  }
+
   listEntities(filters, options, cb) {
     let filtersRequest = encodeURIComponent(JSON.stringify(filters))
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
