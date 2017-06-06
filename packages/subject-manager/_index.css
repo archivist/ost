@@ -3,40 +3,44 @@
   flex-flow: column nowrap;
 }
 
+.sc-subjects-page .se-cell.se-title {
+  font-weight: bold;
+} 
+
 .se-cell.se-level-1 {
-  padding-left: 20px;
+  padding-left: 20px!important;
 }
 
 .se-cell.se-level-2 {
-  padding-left: 50px;
+  padding-left: 50px!important;
 }
 
 .se-cell.se-level-3 {
-  padding-left: 80px;
+  padding-left: 80px!important;
 }
 
 .se-cell.se-level-4 {
-  padding-left: 110px;
+  padding-left: 110px!important;
 }
 
 .se-cell.se-level-5 {
-  padding-left: 140px;
+  padding-left: 140px!important;
 }
 
 .se-cell.se-level-6 {
-  padding-left: 170px;
+  padding-left: 170px!important;
 }
 
 .se-cell.se-level-7 {
-  padding-left: 200px;
+  padding-left: 200px!important;
 }
 
 .se-cell.se-level-8 {
-  padding-left: 230px;
+  padding-left: 230px!important;
 }
 
 .se-cell.se-level-9 {
-  padding-left: 260px;
+  padding-left: 260px!important;
 }
 
 .sc-subjects-page .se-collapse {
@@ -55,6 +59,7 @@
 
 .sc-subjects-page .se-description {
   float: left;
+  padding: 0px 10px 10px;
 }
 
 .se-drop-before {

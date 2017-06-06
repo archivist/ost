@@ -222,7 +222,7 @@ class SubjectsPage extends Component {
     if(node.description) {
       el.append(
         $$(Grid.Row).addClass('se-tree-node-description').append(
-          $$('div').addClass('se-cell se-description').setInnerHTML(node.description)
+          $$('div').addClass('se-cell se-description').addClass('se-level-' + level).setInnerHTML(node.description)
         )
       )
     }
