@@ -365,8 +365,8 @@ function importDocuments() {
       } else if (node.type === 'comment') {
         let comment = {
           id: 'comment-' + cIndex,
-          containerId: 'body',
           content: node.content,
+          containerId: 'body',
           type: 'comment',
           start: {
             path: [
@@ -383,7 +383,8 @@ function importDocuments() {
             offset: node.endOffset
           },
           author: defaultUser,
-          createdAt: node.created_at
+          createdAt: node.created_at,
+          replies: []
         }
         documentData.nodes.push(comment)
         cIndex++
