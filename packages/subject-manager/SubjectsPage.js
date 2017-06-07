@@ -1,5 +1,5 @@
 import { Button, Component, FontAwesomeIcon as Icon, Grid, Input, Layout, Modal, SplitPane, SubstanceError as Err } from 'substance'
-import { concat, delay, each, findIndex, flattenDeep, isEmpty, sortBy, map} from 'lodash-es'
+import { concat, each, findIndex, flattenDeep, isEmpty, sortBy, map, throttle} from 'lodash-es'
 import moment from 'moment'
 
 // Sample data for debugging
@@ -11,14 +11,19 @@ class SubjectsPage extends Component {
 
     this.dragSource = null
     this.currentTarget = null
+    this.updateStack = []
     this.handleActions({
-      'newSubject': this._newSubject
+      'newSubject': this._newSubject,
+      'toggleDescription': this._toggleDescription,
+      'closeModal': this._doneEditing,
+      'updateEntity': this._updateEntity
     })
   }
 
 
   getInitialState() {
     return {
+      description: true,
       active: {},
       filters: {entityType: 'subject'},
       search: '',
@@ -43,6 +48,17 @@ class SubjectsPage extends Component {
 
     let toolbox = this.renderToolbox($$)
     main.append(toolbox)
+
+    if (this.state.entityId && this.state.mode === 'edit') {
+      let EntityEditor = this.getComponent('entity-editor')
+      main.append(
+        $$(Modal, {
+          width: 'medium'
+        }).append(
+          $$(EntityEditor, {entityId: this.state.entityId})
+        ).ref('modal')
+      )
+    }
 
     if (!isEmpty(items)) {
       main.append(this.renderFull($$))
@@ -91,6 +107,7 @@ class SubjectsPage extends Component {
 
     let toolbox = $$(Toolbox, {
       actions: {
+        'toggleDescription': 'Toggle Description',
         'newSubject': '+ Add subject'
       },
       content: filters
@@ -193,13 +210,17 @@ class SubjectsPage extends Component {
     }
     title.append($$('span').addClass('se-tree-node-name').append(node.name))
 
-    let additionalActions = [
-      {label: 'Delete', action: this._removeItem.bind(this, node.id)},
-      {label: 'Merge into', action: this._mergeInto.bind(this, node.id)}
-    ]
+    let additionalActions = [{label: 'Edit', action: this._editItem.bind(this, node.id)}]
 
     if(hideExpand) {
-      additionalActions.push({label: 'Merge', action: this._merge.bind(this, node.id)})
+      additionalActions.push(
+        {label: 'Delete', action: this._removeItem.bind(this, node.id)},
+        {label: 'Merge', action: this._merge.bind(this, node.id)}
+      )
+    } else {
+      if(this.state.mode === 'merge') {
+        additionalActions.push({label: 'Merge into', action: this._mergeInto.bind(this, node.id)})
+      }
     }
 
     let el = $$('div').addClass('se-row se-tree-node').append(
@@ -217,9 +238,9 @@ class SubjectsPage extends Component {
     .attr({draggable: true})
     .on('dragstart', this._onDragStart.bind(this, node.id))
     .on('dragend', this._onDragEnd)
-    .on('dragover', this._onDragOver.bind(this, node.id))
+    .on('dragover', throttle(this._onDragOver.bind(this, node.id), 300))
 
-    if(node.description) {
+    if(node.description && this.state.description) {
       el.append(
         $$(Grid.Row).addClass('se-tree-node-description').append(
           $$('div').addClass('se-cell se-description').addClass('se-level-' + level).setInnerHTML(node.description)
@@ -257,12 +278,12 @@ class SubjectsPage extends Component {
 
   _onDragOver(id, e) {
     this.currentTarget = id
-    let dropTarget = e.currentTarget
+    let dropTarget = this.refs[id].getNativeElement()
     let activeEls = dropTarget.parentElement.querySelectorAll('.se-drop-before, .se-drop-after, .se-drop-drill')
     for (let i = activeEls.length - 1; i >= 0; i--) {
       activeEls[i].classList.remove('se-drop-before', 'se-drop-after', 'se-drop-drill')
     }
-    let elHeight = e.currentTarget.offsetHeight
+    let elHeight = dropTarget.offsetHeight
     let hasChildren = this.state.items.hasChildren(id)
     let after = hasChildren ? e.offsetY > elHeight/4*3 : e.offsetY >= elHeight/2
     let before = hasChildren ? e.offsetY < elHeight/4 : e.offsetY < elHeight/2
@@ -277,11 +298,9 @@ class SubjectsPage extends Component {
       if(this.currentDrillTarget !== id && this.dragSource !== id) {
         this.currentState = 'drill'
         this.currentDrillTarget = id
-        delay((id, e) => {
-          if(this.currentTarget === id && this.currentState === 'drill') {
-            this._expandNode(id, e)
-          }
-        }, 500, id, e)
+        if(this.currentTarget === id && this.currentState === 'drill') {
+          this._expandNode(id, e)
+        }
       }
     }
   }
@@ -309,11 +328,13 @@ class SubjectsPage extends Component {
     each(targetSiblings, node => {
       if(node.position >= targetPos) {
         items.set([node.id, 'position'], node.position + 1)
+        this.updateStack.push(node.id)
       }
     })
     console.log('new position', targetPos)
     items.set([source, 'position'], targetPos)
     items.set([source, 'parent'], targetParent)
+    this.updateStack.push(source)
 
     if(sourceParent !== targetParent || sourcePos <= targetPos) {
       this._fixSourceLeaf(items, sourcePos, sourceParent)
@@ -337,6 +358,8 @@ class SubjectsPage extends Component {
     this.extendProps({
       items: items
     })
+
+    this._performUpdate()
   }
 
   _fixSourceLeaf(items, sourcePos, sourceParent) {
@@ -344,20 +367,36 @@ class SubjectsPage extends Component {
     each(sourceSiblings, node => {
       if(node.position >= sourcePos) {
         items.set([node.id, 'position'], node.position - 1)
+        this.updateStack.push(node.id)
       }
     })
   }
 
+  _editItem(id) {
+    this.extendState({
+      entityId: id,
+      mode: 'edit'
+    })
+  }
+
   _removeItem(id) {
-    console.log(id)
+    this.extendState({
+      entityId: id,
+      mode: 'delete'
+    })
   }
 
   _mergeInto(id) {
-    console.log(id)
+    this.extendState({
+      mergeEntityId: id
+    })
   }
 
   _merge(id) {
-    console.log(id)
+    this.extendState({
+      entityId: id,
+      mode: 'merge'
+    })
   }
 
   /*
@@ -512,6 +551,62 @@ class SubjectsPage extends Component {
     let isSupported = (eventName in element)
     
     return isSupported
+  }
+
+  /*
+    Close modal
+  */
+  _doneEditing() {
+    // TODO: form editor isn't disposing, we shouldn't do it manually
+    this.refs.modal.triggerDispose()
+    this.extendState({entityId: undefined, mergeEntityId: undefined, mode: undefined})
+  }
+
+  /*
+    Update grid data
+  */
+  _updateEntity(entity) {
+    let items = this.state.items
+    items.set([entity.entityId, 'name'], entity.name)
+    items.set([entity.entityId, 'description'], entity.description)
+  }
+
+  _toggleDescription() {
+    let currentState = this.state.description
+    this.extendState({description: !currentState})
+  }
+
+
+  _performUpdate() {
+    let resourceClient = this.context.resourceClient
+    let items = this.state.items 
+    let updated = []
+
+    each(this.updateStack, (id) => {
+      let item = items.get(id).toJSON()
+      let record = {
+        entityId: item.id,
+        name: item.name,
+        description: item.description,
+        data: {
+          name: item.name,
+          parent: item.parent,
+          position: item.position,
+          workname: item.workname,
+          description: item.description
+        }
+      }
+      updated.push(record)
+    })
+
+    resourceClient.updateEntities(updated, (err) => {
+      if (err) {
+        console.error('ERROR', err)
+        return
+      }
+
+      this.updateStack = []
+    })
   }
 }
 
