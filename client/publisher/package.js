@@ -18,6 +18,7 @@ import ResourceClient from './ResourceClient'
 import Definition from '../../packages/definition/Definition'
 import Person from '../../packages/person/Person'
 import Prison from '../../packages/prison/Prison'
+import Subject from '../../packages/subjects/Subject'
 import Subjects from '../../packages/subjects/package'
 import Toponym from '../../packages/toponym/Toponym'
 
@@ -73,6 +74,7 @@ export default {
     EntitiesConfigurator.addNode(Person)
     EntitiesConfigurator.addNode(Prison)
     EntitiesConfigurator.addNode(Toponym)
+    EntitiesConfigurator.addNode(Subject)
     config.addConfigurator('archivist-entities', EntitiesConfigurator)
 
     // Subjects subconfigurator
@@ -109,5 +111,7 @@ export default {
       {icon: 'fa-book', label: 'Definitions', action: 'definitions'},
       {icon: 'fa-id-badge', label: 'Users', action: 'users'}
     ])
+
+    config.setDefaultResourceTypes(['definition', 'person', 'prison', 'toponym'])
   }
 }
