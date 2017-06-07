@@ -31,6 +31,13 @@ class ResourceClient {
   }
 
   /*
+    Update entities
+  */
+  updateEntities(entityData, cb) {
+    request('POST', '/api/entities/tree/update', entityData, cb)
+  }
+
+  /*
     Remove an entity
   */
   deleteEntity(entityId, cb) {

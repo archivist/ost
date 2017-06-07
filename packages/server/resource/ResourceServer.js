@@ -13,6 +13,7 @@ class ResourceServer extends ArchivistResourceServer {
     app.get(this.path + '/entities/persons', this._getPersonsList.bind(this))
     super.bind(app)
     app.get(this.path + '/entities/persons/stats', this._getPersonsStats.bind(this))
+    app.post(this.path + '/entities/tree/update', this._updateResourcesTree.bind(this))
     app.get(this.path + '/entities/tree/:type', this._getResourcesTree.bind(this))
     app.get(this.path + '/entities/facets/:type', this._getResourcesFacetsTree.bind(this))
   }
@@ -26,6 +27,21 @@ class ResourceServer extends ArchivistResourceServer {
     this.engine.getResourcesTree(type)
       .then(function(entities) {
         res.json(entities)
+      })
+      .catch(function(err) {
+        next(err)
+      })
+  }
+
+  /*
+    Massive update tree leaves
+  */
+  _updateResourcesTree(req, res, next) {
+    let updated = req.body
+
+    this.engine.updateResourcesTree(updated)
+      .then(function() {
+        res.send(200)
       })
       .catch(function(err) {
         next(err)

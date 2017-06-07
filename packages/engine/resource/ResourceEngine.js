@@ -4,10 +4,12 @@ let each = require('lodash/each')
 let isEmpty = require('lodash/isEmpty')
 let isNull = require('lodash/isNull')
 let isUndefined = require('lodash/isUndefined')
+let Promise = require('bluebird')
 
+let massivePath = require.resolve('massive')
 // Massive internal libs
-let ArgTypes = require('../../../node_modules/massive/lib/arg_types')
-let Where = require('../../../node_modules/massive/lib/where')
+let ArgTypes = require(massivePath + '/../lib/arg_types')
+let Where = require(massivePath + '/../lib/where')
 
 class ResourceEngine extends ArchivistResourceEngine {
 
@@ -30,6 +32,12 @@ class ResourceEngine extends ArchivistResourceEngine {
         resolve(entities)
       })
     })
+  }
+
+  updateResourcesTree(data) {
+    return Promise.map(data, entity => {
+      return this.updateEntity(entity.entityId, entity)
+    }) 
   }
 
   getResourcesTreeFacets(filters, entityType) {
