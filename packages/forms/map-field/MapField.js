@@ -44,8 +44,10 @@ class MapField extends Component {
 
   setValue(value) {
     // TODO: fix array reverse bug, sometimes coordinates got reversed on map update
-    this.map.setView(value.reverse(), this.state.defaultZoom)
-    this.control._geocodeMarker = L.marker(value).addTo(this.map)
+    if(value.length > 0) {
+      this.map.setView(value.reverse(), this.state.defaultZoom)
+      this.control._geocodeMarker = L.marker(value).addTo(this.map)
+    }
   }
 
   getValue() {
