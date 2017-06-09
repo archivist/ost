@@ -9,6 +9,15 @@ class ToponymReference extends PropertyAnnotation {
   isResourceReference() {
     return true
   }
+
+  /**
+    If this annotation is a Resource Multiple Reference.
+    Resource Multiple References are annotations with an array reference property.
+    @returns {Boolean}
+  */
+  isResourceMultipleReference() {
+    return false
+  }
 }
 
 ToponymReference.define({

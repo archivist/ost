@@ -23,6 +23,15 @@ class SubjectReference extends ContainerAnnotation {
   isResourceMultipleReference() {
     return true
   }
+
+  /**
+    If this annotation is a Resource Reference.
+    Resource References are annotations with a reference property.
+    @returns {Boolean}
+  */
+  isResourceReference() {
+    return false
+  }
 }
 
 SubjectReference.define({
