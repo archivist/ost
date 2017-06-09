@@ -47,11 +47,12 @@ class ResourceClient {
   /*
     Merge two entities
   */
-  mergeEntity(entityId, mergeEntityId, cb) {
+  mergeEntity(entityId, mergeEntityId, type, cb) {
     let entityData = {
       mergeEntity: entityId,
       targetEntity: mergeEntityId
     }
+    if(type) entityData.type = type
     request('POST', '/api/entities/merge', entityData, cb)
   }
 
