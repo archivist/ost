@@ -31,12 +31,12 @@ class Prison extends DocumentNode {
 
     let name = this.getName()
     if(synonyms.indexOf(name) < 0) {
-      synonyms.push(name)
+      if(name !== '') synonyms.push(name)
     }
 
     let locality = this.nearestLocality
     if(synonyms.indexOf(locality) < 0) {
-      synonyms.push(locality)
+      if(locality !== '') synonyms.push(locality)
     }
 
     return synonyms

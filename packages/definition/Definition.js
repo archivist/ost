@@ -27,7 +27,7 @@ class Definition extends DocumentNode {
     let synonyms = this.synonyms
     let name = this.getName()
     if(synonyms.indexOf(name) < 0) {
-      synonyms.push(name)
+      if(name !== '') synonyms.push(name)
     }
     return synonyms
   }
