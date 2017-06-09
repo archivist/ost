@@ -1,5 +1,5 @@
 // import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane, Toolbar } from 'substance'
-import { forEach, map } from 'lodash-es'
+import { findIndex, forEach, map } from 'lodash-es'
 import OstPublisherContext from './OstPublisherContext'
 import { Publisher } from 'archivist'
 
@@ -30,30 +30,6 @@ class OstPublisher extends Publisher {
 
     let change = editorSession.getChange()
     if(change) {
-      let changeInfo = editorSession.getChangeInfo()
-      // Fetch resource after remote update
-      if(changeInfo.remote) {
-        // Look for updated references with new resources
-        Object.keys(change.updated).forEach(prop => {
-          let index = prop.indexOf('reference')
-          if(index > -1) {
-            let doc = editorSession.getDocument()
-            let nodeId = prop.slice(0, index - 1)
-            let node = doc.get(nodeId)
-            let reference = node.reference
-
-            this._addResource(editorSession, reference)
-          }
-        })
-        // Look for a new references with new resources
-        Object.keys(change.created).forEach(id => {
-          let node = change.created[id]
-          let reference = node.reference
-
-          this._addResource(editorSession, reference)
-        })
-      }
-
       // Rerender brackets if subjects were affected
       change.ops.forEach(op => {
         if(op.path[0].indexOf('subject') > -1) {
@@ -110,6 +86,20 @@ class OstPublisher extends Publisher {
 
       this.contentHighlights.set(highlights)
 
+    }
+  }
+
+  _deleteResource(resourceId) {
+    let editorSession = this.getEditorSession()
+    let index = findIndex(editorSession.resources, item => { return item.entityId === resourceId })
+    let resource = editorSession.resources[index]
+    let resourceType = resource.entityType
+
+    editorSession.resources.splice(index, 1)
+
+    if (resourceType === 'subject') {
+      editorSession.subjects.delete(resourceId)
+      this.refs.contextPanel.rerender()
     }
   }
 
