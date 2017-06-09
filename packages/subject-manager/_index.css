@@ -5,7 +5,23 @@
 
 .sc-subjects-page .se-cell.se-title {
   font-weight: bold;
-} 
+}
+
+.sc-subjects-page .se-document-reference .se-badge {
+  background: #fafafa;
+  text-align: center;
+}
+
+.sc-subjects-page .se-document-reference:hover > .se-badge {
+  background: #EEEEEE;
+}
+
+.sc-subjects-page .se-row.se-highlighted .se-tree-node-name {
+  background: rgba(4, 239, 0, 0.2);
+  padding: 5px;
+  position: relative;
+  left: -5px;
+}
 
 .se-cell.se-level-1 {
   padding-left: 20px!important;
@@ -57,7 +73,7 @@
   border-bottom: none;
 }
 
-.sc-subjects-page .se-description {
+.sc-subjects-page .sc-grid .se-description {
   float: left;
   padding: 0px 10px 10px;
 }

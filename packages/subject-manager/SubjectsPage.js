@@ -16,10 +16,11 @@ class SubjectsPage extends Component {
       'newSubject': this._newSubject,
       'toggleDescription': this._toggleDescription,
       'closeModal': this._doneEditing,
-      'updateEntity': this._updateEntity
+      'closeResourceOperator': this._doneEditing,
+      'updateEntity': this._updateEntity,
+      'deleteEntity': this._removeFromList
     })
   }
-
 
   getInitialState() {
     return {
@@ -51,11 +52,30 @@ class SubjectsPage extends Component {
 
     if (this.state.entityId && this.state.mode === 'edit') {
       let EntityEditor = this.getComponent('entity-editor')
+
       main.append(
         $$(Modal, {
           width: 'medium'
         }).append(
           $$(EntityEditor, {entityId: this.state.entityId})
+        ).ref('modal')
+      )
+    }
+
+    if(this.state.entityId && (this.state.mode === 'delete' || (this.state.mode === 'merge' && this.state.mergeEntityId))) {
+      let ResourceOperator = this.getComponent('resource-operator')
+
+      main.append(
+        $$(Modal, {
+          width: 'medium'
+        }).append(
+          $$(ResourceOperator, {
+            entityId: this.state.entityId, 
+            mergeEntityId: this.state.mergeEntityId, 
+            item: items.get(this.state.entityId), 
+            mergeItem: items.get(this.state.mergeEntityId), 
+            mode: this.state.mode
+          })
         ).ref('modal')
       )
     }
@@ -188,7 +208,8 @@ class SubjectsPage extends Component {
   renderChildren($$, node, level) {
     let items = this.state.items
     let edited = ['Updated', moment(node.edited).fromNow(), 'by', node.updatedBy].join(' ')
-    let isExpanded = node.expanded
+    let isHighlighted = node.selected
+    let isExpanded = node.expanded || items.hasSelectedChildren(node.id)
     let childNodes = items.getChildren(node.id)
     childNodes = sortBy(childNodes, ['position'])
     let hideExpand = isEmpty(childNodes)
@@ -210,17 +231,20 @@ class SubjectsPage extends Component {
     }
     title.append($$('span').addClass('se-tree-node-name').append(node.name))
 
-    let additionalActions = [{label: 'Edit', action: this._editItem.bind(this, node.id)}]
+    let additionalActions = [
+      {label: 'Edit', action: this._editItem.bind(this, node.id)},
+      {label: 'Documents', action: this._loadReferences.bind(this, node.id)}
+    ]
 
     if(hideExpand) {
       additionalActions.push(
         {label: 'Delete', action: this._removeItem.bind(this, node.id)},
         {label: 'Merge', action: this._merge.bind(this, node.id)}
       )
-    } else {
-      if(this.state.mode === 'merge') {
-        additionalActions.push({label: 'Merge into', action: this._mergeInto.bind(this, node.id)})
-      }
+    }
+
+    if(this.state.mode === 'merge') {
+      additionalActions.push({label: 'Merge into', action: this._mergeInto.bind(this, node.id)})
     }
 
     let el = $$('div').addClass('se-row se-tree-node').append(
@@ -240,6 +264,10 @@ class SubjectsPage extends Component {
     .on('dragend', this._onDragEnd)
     .on('dragover', throttle(this._onDragOver.bind(this, node.id), 300))
 
+    if(isHighlighted) {
+      el.addClass('se-highlighted')
+    }
+
     if(node.description && this.state.description) {
       el.append(
         $$(Grid.Row).addClass('se-tree-node-description').append(
@@ -248,7 +276,23 @@ class SubjectsPage extends Component {
       )
     }
 
-    return concat(el, childrenEls);
+    let details = this.state.details
+    let references = this.state.references
+    let refs = []
+
+    if(details === node.id && references) {
+      references.forEach((reference) => {
+        let referenceIcon = $$(Icon, {icon: 'fa-file-text-o'})
+        refs.push(
+          $$(Grid.Row).addClass('se-document-reference').ref(reference.documentId).append(
+            $$(Grid.Cell, {columns: 2}).addClass('se-badge se-level-' + level).append(referenceIcon),
+            $$(Grid.Cell, {columns: 10}).addClass('se-reference').append(reference.title)
+          )
+        )
+      })
+    }
+
+    return concat(el, refs, childrenEls)
   }
 
   _expandNode(id, e) {
@@ -311,14 +355,23 @@ class SubjectsPage extends Component {
   }
 
   _moveItem(source, target, pos) {
-    console.log('moving', source, pos, target)
+    if(source === target) return
+
     let items = this.state.items
+    console.log('moving', source, pos, target)
+    console.log('moving', items.get([source, 'name']), pos, items.get([target, 'name']))
 
     let sourcePos = items.get([source, 'position'])
     let sourceParent = items.get([source, 'parent'])
     let dropPos = items.get([target, 'position'])
     let targetPos = pos === 'before' ? dropPos : dropPos + 1
     let targetParent = items.get([target, 'parent'])
+
+    if(sourceParent === targetParent) {
+      if(sourcePos === targetPos) return
+      if(sourcePos - targetPos === 1 && pos === 'after') return
+      if(sourcePos - targetPos === -1 && pos === 'before') return  
+    }
 
     if(sourceParent === targetParent && sourcePos > targetPos) {
       this._fixSourceLeaf(items, sourcePos, sourceParent)
@@ -341,12 +394,12 @@ class SubjectsPage extends Component {
     }
 
     // debugging
-    window.subjects = items
     let tSiblings = targetParent !== null ? items.getChildren(targetParent) : items.getRoots()
     let tPositions = []
     each(tSiblings, n => {
       tPositions.push(n.position)
     })
+
     console.log('target positions', tPositions)
     let sSiblings = sourceParent !== null ? items.getChildren(sourceParent) : items.getRoots()
     let sPositions = []
@@ -388,7 +441,8 @@ class SubjectsPage extends Component {
 
   _mergeInto(id) {
     this.extendState({
-      mergeEntityId: id
+      mergeEntityId: id,
+      mode: 'merge'
     })
   }
 
@@ -491,16 +545,15 @@ class SubjectsPage extends Component {
     })
   }
 
-  _loadReferences(entityId, index) {
+  _loadReferences(entityId) {
     let filters = {}
     let options = {
       columns: ['"documentId"', 'title'],
       order: '"updatedAt" DESC'
     }
     let documentClient = this.context.documentClient
-    let items = this.state.items
 
-    if(!items[index].references) {
+    if(entityId) {
       documentClient.getReferences(entityId, filters, options, function(err, references) {
         if (err) {
           this.setState({
@@ -513,15 +566,11 @@ class SubjectsPage extends Component {
           return
         }
 
-        items[index].references = references.records
-
         this.extendState({
-          items: items,
-          details: index 
+          details: entityId,
+          references: references.records
         })
       }.bind(this))
-    } else {
-      this.extendState({details: index})
     }
   }
 
@@ -539,9 +588,24 @@ class SubjectsPage extends Component {
 
   _onSearch() {
     let searchValue = this.refs['searchInput'].val()
+    let tree = this.state.items
+
+    tree.resetSelection()
+
+    if(searchValue !== '') {
+      let nodes = tree.getNodes()
+
+      each(nodes, (node) => {
+        let name = node.name.toLowerCase()
+        if(name.indexOf(searchValue.toLowerCase()) > -1) {
+          tree.set([node.id, 'selected'], true)
+        }
+      })
+    }
+
     this.extendState({
       search: searchValue,
-      pagination: false
+      items: tree
     })
   }
 
@@ -562,6 +626,13 @@ class SubjectsPage extends Component {
     this.extendState({entityId: undefined, mergeEntityId: undefined, mode: undefined})
   }
 
+  // /*
+  //   Close Resource Operator modal
+  // */
+  // _closeResourceOperator() {
+  //   this.extendState({entityId: undefined, mode: undefined})
+  // }
+
   /*
     Update grid data
   */
@@ -571,11 +642,19 @@ class SubjectsPage extends Component {
     items.set([entity.entityId, 'description'], entity.description)
   }
 
+  _removeFromList(id) {
+    let items = this.state.items
+    let item = items.get(id)
+    items.delete(id)
+    this._fixSourceLeaf(items, item.position, item.parent)
+    this.extendState({items: items, entityId: undefined, mergeEntityId: undefined, mode: undefined})
+    this._performUpdate()
+  }
+
   _toggleDescription() {
     let currentState = this.state.description
     this.extendState({description: !currentState})
   }
-
 
   _performUpdate() {
     let resourceClient = this.context.resourceClient
