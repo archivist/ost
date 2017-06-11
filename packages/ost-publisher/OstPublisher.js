@@ -53,7 +53,10 @@ class OstPublisher extends Publisher {
       let highlights = {}
       forEach(nodes, node => {
         if(node.prototype.isResourceReference) {
-          highlights[node.type] = []
+          let isResourceReference = node.prototype.isResourceReference()
+          if(isResourceReference) {
+            highlights[node.type] = []
+          }
         }
       })
 
@@ -80,7 +83,10 @@ class OstPublisher extends Publisher {
         if(overlapedComments.length > 0) {
           contextPanel.openComment(overlapedComments[0])
         } else {
-          contextPanel.openDefaultTab()
+          let currentContext = contextPanel.state.contextId
+          if(currentContext !== 'metadata') {
+            contextPanel.openDefaultTab()
+          }
         }
       }
 
