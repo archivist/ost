@@ -17,7 +17,10 @@ class ToponymContextItem extends Component {
     let el = $$('div')
       .attr("data-id", this.props.entityId)
       .addClass('sc-entity-entry se-toponym')
-      .on('click', this.handleEditorClick)
+    
+    if(this.props.mode !== 'view') {
+      el.on('click', this.handleEditorClick)
+    }
 
     if(this.props.focus) {
       el.addClass('se-focused')
@@ -77,7 +80,9 @@ class ToponymContextItem extends Component {
     return el
   }
 
-  editEntity() {
+  editEntity(e) {
+    e.preventDefault()
+    e.stopPropagation()
     this.send('editEntity', this.props.entityId)
   }
 

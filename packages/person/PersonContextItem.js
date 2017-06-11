@@ -17,7 +17,10 @@ class PersonContextItem extends Component {
     let el = $$('div')
       .attr("data-id", this.props.entityId)
       .addClass('sc-entity-entry se-person')
-      .on('click', this.handleEditorClick)
+
+    if(this.props.mode !== 'view') {
+      el.on('click', this.handleEditorClick)
+    }
 
     if(this.props.focus) {
       el.addClass('se-focused')
@@ -64,7 +67,9 @@ class PersonContextItem extends Component {
     return el
   }
 
-  editEntity() {
+  editEntity(e) {
+    e.preventDefault()
+    e.stopPropagation()
     this.send('editEntity', this.props.entityId)
   }
 
