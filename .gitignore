@@ -35,6 +35,8 @@ node_modules
 
 # Production config
 config/production.json
+config/test.json
+config/dev.json
 ecosystem.json
 
 # Conversion data
