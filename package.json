@@ -15,7 +15,7 @@
     "massive": "^2.5.0",
     "moment": "^2.17.1",
     "plyr": "^2.0.11",
-    "substance": "substance/substance#5dd96de2170c56f9b7535bab27dc4dc80bc032c1",
+    "substance": "substance/substance#124de6a320f334b58decc065b709db67117aaa77",
     "ws": "^1.1.1"
   },
   "devDependencies": {
