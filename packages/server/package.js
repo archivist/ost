@@ -9,7 +9,7 @@ let ConverterServerPackage = require('./converter/package')
 let DocumentServerPackage = require('./document/package')
 let AuthServerPackage = require('archivist').AuthServerPackage
 let CollabServerPackage = require('archivist').CollabServerPackage
-let UserServerPackage = require('archivist').ResourceServerPackage
+let UserServerPackage = require('archivist').UserServerPackage
 let InspectorPackage = require('archivist').InspectorPackage
 
 let db = new Database()
