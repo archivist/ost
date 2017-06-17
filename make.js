@@ -103,7 +103,7 @@ b.task('publisher-min', buildApp('publisher', true))
 b.task('scholar-min', buildApp('scholar', true))
 
 b.task('client', ['publisher', 'scholar'])
-b.task('client-min', ['scholar-min'])
+b.task('client-min', ['scholar-min', 'publisher-min'])
 
 // build all
 b.task('default', ['deps', 'client', 'ost'])
