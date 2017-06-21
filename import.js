@@ -116,7 +116,7 @@ function importDefinitions() {
       data: {
         name: definition.title,
         description: definition.description,
-        definitionType: definition.type
+        definitionType: definition.definition_type
       }
     }
 
