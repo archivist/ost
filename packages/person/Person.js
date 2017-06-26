@@ -23,7 +23,7 @@ class Person extends DocumentNode {
 
   // Get entity synonyms
   getSynonyms() {
-    let synonyms = this.synonyms
+    let synonyms = []
     let name = this.getName()
     if(synonyms.indexOf(name) < 0) {
       if(name !== '') synonyms.push(name)
