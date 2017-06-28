@@ -1,5 +1,5 @@
 import { ProseArticle } from 'substance'
-import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, DocumentsPackage, IndentationPackage, MetadataEditorPackage, ResourcesPackage, UsersPackage, WhitespacePackage } from 'archivist'
+import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, DocumentsPackage, IndentationPackage, MetadataEditorPackage, ResourcesPackage, TimecodeAnnotatorPackage, UsersPackage, WhitespacePackage } from 'archivist'
 import InterviewPackage from '../../packages/interview/package'
 import FormsPackage from '../../packages/forms/package'
 import DefinitionManagerPackage from '../../packages/definition-manager/package'
@@ -56,6 +56,7 @@ export default {
     EditorConfigurator.import(InterviewPackage)
     EditorConfigurator.import(IndentationPackage)
     EditorConfigurator.import(WhitespacePackage)
+    EditorConfigurator.import(TimecodeAnnotatorPackage)
     EditorConfigurator.setContextMapping({
       'subject': 'subjects',
       'definition': 'resources',
