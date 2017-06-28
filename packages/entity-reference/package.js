@@ -5,7 +5,7 @@ import EntityReferenceCommand from './EntityReferenceCommand'
 export default {
   name: 'entity-reference',
   configure: function(config) {
-    config.addTool('entity-reference', EntityReferenceTool, {toolGroup: 'default'})
+    config.addTool('entity-reference', EntityReferenceTool, {toolGroup: 'references'})
     config.addCommand('entity-reference', EntityReferenceCommand, { nodeType: 'entity-reference' })
     config.addIcon('entity-reference', {'fontawesome': 'fa-book'})
 
