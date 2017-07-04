@@ -3,7 +3,7 @@
   "description": "",
   "main": "dist/ost.cjs.js",
   "dependencies": {
-    "archivist": "archivist/archivist#4b3a538b945e828d4d8dc98667a3492dd3be75a4",
+    "archivist": "archivist/archivist#695ddec3afda6af3b52dbcbe2f1a8b6cde0c7add",
     "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
@@ -29,7 +29,8 @@
   },
   "scripts": {
     "bundle": "node make production",
-    "dev": "node make -s -w & node server",
+    "dev": "node make -w & node server",
+    "seed": "node seed",
     "start": "node server",
     "test": "gulp test"
   },
