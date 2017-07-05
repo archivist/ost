@@ -29,7 +29,7 @@
   },
   "scripts": {
     "bundle": "node make production",
-    "dev": "node make -w & node server",
+    "dev": "node make dev -w && node server",
     "seed": "node seed",
     "start": "node server",
     "test": "gulp test"
