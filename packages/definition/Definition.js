@@ -38,7 +38,7 @@ Definition.type = 'definition'
 Definition.define({
   name: { type: 'string', default: 'Unknown definition', field: { type: "text", dataType: "text", placeholder: "Enter definition's title" }},
   synonyms: {type: ['string'], default: [], field: { type: "tags", placeholder: "Enter synonyms of a definition" }},
-  definitionType: { type: 'string', default: '', field: { type: "select", options: ['общий комментарий', 'лагерная реалия', 'сокращение', 'языковой комментарий'], placeholder: "Select a definition type" }},
+  definitionType: { type: 'string', default: 'общий комментарий', field: { type: "select", options: ['общий комментарий', 'лагерная реалия', 'сокращение', 'языковой комментарий'], placeholder: "Select a definition type" }},
   description: { type: 'string', default: '', field: { type: "prose", placeholder: "Enter definition's description" }}
 })
 
