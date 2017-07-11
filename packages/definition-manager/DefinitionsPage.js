@@ -22,7 +22,17 @@ class DefinitionsPage extends AbstractEntityPage {
     } else {
       searchInput.on('keypress', this._onSearchKeyPress)
     }
-    search.append(searchInput)
+
+    let FTSSwitcher = $$('span').addClass('se-fts-switch')
+      .append('fts')
+      .on('click', this._switchFTS)
+
+    if(this.state.fts) FTSSwitcher.addClass('se-active')
+
+    search.append(
+      searchInput,
+      FTSSwitcher
+    )
 
     filters.push(search)
 
