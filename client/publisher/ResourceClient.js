@@ -7,13 +7,36 @@ import { request } from 'substance'
 class ResourceClient {
   constructor(config) {
     this.config = config
+    this.authClient = config.authClient
+  }
+
+  request(method, url, data, cb) {
+    let request = new XMLHttpRequest();
+    request.open(method, url, true)
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+    request.setRequestHeader('x-access-token', this.authClient.getSessionToken())
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        let res = request.responseText;
+        if(isJson(res)) res = JSON.parse(res);
+        cb(null, res);
+      } else {
+        return cb(new Error('Request failed. Returned status: ' + request.status))
+      }
+    }
+
+    if (data) {
+      request.send(JSON.stringify(data))
+    } else {
+      request.send()
+    }
   }
 
   /*
     Create an entity
   */
   createEntity(entityData, cb) {
-    request('POST', '/api/entities', entityData, cb)
+    this.request('POST', '/api/entities', entityData, cb)
   }
 
   /*
@@ -27,21 +50,21 @@ class ResourceClient {
     Update an entity
   */
   updateEntity(entityId, entityData, cb) {
-    request('PUT', '/api/entities/' + entityId, entityData, cb)
+    this.request('PUT', '/api/entities/' + entityId, entityData, cb)
   }
 
   /*
     Update entities
   */
   updateEntities(entityData, cb) {
-    request('POST', '/api/entities/tree/update', entityData, cb)
+    this.request('POST', '/api/entities/tree/update', entityData, cb)
   }
 
   /*
     Remove an entity
   */
   deleteEntity(entityId, cb) {
-    request('DELETE', '/api/entities/' + entityId, null, cb)
+    this.request('DELETE', '/api/entities/' + entityId, null, cb)
   }
 
   /*
@@ -53,7 +76,7 @@ class ResourceClient {
       targetEntity: mergeEntityId
     }
     if(type) entityData.type = type
-    request('POST', '/api/entities/merge', entityData, cb)
+    this.request('POST', '/api/entities/merge', entityData, cb)
   }
 
   listEntities(filters, options, cb) {
@@ -81,7 +104,15 @@ class ResourceClient {
   getSubjects(cb) {
     request('GET', '/api/entities/tree/subject', null, cb)
   }
+}
 
+function isJson(str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
 }
 
 export default ResourceClient

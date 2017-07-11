@@ -33,13 +33,28 @@ class ArchivistDocumentClient extends DocumentClient {
   }
 
   /*
+    Create a new document on the server
+    ```js
+    @example
+    ```
+    documentClient.createDocument({
+      schemaName: 'prose-article',
+      info: {
+        userId: 'userx'
+      }
+    });
+  */
+  createDocument(newDocument, cb) {
+    this.request('POST', this.config.httpUrl, newDocument, cb)
+  }
+
+  /*
     Remove a document from the server
     @example
     ```js
     documentClient.deleteDocument('mydoc-id');
     ```
   */
-
   deleteDocument(documentId, cb) {
     this.request('DELETE', this.config.httpUrl+documentId, null, cb)
   }

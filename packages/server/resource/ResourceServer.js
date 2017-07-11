@@ -13,7 +13,7 @@ class ResourceServer extends ArchivistResourceServer {
     app.get(this.path + '/entities/persons', this._getPersonsList.bind(this))
     super.bind(app)
     app.get(this.path + '/entities/persons/stats', this._getPersonsStats.bind(this))
-    app.post(this.path + '/entities/tree/update', this._updateResourcesTree.bind(this))
+    app.post(this.path + '/entities/tree/update', this.authEngine.hasAccess.bind(this.authEngine), this._updateResourcesTree.bind(this))
     app.get(this.path + '/entities/tree/:type', this._getResourcesTree.bind(this))
     app.get(this.path + '/entities/facets/:type', this._getResourcesFacetsTree.bind(this))
   }
