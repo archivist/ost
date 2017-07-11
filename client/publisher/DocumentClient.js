@@ -5,6 +5,44 @@ import { request, DocumentClient } from 'substance'
 */
 
 class ArchivistDocumentClient extends DocumentClient {
+  constructor(config) {
+    super(config)
+    this.authClient = config.authClient
+  }
+
+  request(method, url, data, cb) {
+    let request = new XMLHttpRequest();
+    request.open(method, url, true)
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+    request.setRequestHeader('x-access-token', this.authClient.getSessionToken())
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        let res = request.responseText;
+        if(isJson(res)) res = JSON.parse(res);
+        cb(null, res);
+      } else {
+        return cb(new Error('Request failed. Returned status: ' + request.status))
+      }
+    }
+
+    if (data) {
+      request.send(JSON.stringify(data))
+    } else {
+      request.send()
+    }
+  }
+
+  /*
+    Remove a document from the server
+    @example
+    ```js
+    documentClient.deleteDocument('mydoc-id');
+    ```
+  */
+
+  deleteDocument(documentId, cb) {
+    this.request('DELETE', this.config.httpUrl+documentId, null, cb)
+  }
 
   listDocuments(filters, options, cb) {
     let filtersRequest = encodeURIComponent(JSON.stringify(filters))
@@ -28,6 +66,15 @@ class ArchivistDocumentClient extends DocumentClient {
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
     request('GET', '/api/documents/' + documentId + '/search?query=' + query + '&language=' + language + '&filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
+}
+
+function isJson(str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
 }
 
 export default ArchivistDocumentClient
