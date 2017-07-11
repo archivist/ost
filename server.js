@@ -26,6 +26,7 @@ configurator.setServerApp(app);
 configurator.setWebSocketServer(wss);
 configurator.import(ServerPackage);
 var config = configurator.getAppConfig();
+configurator.setDefaultLanguage('russian');
 
 /*
   Serve app
