@@ -66,7 +66,7 @@ export default {
       'comment': 'comments'
     })
     EditorConfigurator.setDefaultLanguage(appConfig.defaultLanguage)
-    config.addConfigurator('archivist-interview-editor', EditorConfigurator)
+    config.addConfigurator('archivist-interview-editor', EditorConfigurator, true)
 
     // Entities subconfigurator
     let EntitiesConfigurator = new ArchivistSubConfigurator()
