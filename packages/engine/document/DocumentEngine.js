@@ -12,7 +12,7 @@ class DocumentEngine extends ArchivistDocumentEngine {
     let options = !isEmpty(args.options) ? JSON.parse(args.options) : {} 
     let results = {}
     
-    if(!options.columns) options.columns = ['"documentId"', '"schemaName"', '"schemaVersion"', "meta", "title", "language", '"updatedAt"', '"updatedBy"', '"userId"', '"references"']
+    if(!options.columns) options.columns = ['"documentId"', '"schemaName"', '"schemaVersion"', "meta", "title", "language", '"updatedAt"', '(SELECT name FROM users WHERE "userId" = "updatedBy") AS "updatedBy"', '"userId"', '"references"']
 
     let topics = filters.topics ? filters.topics : []
     delete filters.topics
