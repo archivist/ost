@@ -3,7 +3,7 @@
   "description": "",
   "main": "dist/ost.cjs.js",
   "dependencies": {
-    "archivist": "archivist/archivist#c189d8599c16c53949aea9b73c96b2e947d38c32",
+    "archivist": "archivist/archivist#0b26a724a782e07e1e98362f26bc3e59f0213a39",
     "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",

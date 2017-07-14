@@ -15,7 +15,8 @@ class SubjectsPage extends Component {
     this.handleActions({
       'newSubject': this._newSubject,
       'toggleDescription': this._toggleDescription,
-      'closeModal': this._doneEditing,
+      //'closeModal': this._doneEditing,
+      'finishEditing': this._doneEditing,
       'closeResourceOperator': this._doneEditing,
       'updateEntity': this._updateEntity,
       'deleteEntity': this._removeFromList
