@@ -31,10 +31,7 @@ configurator.setDefaultLanguage('russian');
 /*
   Serve app
 */
-app.use('/archivist', express.static(path.join(__dirname, '/dist/archivist')));
-app.use('/font-awesome', express.static(path.join(__dirname, '/dist/font-awesome')));
-app.use('/markercluster', express.static(path.join(__dirname, '/dist/markercluster')));
-app.use('/substance', express.static(path.join(__dirname, '/dist/substance')));
+app.use('/libs', express.static(path.join(__dirname, '/dist/libs')));
 if(config.publisherEndpoint) app.use(config.publisherEndpoint, express.static(path.join(__dirname, '/dist/publisher')));
 if(config.scholarEndpoint) app.use(config.scholarEndpoint, express.static(path.join(__dirname, '/dist/scholar')));
 app.use('/documents/:id', express.static(path.join(__dirname, '/dist/scholar')));
