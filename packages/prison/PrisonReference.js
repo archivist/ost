@@ -18,6 +18,14 @@ class PrisonReference extends PropertyAnnotation {
   isResourceMultipleReference() {
     return false
   }
+
+  setHighlighted(highlighted, scope) {
+    if (this.highlighted !== highlighted) {
+      this.highlightedScope = scope
+      this.highlighted = highlighted
+      this.emit('highlighted', highlighted)
+    }
+  }
 }
 
 PrisonReference.define({
