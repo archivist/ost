@@ -8,7 +8,7 @@ class SubjectsImporter extends HTMLImporter {
   importDocument(subjectsData, reader, facets) {
     this.reset()
 
-    let doc = this.generateDocument()
+    let doc = this.state.doc
     each(subjectsData, function(subject) {
       if(reader) {
         doc.create({

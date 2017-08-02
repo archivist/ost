@@ -8,8 +8,8 @@ export default {
   configure: function(config) {
     config.defineSchema({
       name: 'archivist-subjects',
-      ArticleClass: Subjects,
-      defaultTextType: 'paragraph'
+      DocumentClass: Subjects,
+      defaultTextType: 'subject'
     })
 
     config.addNode(Subject)
