@@ -1,4 +1,4 @@
-import { Button, Component, ScrollPane } from 'substance'
+import { Component, ScrollPane } from 'substance'
 
 class InfoContext extends Component {
   getInitialState() {
@@ -45,20 +45,22 @@ class InfoContext extends Component {
   }
 
   renderAbstract($$, abstract) {
+    const Button = this.getComponent('button')
+
     let el = $$('div').addClass('se-meta-abstract')
     
     if(this.state.teaserAbstract) {
       let teaser = abstract.split('\n').shift()
       el.append(
         teaser,
-        $$(Button, {style: 'outline', label: 'expand-abstract'}).addClass('se-abstract-toggle')
+        $$(Button, {theme: 'round', label: 'expand-abstract'}).addClass('se-abstract-toggle')
           .on('click', this._toggleAbstract)
       )
     } else {
       el.append(
         $$('div').addClass('se-abstract-full')
           .setInnerHTML('<p>' + abstract.split('\n').join('</p><p>') + '</p>'),
-        $$(Button, {style: 'outline', label: 'collapse-abstract'}).addClass('se-abstract-toggle')
+        $$(Button, {theme: 'round', label: 'collapse-abstract'}).addClass('se-abstract-toggle')
           .on('click', this._toggleAbstract)
       )
     }

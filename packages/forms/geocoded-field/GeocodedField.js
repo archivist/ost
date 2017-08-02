@@ -1,4 +1,6 @@
-import { Component, FontAwesomeIcon as Icon, Input } from 'substance'
+import { Component, FontAwesomeIcon as Icon, InputPackage } from 'substance'
+
+const { Input } = InputPackage
 
 class GeocodedField extends Component {
 

@@ -1,4 +1,4 @@
-import { FontAwesomeIcon as Icon, Input } from 'substance'
+import { FontAwesomeIcon as Icon } from 'substance'
 import { AbstractEntityPage } from 'archivist'
 
 const definitionTypes = [
@@ -10,6 +10,8 @@ const definitionTypes = [
 
 class DefinitionsPage extends AbstractEntityPage {
   renderFilters($$) {
+    const Input = this.getComponent('input')
+
     let filters = []
     let search = $$('div').addClass('se-search').append(
       $$(Icon, {icon: 'fa-search'})

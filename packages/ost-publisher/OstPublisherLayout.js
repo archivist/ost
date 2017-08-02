@@ -1,7 +1,8 @@
-import { CollabSession, JSONConverter, series, substanceGlobals } from 'substance'
+import { async, CollabSession, JSONConverter, substanceGlobals } from 'substance'
 import { PublisherLayout } from 'archivist'
 import OstPublisher from './OstPublisher'
 
+const {series} = async
 let converter = new JSONConverter()
 
 class OstPublisherLayout extends PublisherLayout {

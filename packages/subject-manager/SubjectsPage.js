@@ -1,9 +1,6 @@
-import { Button, Component, FontAwesomeIcon as Icon, Grid, Input, Layout, Modal, SplitPane, SubstanceError as Err } from 'substance'
-import { concat, each, findIndex, flattenDeep, isEmpty, sortBy, map, throttle} from 'lodash-es'
+import { Component, FontAwesomeIcon as Icon, SplitPane, SubstanceError as Err } from 'substance'
+import { concat, each, flattenDeep, isEmpty, sortBy, map, throttle} from 'lodash-es'
 import moment from 'moment'
-
-// Sample data for debugging
-// import DataSample from '../../data/docs'
 
 class SubjectsPage extends Component {
   constructor(...args) {
@@ -42,6 +39,8 @@ class SubjectsPage extends Component {
   }
 
   render($$) {
+    const Modal = this.getComponent('modal')
+
     let items = this.state.items
     let el = $$('div').addClass('sc-subjects-page')
     let main = $$('div').addClass('se-entity-layout')
@@ -98,6 +97,8 @@ class SubjectsPage extends Component {
   }
 
   renderFilters($$) {
+    const Input = this.getComponent('input')
+
     let filters = []
     let search = $$('div').addClass('se-search').append(
       $$(Icon, {icon: 'fa-search'})
@@ -145,6 +146,8 @@ class SubjectsPage extends Component {
   }
 
   renderEmpty($$) {
+    const Layout = this.getComponent('layout')
+
     let layout = $$(Layout, {
       width: 'medium',
       textAlign: 'center'
@@ -173,6 +176,8 @@ class SubjectsPage extends Component {
   }
 
   renderAdditionalMenu($$, actions) {
+    const Button = this.getComponent('button')
+
     let el = $$('div').addClass('se-more').attr({'tabindex': 0})
     let actionsList = $$('ul').addClass('se-more-content')
     each(actions, action => {
@@ -188,7 +193,8 @@ class SubjectsPage extends Component {
   }
 
   renderFull($$) {
-    let urlHelper = this.context.urlHelper
+    const Grid = this.getComponent('grid')
+
     let items = this.state.items
     let grid = $$(Grid)
 
@@ -207,6 +213,8 @@ class SubjectsPage extends Component {
   }
 
   renderChildren($$, node, level) {
+    const Grid = this.getComponent('grid')
+    
     let items = this.state.items
     let edited = ['Updated', moment(node.edited).fromNow(), 'by', node.updatedBy].join(' ')
     let isHighlighted = node.selected
