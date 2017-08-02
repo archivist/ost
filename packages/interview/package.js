@@ -16,7 +16,7 @@ export default {
   configure: function(config) {
     config.defineSchema({
       name: 'archivist-interview',
-      ArticleClass: Interview,
+      DocumentClass: Interview,
       defaultTextType: 'paragraph'
     })
     config.addNode(MetaNode)

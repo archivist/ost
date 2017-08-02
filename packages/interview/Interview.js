@@ -6,12 +6,10 @@ import { map } from 'lodash-es'
 */
 
 class Interview extends Document {
-  constructor(...args) {
-    super(...args)
-    this._initialize()
-  }
-
+  
   _initialize() {
+    super._initialize()
+
     this.create({
       type: 'container',
       id: 'body',
