@@ -1,21 +1,13 @@
-import { DocumentPackage, PagerPackage, ToolboxPackage } from 'archivist'
+import { BasePackage } from 'substance'
+import { DocumentPackage, PagerPackage, SpinnerPackage, ToolboxPackage } from 'archivist'
 
 export default {
   name: 'scholar',
   configure: function(config) {
+    config.import(BasePackage)
     config.import(DocumentPackage)
-
-    // config.import(Note);
-    // config.import(Dashboard);
     config.import(PagerPackage)
+    config.import(SpinnerPackage)
     config.import(ToolboxPackage)
-    // //config.import(LoaderPackage);
-    // config.import(NotificationPackage);
-    // config.import(CollaboratorsPackage);
-
-
-    // // Default configuration for available modes
-    // config.addConfigurator('reader', ReaderConfigurator);
-    // config.addConfigurator('writer', WriterConfigurator);
   }
 }
