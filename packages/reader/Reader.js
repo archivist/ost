@@ -1,6 +1,9 @@
-import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane, TextPropertyEditor } from 'substance'
-import { forEach, map, orderBy, uniq } from 'lodash-es'
+import { ProseEditorPackage } from 'substance'
+import { ContainerEditor, Highlights, Layout, SplitPane, TextPropertyEditor } from 'substance'
+import { forEach, map, uniq } from 'lodash-es'
 import ReaderContext from './ReaderContext'
+
+const { ProseEditor } = ProseEditorPackage
 
 class Reader extends ProseEditor {
   constructor(...args) {
@@ -19,10 +22,12 @@ class Reader extends ProseEditor {
     let parent = this.getParent()
     let entityId = parent.props.entityId
     if(entityId) {
-      this._showReferences(entityId, true)
+      setTimeout(() => {
+        this._showReferences(entityId, true)
+      }, 10)
     }
     if(parent.props.fragment) {
-      this.refs.contentPanel.scrollTo(parent.props.fragment)
+      this.refs.contentPanel.scrollTo(`[data-id="${parent.props.fragment}"]`)
     }
   }
 
@@ -81,13 +86,15 @@ class Reader extends ProseEditor {
         disabled: true
       }).addClass('se-title'),
       $$(ContainerEditor, {
-        disabled: 'true',
+        disabled: true,
         editorSession: this.editorSession,
         node: doc.get('body'),
-        commands: configurator.getSurfaceCommandNames(),
-        textTypes: configurator.getTextTypes()
+        commands: configurator.getSurfaceCommandNames()
       }).ref('body'),
-      $$(Overlay)
+      $$(Overlay, {
+        toolPanel: configurator.getToolPanel('main-overlay'),
+        theme: 'dark'
+      })
     )
 
     contentPanel.append(layout)
@@ -134,12 +141,25 @@ class Reader extends ProseEditor {
     let doc = editorSession.getDocument()
     let entityIndex = doc.getIndex('entities')
     let refs = entityIndex.get(entityId)
-    let ordered = orderBy(refs, ref => {
-      let p = ref.path[0]
-      return container.getPosition(p)
+    // We are sorting references by paregraph position
+    // if nodes annotations are in same paragraph 
+    // we will sort them by start offset
+    let refIds = Object.keys(refs)
+    let ordered = refIds.sort((a,b) => {
+      const refAPath = refs[a].getPath()
+      const refBPath = refs[b].getPath()
+
+      if (refAPath[0] !== refBPath[0]){
+        return (container.getPosition(refAPath[0]) - container.getPosition(refBPath[0]))
+      } else {
+        const refAOffset = refs[a].start.getOffset()
+        const refBOffset = refs[b].start.getOffset()
+
+        return (refAOffset - refBOffset)
+      }
     })
 
-    this.refs.contentPanel.scrollTo(ordered[0].id)
+    this.refs.contentPanel.scrollTo(`[data-id="${ordered[0]}"]`)
     this.highlightReferences([entityId])
 
     if(!silent) {
@@ -159,7 +179,7 @@ class Reader extends ProseEditor {
       paragraphs = paragraphs.concat(paras)
     })
     let firstPara = doc.getFirst(paragraphs)
-    this.refs.contentPanel.scrollTo(firstPara)
+    this.refs.contentPanel.scrollTo(`[data-id="${firstPara}"]`)
 
     setTimeout(function(){
       this.refs.brackets.highlight(topics)
