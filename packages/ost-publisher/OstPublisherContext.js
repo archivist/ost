@@ -17,6 +17,13 @@ class OstPublisherContext extends PublisherContext {
     console.log('Edit container resource', node.id, ',', mode, 'mode')
   }
 
+  resetSubjectsList() {
+    let context = 'subjects'
+    if(this.refs[context]) {
+      this.refs[context].setSelected()
+    }
+  }
+
 }
 
 export default OstPublisherContext
