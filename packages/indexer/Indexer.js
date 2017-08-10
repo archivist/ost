@@ -5,10 +5,17 @@ let forEach = require('lodash/forEach')
 let isEmpty = require('lodash/isEmpty')
 
 // Massive internal libs
-let ArgTypes = require('../../node_modules/massive/lib/arg_types')
-let Where = require('../../node_modules/massive/lib/where')
+let massivePath = require.resolve('massive')
+let ArgTypes = require(massivePath + '/../lib/arg_types')
+let Where = require(massivePath + '/../lib/where')
 
 class Indexer extends ArchivistIndexer {
+  constructor(config) {
+    super(config)
+
+    this.resourceEngine = config.resourceEngine
+  }
+
   searchDocuments(filters, options) {
     let isTextSearch = filters.query ? true : false
     let limit = options.limit || 100
@@ -242,6 +249,43 @@ ORDER BY count DESC limit ${limit} offset ${offset}`
         resolve(res)
       })
     }.bind(this))
+  }
+
+  _countEntityReferences(doc) {
+    return new Promise((resolve) => {
+      let configurator = this.configurator.getConfigurator('archivist-subjects')
+
+      this.resourceEngine.getResourcesTree('subject')
+        .then(subjectsData => {
+          let importer = configurator.createImporter('subjects')
+          let subjects = importer.importDocument(subjectsData, true)
+          let entitiesIndex = doc.getIndex('entities')
+          let annotations = []
+          let references = {}
+          forEach(entitiesIndex.byReference, (refs, key) => {
+            annotations.push(key)
+            references[key] = Object.keys(refs).length
+
+            let parents = subjects.getParents(key)
+            parents.forEach(parent => {
+              if(annotations.indexOf(parent) === -1) {
+                annotations.push(parent)
+              }
+              let counter = references[parent]
+              if(!counter) {
+                references[parent] = 1
+              } else {
+                references[parent]++
+              }
+            })
+          })
+
+          resolve({
+            annotations: annotations,
+            references: references
+          })
+        })
+    })
   }
 }
 
