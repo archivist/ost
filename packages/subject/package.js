@@ -7,7 +7,7 @@ export default {
   configure: function(config) {
     config.addNode(SubjectReference)
     config.addCommand(SubjectReference.type, SubjectCommand, { nodeType: SubjectReference.type, commandGroup: 'references' })
-    config.addComponent('container-annotation-fragment', SubjectComponent)
+    config.addComponent(SubjectReference.type, SubjectComponent)
     config.addIcon(SubjectReference.type, {'fontawesome': 'fa-tags'})
 
     config.addLabel('subject', {

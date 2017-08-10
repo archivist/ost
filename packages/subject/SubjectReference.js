@@ -1,4 +1,5 @@
 import { ContainerAnnotation } from 'substance'
+import { forEach } from 'lodash-es'
 
 /**
   SubjectReference Node.
@@ -31,6 +32,17 @@ class SubjectReference extends ContainerAnnotation {
   */
   isResourceReference() {
     return false
+  }
+
+  setHighlighted(highlighted, scope) {
+    if (this.highlighted !== highlighted) {
+      this.highlighted = highlighted
+      this.highlightedScope = scope
+      this.emit('highlighted', highlighted, scope)
+      forEach(this.fragments, function(frag) {
+        frag.emit('highlighted', highlighted, scope)
+      })
+    }
   }
 }
 
