@@ -1,15 +1,16 @@
-import { Component, Grid } from 'substance'
+import { Component } from 'substance'
 import { forEach, isEmpty } from 'lodash-es'
 import moment from 'moment'
 
 class DocumentItem extends Component {
 
   render($$) {
+    let Grid = this.getComponent('grid')
+
     let item = this.props.item
     let meta = item.meta
     let index = this.props.index
     let config = this.context.config
-    //let documentIcon = $$(Icon, {icon: 'fa-file-text-o'})
     
     let urlHelper = this.context.urlHelper
     let url = urlHelper.openDocument(item.documentId)

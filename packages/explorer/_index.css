@@ -24,10 +24,17 @@
   position: absolute;
   top: 5px;
   right: 6px;
+  height: 30px;
+  line-height: 30px;
   background: #4A90E2;
   padding: 0px 10px;
   color: #fff;
   border-radius: 3px;
+}
+
+.sc-explorer .sc-searchbar .se-search-submit:hover,
+.sc-explorer .sc-searchbar .se-search-submit:active {
+  background: #4A90E2!important;
 }
 
 .sc-explorer .se-results-pane {
