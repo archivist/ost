@@ -26,7 +26,7 @@ class ResourcesContext extends Component {
 
   didUpdate() {
     if(this.state.entityId && !this.state.noScroll) {
-      this.refs.panelEl.scrollTo(this.state.entityId)
+      this.refs.panelEl.scrollTo(`[data-id="${this.state.entityId}"]`)
     }
   }
 
