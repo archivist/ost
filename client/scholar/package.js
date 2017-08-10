@@ -1,4 +1,4 @@
-import { ProseArticle } from 'substance'
+import { ProseEditorPackage } from 'substance'
 import ScholarPackage from '../../packages/scholar/package'
 import HeaderPackage from '../../packages/header/package'
 import ExplorerPackage from '../../packages/explorer/package'
@@ -20,6 +20,8 @@ import Definition from '../../packages/definition/Definition'
 import Person from '../../packages/person/Person'
 import Prison from '../../packages/prison/Prison'
 import Toponym from '../../packages/toponym/Toponym'
+
+const { ProseArticle } = ProseEditorPackage
 
 let appConfig = 'ARCHIVISTCONFIG'
 appConfig = JSON.parse(appConfig)
@@ -57,7 +59,7 @@ export default {
     let EntitiesConfigurator = new ScholarSubConfigurator()
     EntitiesConfigurator.defineSchema({
       name: 'archivist-entities',
-      ArticleClass: ProseArticle
+      DocumentClass: ProseArticle
     })
     EntitiesConfigurator.addNode(Definition)
     EntitiesConfigurator.addNode(Person)
