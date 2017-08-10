@@ -26,9 +26,9 @@ MetaNode.define({
   interviewee_military_service: { type: 'boolean', default: false, field: { editor: "logical", description: "Check if person was in Soviet army", label: "Military service", group: 'Person details'}},
   interviewee_sex: { type: 'string', default: '', field: { editor: "select", description: "Person gender", options: ['мужчина', 'женщина'], group: 'Person details'}},
   interviewee_place_of_birth: { type: 'string', default: '', field: { editor: "text", description: "Person place of birth", group: 'Person details'}},
-  interviewee_year_of_birth: { type: 'string', default: '', field: { editor: "input", dataType: "number", description: "Person year of birth", group: 'Person details'}},
-  interviewee_enslaving_year: { type: 'string', default: '', field: { editor: "input", dataType: "number", description: "Person enslaving year", group: 'Person details'}},
-  interviewee_homecoming_year: { type: 'string', default: '', field: { editor: "input", dataType: "number", description: "Person homecoming year", group: 'Person details'}},
+  interviewee_year_of_birth: { type: 'string', default: '', field: { editor: "input", dataType: "text", description: "Person year of birth", group: 'Person details'}},
+  interviewee_enslaving_year: { type: 'string', default: '', field: { editor: "input", dataType: "text", description: "Person enslaving year", group: 'Person details'}},
+  interviewee_homecoming_year: { type: 'string', default: '', field: { editor: "input", dataType: "text", description: "Person homecoming year", group: 'Person details'}},
   interviewee_photo: { type: 'string', default: '', field: { editor: "text", description: "Path to photo file", group: 'Person details'}},
 
   // Project data
