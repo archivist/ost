@@ -83,6 +83,7 @@ CREATE TABLE "documents" (
   title text,
   language text,
   annotations text[],
+  collaborators text[],
   "references" jsonb,
   "fullText" text,
   "updatedAt" timestamp,
