@@ -82,27 +82,41 @@ class ResourceClient {
   listEntities(filters, options, cb) {
     let filtersRequest = encodeURIComponent(JSON.stringify(filters))
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
-    request('GET', '/api/entities?filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
+    this.request('GET', '/api/entities?filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
 
   searchEntities(query, language, filters, options, cb) {
     let filtersRequest = encodeURIComponent(JSON.stringify(filters))
     let optionsRequest = encodeURIComponent(JSON.stringify(options))
-    request('GET', '/api/entities/search?query=' + query + '&language=' + language + '&filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
+    this.request('GET', '/api/entities/search?query=' + query + '&language=' + language + '&filters=' + filtersRequest + '&options=' + optionsRequest, null, cb)
   }
 
   /*
-    Read all document resources
+    Fetch all document resources
+  */
+  getDocumentCollaborators(documentId, cb) {
+    this.request('GET', '/api/collaborators/document/' + documentId, null, cb)
+  }
+
+  /*
+    Fetch all document resources
   */
   getDocumentResources(documentId, cb) {
-    request('GET', '/api/entities/document/' + documentId, null, cb)
+    this.request('GET', '/api/entities/document/' + documentId, null, cb)
   }
 
   /*
     Get subjects data
   */
   getSubjects(cb) {
-    request('GET', '/api/entities/tree/subject', null, cb)
+    this.request('GET', '/api/entities/tree/subject', null, cb)
+  }
+
+  /*
+    Get collaborator data
+  */
+  getCollaborator(userId, cb) {
+    this.request('GET', '/api/collaborators/' + userId, null, cb)
   }
 }
 

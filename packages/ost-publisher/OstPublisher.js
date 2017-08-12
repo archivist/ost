@@ -40,6 +40,10 @@ class OstPublisher extends Publisher {
           }.bind(this))
         }
       })
+
+      // If there is no collaborator data we should add it
+      let author = change.info.userId
+      if(author) this._addCollaborator(author)
     }
 
     // TODO: figure out why selection flags changed after comment update 

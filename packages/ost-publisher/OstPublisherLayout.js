@@ -46,7 +46,8 @@ class OstPublisherLayout extends PublisherLayout {
 
       series([
         this._loadResources(documentId, session),
-        this._loadSubjects(session)
+        this._loadSubjects(session),
+        this._loadCollaborators(documentId, session)
       ], () => {
         this.setState({
           session: session
