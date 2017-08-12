@@ -31,9 +31,13 @@
 }
 
 .se-entity-entries .sc-entity-entry.se-prison .se-title {
-  margin-top: 30px;
+  margin-top: 0px;
   margin-bottom: 10px;
   margin-right: 60px;
+}
+
+.sc-reader .se-entity-entries .sc-entity-entry.se-prison .se-title {
+  margin-top: 30px;
 }
 
 .sc-entity-entry.se-prison .se-prison-type {
