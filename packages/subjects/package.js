@@ -8,6 +8,7 @@ export default {
   configure: function(config) {
     config.defineSchema({
       name: 'archivist-subjects',
+      version: '1.0.0',
       DocumentClass: Subjects,
       defaultTextType: 'subject'
     })

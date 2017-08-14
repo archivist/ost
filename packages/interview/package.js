@@ -16,6 +16,7 @@ export default {
   configure: function(config) {
     config.defineSchema({
       name: 'archivist-interview',
+      version: '1.0.0',
       DocumentClass: Interview,
       defaultTextType: 'paragraph'
     })
