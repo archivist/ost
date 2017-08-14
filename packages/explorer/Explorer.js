@@ -447,7 +447,8 @@ class Explorer extends Component {
     if(op === ' ~~') metaFilter[prop] = '%' + value + '%'
     this.extendState({
       filters: extend({}, filters, metaFilter),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
@@ -463,7 +464,8 @@ class Explorer extends Component {
     metaFilters[id] = value
     this.extendState({
       filters: extend({}, filters, metaFilter),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
@@ -478,7 +480,8 @@ class Explorer extends Component {
     if(filterKey2) delete filters[filterKeys[filterKey2]]
     this.extendState({
       filters: extend({}, filters),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
@@ -495,7 +498,8 @@ class Explorer extends Component {
     })
     this.extendState({
       filters: extend({}, filters),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
