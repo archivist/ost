@@ -18,10 +18,6 @@ class PersonContextItem extends Component {
       .attr("data-id", this.props.entityId)
       .addClass('sc-entity-entry se-person')
 
-    if(this.props.mode !== 'view') {
-      el.on('click', this.handleEditorClick)
-    }
-
     if(this.props.focus) {
       el.addClass('se-focused')
     }
@@ -29,10 +25,15 @@ class PersonContextItem extends Component {
     el.append(
       $$('div').addClass('se-type').append(this.getLabel('person')),
       $$('div').addClass('se-title').append(node.name),
-      $$('div').addClass('se-description').setInnerHTML(node.description),
-      $$('div').addClass('se-edit-entity').append(this.context.iconProvider.renderIcon($$, 'editEntity'))
-        .on('click', this.editEntity)
+      $$('div').addClass('se-description').setInnerHTML(node.description)
     )
+
+    if(this.props.mode !== 'view') {
+      el.append(
+        $$('div').addClass('se-edit-entity').append(this.context.iconProvider.renderIcon($$, 'editEntity'))
+          .on('click', this.editEntity)
+      ).on('click', this.handleEditorClick)
+    }
 
     return el
   }
