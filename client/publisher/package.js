@@ -74,6 +74,7 @@ export default {
     let EntitiesConfigurator = new ArchivistSubConfigurator()
     EntitiesConfigurator.defineSchema({
       name: 'archivist-entities',
+      version: '1.0.0',
       DocumentClass: ProseArticle
     })
     EntitiesConfigurator.addNode(Definition)
