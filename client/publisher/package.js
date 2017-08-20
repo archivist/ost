@@ -31,6 +31,7 @@ export default {
   name: 'archivist-publisher',
   configure: function(config) {
     // Use the default Archivist package
+    config.setDefaultLanguage(appConfig.defaultLanguage)
     config.import(ArchivistPackage)
     config.import(DocumentsPackage)
     // Override Archivist form package 
