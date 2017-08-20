@@ -110,13 +110,13 @@ export default {
     config.setResourceClient(ResourceClient)
 
     config.setMenuItems([
-      {icon: 'fa-file-text', label: 'Documents', action: 'archive'},
-      {icon: 'fa-tags', label: 'Subjects', action: 'subjects'},
-      {icon: 'fa-users', label: 'Persons', action: 'persons'},
-      {icon: 'fa-th', label: 'Prisons', action: 'prisons'},
-      {icon: 'fa-globe', label: 'Toponyms', action: 'toponyms'},
-      {icon: 'fa-book', label: 'Definitions', action: 'definitions'},
-      {icon: 'fa-id-badge', label: 'Users', action: 'users'}
+      {icon: 'fa-file-text', label: 'documents', action: 'archive'},
+      {icon: 'fa-tags', label: 'subjects', action: 'subjects'},
+      {icon: 'fa-users', label: 'persons', action: 'persons'},
+      {icon: 'fa-th', label: 'prisons', action: 'prisons'},
+      {icon: 'fa-globe', label: 'toponyms', action: 'toponyms'},
+      {icon: 'fa-book', label: 'definitions', action: 'definitions'},
+      {icon: 'fa-id-badge', label: 'users', action: 'users'}
     ])
 
     config.setDefaultResourceTypes(['definition', 'person', 'prison', 'toponym'])

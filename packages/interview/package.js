@@ -25,7 +25,6 @@ export default {
 
     // Import Substance Core packages
     config.import(BasePackage)
-    config.import(PersistencePackage)
     config.import(ParagraphPackage)
     config.import(HeadingPackage)
     config.import(BlockquotePackage)
@@ -42,5 +41,26 @@ export default {
     config.import(PrisonPackage)
     config.import(ToponymPackage)
     config.import(EntityReferencePackage)
+
+    config.addLabel('undo', {
+      en: 'undo',
+      ru: 'отмена'
+    })
+    config.addLabel('redo', {
+      en: 'redo',
+      ru: 'вернуть'
+    })
+    config.addLabel('strong', {
+      en: 'strong',
+      ru: 'жирный'
+    })
+    config.addLabel('emphasis', {
+      en: 'emphasis',
+      ru: 'наклонный'
+    })
+    config.addLabel('link', {
+      en: 'link',
+      ru: 'ссылка'
+    })
   }
 }

@@ -6,8 +6,8 @@ export default {
     config.addCommand('entity-reference', EntityReferenceCommand, { nodeType: 'entity-reference', commandGroup: 'references' })
     config.addIcon('entity-reference', {'fontawesome': 'fa-book'})
     config.addLabel('entity-reference', {
-      en: 'Entity reference',
-      ru: 'Связать с сущностью'
+      en: 'entity reference',
+      ru: 'связать с сущностью'
     })
 
     config.addKeyboardShortcut('CommandOrControl+E', { command: 'entity-reference' })

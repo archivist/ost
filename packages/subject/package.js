@@ -11,8 +11,8 @@ export default {
     config.addIcon(SubjectReference.type, {'fontawesome': 'fa-tags'})
 
     config.addLabel('subject', {
-      en: 'Subject reference',
-      ru: 'Связать с рубрикой'
+      en: 'subject reference',
+      ru: 'связать с рубрикой'
     })
   }
 }

@@ -39,7 +39,7 @@ export default {
         type: 'tool-group',
         showDisabled: true,
         style: 'minimal',
-        commandGroups: ['undo-redo', 'persistence']
+        commandGroups: ['undo-redo']
       },
       {
         name: 'annotations',
