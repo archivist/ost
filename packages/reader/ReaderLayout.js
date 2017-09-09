@@ -62,14 +62,7 @@ class ReaderLayout extends Component {
 
     this._updateLayout()
 
-    if (this.state.error) {
-      main = $$('div').append(
-        $$(Notification, {
-          type: 'error',
-          message: this.state.error.message
-        })
-      )
-    } else if (this.state.session) {
+    if (this.state.session) {
       main = $$(Reader, {
         configurator: this.props.configurator,
         editorSession: this.state.session
