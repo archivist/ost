@@ -6,7 +6,7 @@ class OstNodeForm extends NodeForm {
   constructor(...args) {
     super(...args)
 
-    this.forms = new OstForms()
+    this.forms = new OstForms({configurator: this.context.configurator})
   }
 
   didMount() {
