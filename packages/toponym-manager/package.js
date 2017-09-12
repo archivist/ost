@@ -8,5 +8,9 @@ export default {
       en: 'Toponyms',
       ru: 'Топонимы'
     })
+    config.addLabel('add-toponym', {
+      en: '+ Add Toponym',
+      ru: '+ Добавить топоним'
+    })
   }
 }

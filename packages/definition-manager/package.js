@@ -8,5 +8,9 @@ export default {
       en: 'Definitions',
       ru: 'Дефиниции'
     })
+    config.addLabel('add-definition', {
+      en: '+ Add Definition',
+      ru: '+ Добавить дефиницию'
+    })
   }
 }

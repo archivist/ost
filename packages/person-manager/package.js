@@ -8,5 +8,9 @@ export default {
       en: 'Persons',
       ru: 'Персоналии'
     })
+    config.addLabel('add-person', {
+      en: '+ Add Person',
+      ru: '+ Добавить персоналию'
+    })
   }
 }
