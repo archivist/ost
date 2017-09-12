@@ -7,9 +7,12 @@ export default class OstForms extends Forms {
   addGeocodedField(fieldId, el, config) {
     config = config || {}
     el = DefaultDOMElement.wrapNativeElement(el)
+    let configurator = this.configurator
+
     let field = GeocodedField.mount({
       fieldId,
-      config
+      config,
+      configurator
     }, el)
     field.on('commit', this._onCommit, this)
     field.on('geocode', this._onGeocode, this)
@@ -20,9 +23,12 @@ export default class OstForms extends Forms {
   addMap(fieldId, el, config) {
     config = config || {}
     el = DefaultDOMElement.wrapNativeElement(el)
+    let configurator = this.configurator
+    
     let field = MapField.mount({
       fieldId,
-      config
+      config,
+      configurator
     }, el)
     field.on('commit', this._onCommit, this)
     field.on('map:point', this._onSetPoint, this)
