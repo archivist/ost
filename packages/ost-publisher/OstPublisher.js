@@ -1,7 +1,7 @@
 // import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane, Toolbar } from 'substance'
 import { findIndex, forEach, map } from 'lodash-es'
 import OstPublisherContext from './OstPublisherContext'
-import { Publisher } from 'archivist'
+import { Publisher } from 'archivist-js'
 
 class OstPublisher extends Publisher {
   constructor(...args) {

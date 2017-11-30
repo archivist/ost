@@ -3,7 +3,7 @@ import MetaNode from './MetaNode'
 import InterviewSeed from './InterviewSeed'
 
 import { BasePackage, ParagraphPackage, PersistencePackage, HeadingPackage, BlockquotePackage, LinkPackage, EmphasisPackage, StrongPackage} from 'substance'
-import { CommentPackage, TimecodePackage } from 'archivist'
+import { CommentPackage, TimecodePackage } from 'archivist-js'
 import SubjectPackage from '../subject/package'
 import DefinitionPackage from '../definition/package'
 import PersonPackage from '../person/package'

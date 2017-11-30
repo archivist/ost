@@ -1,5 +1,5 @@
 import { ContainerAnnotationPackage } from 'substance'
-import { BracketsPackage, TabbedContextPackage } from 'archivist'
+import { BracketsPackage, TabbedContextPackage } from 'archivist-js'
 import ReaderLayout from './ReaderLayout'
 
 export default {

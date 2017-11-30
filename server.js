@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '3mb', parameterLimit: 30
 /* 
   Config
 */
-var ServerConfigurator = require('archivist').ServerConfigurator;
+var ServerConfigurator = require('archivist-js').ServerConfigurator;
 var ServerPackage = require('./packages/server/package');
 var configurator = new ServerConfigurator();
 configurator.setServerApp(app);

@@ -1,5 +1,5 @@
 import { DefaultDOMElement } from 'substance'
-import { Forms } from 'archivist'
+import { Forms } from 'archivist-js'
 import GeocodedField from './geocoded-field/GeocodedField'
 import MapField from './map-field/MapField'
 

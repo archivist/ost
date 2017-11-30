@@ -1,7 +1,7 @@
 // import { Component } from 'substance'
 // import { forEach } from 'lodash-es'
 
-import { PublisherContext } from 'archivist'
+import { PublisherContext } from 'archivist-js'
 
 class OstPublisherContext extends PublisherContext {
   

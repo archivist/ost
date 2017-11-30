@@ -1,5 +1,5 @@
 import OstPublisherLayout from './OstPublisherLayout'
-import { BracketsPackage, CollaboratorsPackage, TabbedContextPackage } from 'archivist'
+import { BracketsPackage, CollaboratorsPackage, TabbedContextPackage } from 'archivist-js'
 import { ContainerAnnotationPackage, FindAndReplacePackage } from 'substance'
 
 export default {

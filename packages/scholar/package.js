@@ -1,5 +1,5 @@
 import { BasePackage } from 'substance'
-import { DocumentPackage, PagerPackage, SpinnerPackage, ToolboxPackage } from 'archivist'
+import { DocumentPackage, PagerPackage, SpinnerPackage, ToolboxPackage } from 'archivist-js'
 
 export default {
   name: 'scholar',

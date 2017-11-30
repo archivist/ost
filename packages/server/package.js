@@ -7,11 +7,11 @@ let IndexerPackage = require('../indexer/package')
 let ResourceServerPackage = require('./resource/package')
 let ConverterServerPackage = require('./converter/package')
 let DocumentServerPackage = require('./document/package')
-let ArchivistSubConfigurator = require('archivist').ArchivistSubConfigurator
-let AuthServerPackage = require('archivist').AuthServerPackage
-let CollabServerPackage = require('archivist').CollabServerPackage
-let UserServerPackage = require('archivist').UserServerPackage
-let InspectorPackage = require('archivist').InspectorPackage
+let ArchivistSubConfigurator = require('archivist-js').ArchivistSubConfigurator
+let AuthServerPackage = require('archivist-js').AuthServerPackage
+let CollabServerPackage = require('archivist-js').CollabServerPackage
+let UserServerPackage = require('archivist-js').UserServerPackage
+let InspectorPackage = require('archivist-js').InspectorPackage
 
 let db = new Database()
 

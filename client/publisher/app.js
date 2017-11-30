@@ -1,5 +1,5 @@
 import { substanceGlobals } from 'substance'
-import { Archivist, ArchivistConfigurator } from 'archivist'
+import { Archivist, ArchivistConfigurator } from 'archivist-js'
 import Package from './package'
 
 substanceGlobals.DEBUG_RENDERING = true;

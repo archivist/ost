@@ -1,5 +1,5 @@
 let Err = require('substance').SubstanceError
-let ArchivistIndexer = require('archivist').Indexer
+let ArchivistIndexer = require('archivist-js').Indexer
 let findIndex = require('lodash/findIndex')
 let forEach = require('lodash/forEach')
 let isEmpty = require('lodash/isEmpty')

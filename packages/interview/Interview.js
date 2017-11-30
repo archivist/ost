@@ -1,5 +1,5 @@
 import { Document } from 'substance'
-import { EntityIndex } from 'archivist'
+import { EntityIndex } from 'archivist-js'
 import { map } from 'lodash-es'
 /*
   Archivist Interview model.

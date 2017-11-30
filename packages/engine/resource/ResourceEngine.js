@@ -1,5 +1,5 @@
 let Err = require('substance').SubstanceError
-let ArchivistResourceEngine = require('archivist').ResourceEngine
+let ArchivistResourceEngine = require('archivist-js').ResourceEngine
 let each = require('lodash/each')
 let isEmpty = require('lodash/isEmpty')
 let isNull = require('lodash/isNull')

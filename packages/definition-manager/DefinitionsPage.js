@@ -1,5 +1,5 @@
 import { FontAwesomeIcon as Icon } from 'substance'
-import { AbstractEntityPage } from 'archivist'
+import { AbstractEntityPage } from 'archivist-js'
 
 const definitionTypes = [
   'общий комментарий',

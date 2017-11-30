@@ -1,5 +1,5 @@
 import { async, JSONConverter, substanceGlobals } from 'substance'
-import { PublisherLayout, PublisherSession } from 'archivist'
+import { PublisherLayout, PublisherSession } from 'archivist-js'
 import OstPublisher from './OstPublisher'
 
 const {series} = async
