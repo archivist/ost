@@ -4,6 +4,7 @@ import InterviewSeed from './InterviewSeed'
 
 import { BasePackage, ParagraphPackage, PersistencePackage, HeadingPackage, BlockquotePackage, LinkPackage, EmphasisPackage, StrongPackage} from 'substance'
 import { CommentPackage, TimecodePackage } from 'archivist-js'
+import WaypointPackage from '../waypoint/package'
 import SubjectPackage from '../subject/package'
 import DefinitionPackage from '../definition/package'
 import PersonPackage from '../person/package'
@@ -33,6 +34,7 @@ export default {
     config.import(LinkPackage)
 
     // Import archivist specific packages
+    config.import(WaypointPackage) 
     config.import(CommentPackage)
     config.import(TimecodePackage)
     config.import(SubjectPackage)

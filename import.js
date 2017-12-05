@@ -26,7 +26,7 @@ args.forEach(function(arg) {
   let option = arg.split('=')
   if(option.length === 2) {
     config[option[0]] = option[1]
-  } 
+  }
 })
 
 let db = new Database()
@@ -148,7 +148,7 @@ function importLocations() {
   jsonData.forEach(function(location) {
     let locationData = {
       entityId: location._id['$oid'],
-      name: location.name, 
+      name: location.name,
       description: location.description,
       edited: location.updatedAt['$date'],
       entityType: location.type,
@@ -233,7 +233,7 @@ function importDocuments() {
   let changes = {}
   let documents = {}
   let snapshots = {}
-  
+
   jsonData.forEach(function(doc) {
     // Document processing
     // ===================
@@ -417,6 +417,9 @@ function importDocuments() {
         entities.push(node.target)
         documentData.nodes.push(entity)
         entityIndexes[entityType]++
+      } else if (node.type === 'waypoint') {
+        node.density = node.density.toString()
+        documentData.nodes.push(node)
       } else if (node.type === 'document') {
         metaSource = node
         metaNode = {
@@ -455,7 +458,8 @@ function importDocuments() {
           interviewee_place_of_birth: node.place_of_birth,
           interviewee_year_of_birth: node.year_of_birth,
           interviewee_enslaving_year: node.enslaving_year,
-          interviewee_homecoming_year: node.homecoming_year
+          interviewee_homecoming_year: node.homecoming_year,
+          interviewee_waypoints: node.interviewee_waypoints || []
         }
 
         try {
@@ -475,7 +479,7 @@ function importDocuments() {
         if(node.finished) metaNode.state = 'finished'
         if(node.published) metaNode.state = 'published'
 
-        documentData.nodes.unshift(metaNode)        
+        documentData.nodes.unshift(metaNode)
       }
 
     })
@@ -536,11 +540,11 @@ function importDocuments() {
     // }
 
   })
-  
+
   let changeStore = configurator.getStore('change')
   let documentStore = configurator.getStore('document')
   let snapshotStore = configurator.getStore('snapshot')
-  
+
   return documentStore.seed(documents)
     .then(function() {
       return changeStore.seed(changes)

@@ -13,7 +13,7 @@ MetaNode.define({
   abstract: { type: 'string', default: '', field: { editor: "multitext", description: "Enter abstract", collapse: 'Russian', group: 'Abstract'}},
   abstract_translation: { type: 'string', default: '', field: { editor: "multitext", description: "Enter short summary in English", collapse: 'English', group: 'Abstract'}},
   abstract_translation_second: { type: 'string', default: '', field: { editor: "multitext", description: "Enter short summary in German", collapse: 'German', group: 'Abstract'}},
-  
+
   // Interviewee data
   title: { type: 'string', default: 'Untitled Interview', field: { editor: "text", description: "Person name", group: 'Person details'}},
   interviewee_bio: { type: 'string', default: '', field: { editor: "multitext", description: "Enter person biography", collapse: 'Russian bio', group: 'Person details'}},
@@ -30,6 +30,8 @@ MetaNode.define({
   interviewee_enslaving_year: { type: 'string', default: '', field: { editor: "input", dataType: "text", description: "Person enslaving year", group: 'Person details'}},
   interviewee_homecoming_year: { type: 'string', default: '', field: { editor: "input", dataType: "text", description: "Person homecoming year", group: 'Person details'}},
   interviewee_photo: { type: 'string', default: '', field: { editor: "text", description: "Path to photo file", group: 'Person details'}},
+  // TODO: waypoint editor
+  interviewee_waypoints: { type: ['waypoint'], default: [] },
 
   // Project data
   project: { type: 'string', default: '', field: { editor: "select", description: "Project", options: ['Международный проект документации рабского и принудительного труда', 'Выжившие в Маутхаузене', 'Коллекция №1'], group: 'Project details'}},
@@ -45,9 +47,6 @@ MetaNode.define({
   record_type: { type: 'string', default: '', field: { editor: "select", description: "Interview type", options: ['audio', 'video'], group: 'Project details'}},
   interview_duration: { type: 'number', default: 0, field: { editor: "input", dataType: "number", description: "Duration (in minutes)", group: 'Project details'}},
   media_id: { type: 'string', default: '', field: { editor: "text", description: "Media identifier", group: 'Project details'}},
-
-  // TODO: waypoints
-  //interviewee_waypoints: { type: ['waypoint'], default: [] }
 
   // Document data
   published_on: { type: 'string', default: '', field: { editor: "input", dataType: "date", description: "Published date (yyyy-MM-dd)", group: 'Document details'}},
