@@ -10,12 +10,12 @@ class ConverterServer {
   }
 
   bind(app) {
-    app.get(this.path + '/convert', this._convert.bind(this))
+    //app.get(this.path + '/convert', this._convert.bind(this))
   }
 
   _convert(req, res, next) {
     res.send('<p>Current data will be converted in couple of minutes...</p>')
-    let converter = spawn('../../convert.sh')
+    let converter = spawn('../convert.sh')
 
     converter.stdout.on('data', function(data) {
       console.log('stdout: ' + data);
