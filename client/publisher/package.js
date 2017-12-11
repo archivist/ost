@@ -1,7 +1,8 @@
 import { ProseEditorPackage } from 'substance'
-import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, DocumentsPackage, IndentationPackage, MetadataEditorPackage, ResourcesPackage, TimecodeAnnotatorPackage, UsersPackage, WhitespacePackage } from 'archivist-js'
+import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, IndentationPackage, MetadataEditorPackage, ResourcesPackage, TimecodeAnnotatorPackage, UsersPackage, WhitespacePackage } from 'archivist-js'
 import InterviewPackage from '../../packages/interview/package'
 import FormsPackage from '../../packages/forms/package'
+import DocumentsPackage from '../../packages/documents/package'
 import DefinitionManagerPackage from '../../packages/definition-manager/package'
 import PersonManagerPackage from '../../packages/person-manager/package'
 import PrisonManagerPackage from '../../packages/prison-manager/package'
@@ -34,7 +35,7 @@ export default {
     config.setDefaultLanguage(appConfig.defaultLanguage)
     config.import(ArchivistPackage)
     config.import(DocumentsPackage)
-    // Override Archivist form package 
+    // Override Archivist form package
     config.import(FormsPackage)
     // Manage person entity type
     config.import(PersonManagerPackage)
