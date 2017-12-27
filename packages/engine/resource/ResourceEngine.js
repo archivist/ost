@@ -123,7 +123,7 @@ class ResourceEngine extends ArchivistResourceEngine {
           feature.properties.documents = entity.cnt
           feature.properties.fragments = entity.sum
 
-          if(!isNull(entity.data.point)) geojson.features.push(feature)
+          if(!isNull(entity.data.point) && entity.data.point.length > 0) geojson.features.push(feature)
         })
 
         resolve(geojson)
