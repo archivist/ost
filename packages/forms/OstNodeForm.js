@@ -75,6 +75,7 @@ class OstNodeForm extends NodeForm {
         this.forms.setValue('currentName', value)
         this._commit('currentName', value)
       }
+      this.forms._editables.synonyms.rerender()
     }
   }
 }
