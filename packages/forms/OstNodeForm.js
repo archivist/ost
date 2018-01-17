@@ -72,10 +72,15 @@ class OstNodeForm extends NodeForm {
       }
       field = this.forms._editables.currentName
       if(field) {
+        const currentName = this.forms.getValue('currentName')
+        let synonyms = this.forms.getValue('synonyms')
+        const currentNameIndex = synonyms.indexOf(currentName)
+        synonyms[currentNameIndex] = value
+        this.forms.setValue('synonyms', synonyms)
         this.forms.setValue('currentName', value)
         this._commit('currentName', value)
+        this.forms._editables.synonyms.rerender()
       }
-      this.forms._editables.synonyms.rerender()
     }
   }
 }
