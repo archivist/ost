@@ -19,7 +19,11 @@
   white-space: pre-wrap;
 }
 
-.sc-reader .se-context-section { 
+.sc-reader .sc-text-property .sc-comment {
+  background: none;
+}
+
+.sc-reader .se-context-section {
   background: #fafafa;
   border-left: 1px solid var(--border-color);
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
