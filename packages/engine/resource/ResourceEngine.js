@@ -90,11 +90,11 @@ class ResourceEngine extends ArchivistResourceEngine {
   getLocationsList() {
     let query = `
       SELECT "entityId", name, "entityType", data,
-      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") AS cnt,
-      (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId") AS sum
+      (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published') AS cnt,
+      (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published') AS sum
       FROM entities
-      WHERE ("entityType" = 'prison' OR "entityType" = 'toponym') AND (data->>'point' != '{}')
-      AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
+      WHERE (select exists(SELECT 1 FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published'))
+      AND ("entityType" = 'prison' OR "entityType" = 'toponym') AND (data->>'point' != '{}')
     `
 
     return new Promise((resolve, reject) => {
@@ -150,9 +150,9 @@ class ResourceEngine extends ArchivistResourceEngine {
       (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published') AS count,
       (SELECT SUM(("references"->"entityId")::text::integer) FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published') AS fragments
       FROM entities
-      WHERE "entityType" = 'person'
+      WHERE (select exists(SELECT 1 FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published'))
+      AND "entityType" = 'person'
       AND entities.data->'global' = 'true' ${letterCondition}
-      AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
       ORDER BY name ASC
       LIMIT ${limit} OFFSET ${offset}
     `
@@ -187,9 +187,9 @@ class ResourceEngine extends ArchivistResourceEngine {
     let query = `
       SELECT lower(LEFT(name, 1)) AS letter, COUNT(*) AS cnt
       FROM entities
-      WHERE "entityType" = 'person'
+      WHERE (select exists(SELECT 1 FROM documents WHERE "references" ? "entityId" AND meta->>'state' = 'published'))
+      AND "entityType" = 'person'
       AND data->>'global' = 'true'
-      AND (SELECT COUNT(*) FROM documents WHERE "references" ? "entityId") > 0
       GROUP BY letter
     `
 

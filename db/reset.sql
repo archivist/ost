@@ -54,14 +54,15 @@ CREATE INDEX entities_created_idx ON entities(created);
 CREATE INDEX tsv_entities_idx ON entities USING gin(tsv);
 -- Entity name first letter index
 CREATE INDEX entity_name_first_letter ON entities USING btree (lower(cast(name AS varchar(1))));
+CREATE INDEX entity_names ON entities USING btree (name, "entityId")
 
-CREATE OR REPLACE FUNCTION arr2text(text[]) 
+CREATE OR REPLACE FUNCTION arr2text(text[])
   RETURNS text LANGUAGE sql IMMUTABLE AS 'SELECT $1::text';
 
 CREATE FUNCTION entities_search_trigger() RETURNS trigger AS $$
 begin
   new.tsv :=
-    setweight(to_tsvector('russian', COALESCE(new.name,'')), 'A') || 
+    setweight(to_tsvector('russian', COALESCE(new.name,'')), 'A') ||
     setweight(to_tsvector('russian', COALESCE(arr2text(new.synonyms),'')),'B') ||
     setweight(to_tsvector('russian', COALESCE(new.description,'')),'C');
   return new;
@@ -102,7 +103,7 @@ CREATE INDEX tsv_documents_idx ON documents USING gin(tsv);
 CREATE FUNCTION documents_search_trigger() RETURNS trigger AS $$
 begin
   new.tsv :=
-    setweight(to_tsvector('russian', COALESCE(new.title,'')), 'A') || 
+    setweight(to_tsvector('russian', COALESCE(new.title,'')), 'A') ||
     setweight(to_tsvector('russian', COALESCE(new.meta->>'summary','')),'B') ||
     setweight(to_tsvector('russian', COALESCE(new."fullText",'')),'C');
   return new;
@@ -148,7 +149,7 @@ CREATE TABLE "fragments" (
   "time" text,
   -- array with annotations references
   annotations text[],
-  -- annotations references as key/value object 
+  -- annotations references as key/value object
   -- (key is reference and value is number of references)
   "references" jsonb,
   -- previous fragment reference

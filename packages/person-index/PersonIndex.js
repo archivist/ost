@@ -133,7 +133,7 @@ class PersonIndex extends Component {
     let perPage = this.state.perPage
     let options = {
       order: this.state.order + ' ' + this.state.direction,
-      limit: perPage, 
+      limit: perPage,
       offset: pagination ? this.state.items.length : 0
     }
     let items = []

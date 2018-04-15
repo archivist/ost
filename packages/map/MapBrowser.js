@@ -24,11 +24,11 @@ class MapBrowser extends Component {
     return {
       filters: {
         toponym: {
-          counter: 0, 
+          counter: 0,
           state: true
         },
         prison: {
-          counter: 0, 
+          counter: 0,
           state: true
         }
       },
@@ -102,6 +102,9 @@ class MapBrowser extends Component {
       filter: feature => {
         let type = feature.properties.entityType
         return filters[type].state
+      },
+      coordsToLatLng: coords => {
+        return new L.LatLng(coords[0], coords[1])
       }
     })
 
@@ -128,7 +131,7 @@ class MapBrowser extends Component {
       let id = e.layer.feature.properties.entityId
       this._showLocation(id, e.layer)
     })
-    this.markers.addLayer(this.geojson) 
+    this.markers.addLayer(this.geojson)
     this.map.addLayer(this.markers)
   }
 
