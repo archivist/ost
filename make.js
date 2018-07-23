@@ -36,15 +36,12 @@ b.task('server', () => {
 // build all
 b.task('default', ['dev'])
 b.task('dev', ['clean', 'assets', 'deps', 'server', 'client'])
-b.task('production', ['clean', 'assets', 'deps-min', 'server', 'client-min'])
+b.task('production', ['clean', 'assets', 'deps', 'server', 'client'])
 
 function buildApp(app, production) {
   return function() {
-    if(production) {
-      b.copy('client/'+ app +'/index.production.html', './dist/'+ app +'/index.html')
-    } else {
-      b.copy('client/'+ app +'/index.html', './dist/'+ app +'/')
-    }
+    b.copy('client/'+ app +'/index.production.html', './dist/'+ app +'/index.html')      
+    //b.copy('client/'+ app +'/index.html', './dist/'+ app +'/')
     b.copy('client/'+ app +'/assets', './dist/'+ app +'/assets/')
     b.css('client/' + app + '/app.css', 'dist/' + app + '/' + app + '.css')
 
@@ -81,7 +78,7 @@ function buildApp(app, production) {
       }
     })
     if(production) {
-      //b.minify('./dist/' + app + '/' + app + '.js')
+      b.minify('./dist/' + app + '/' + app + '.js')
     } else {
       b.copy('./dist/' + app + '/app.js.map', './dist/' + app + '/' + app + '.js.map')
     }
