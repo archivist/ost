@@ -17,11 +17,6 @@
   <meta property="twitter:url" content="http://archive.tastorona.su">
   <meta property="twitter:image" content="http://tastorona.su/static/img/index-social.jpg">
   <link rel="canonical" href="http://tastorona.su">
-  <script type="text/javascript" src="/assets/polyfills.js"></script>
-  <script type="text/javascript" src="/libs/substance/substance.legacy.min.js"></script>
-  <script type="text/javascript" src="/libs/archivist/archivist.es5.min.js"></script>
-  <script type="text/javascript" src="/scholar.min.js"></script>
-  <script type="text/javascript" src="/libs/markercluster/leaflet.markercluster.js"></script>
   <style>
     @import '/libs/substance/substance.next.css';
     @import '/libs/archivist/archivist.css';
@@ -32,6 +27,16 @@
   </style>
 </head>
 <body>
-
+  <script type="text/javascript">
+    if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/))){
+      var bodyEl = document.getElementsByTagName('body')[0];
+      bodyEl.innerHTML = 'Для просмотра архива воспользуйтесь современным браузером, к примеру: Google Chrome, Firefox, Miscrosoft Edge или Safari';
+    }
+  </script>
+  <script type="text/javascript" src="/assets/polyfills.js"></script>
+  <script type="text/javascript" src="/libs/substance/substance.legacy.min.js"></script>
+  <script type="text/javascript" src="/libs/archivist/archivist.es5.min.js"></script>
+  <script type="text/javascript" src="/scholar.min.js"></script>
+  <script type="text/javascript" src="/libs/markercluster/leaflet.markercluster.js"></script>
 </body>
 </html>
