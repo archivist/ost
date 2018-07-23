@@ -36,7 +36,8 @@ b.task('server', () => {
 // build all
 b.task('default', ['dev'])
 b.task('dev', ['clean', 'assets', 'deps', 'server', 'client'])
-b.task('production', ['clean', 'assets', 'deps-min', 'server', 'client-min'])
+//b.task('production', ['clean', 'assets', 'deps-min', 'server', 'client-min'])
+b.task('production', ['clean', 'assets', 'deps', 'server', 'client'])
 
 function buildApp(app, production) {
   return function() {
