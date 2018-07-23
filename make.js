@@ -36,8 +36,7 @@ b.task('server', () => {
 // build all
 b.task('default', ['dev'])
 b.task('dev', ['clean', 'assets', 'deps', 'server', 'client'])
-//b.task('production', ['clean', 'assets', 'deps-min', 'server', 'client-min'])
-b.task('production', ['clean', 'assets', 'deps', 'server', 'client'])
+b.task('production', ['clean', 'assets', 'deps-min', 'server', 'client-min'])
 
 function buildApp(app, production) {
   return function() {
@@ -82,7 +81,7 @@ function buildApp(app, production) {
       }
     })
     if(production) {
-      b.minify('./dist/' + app + '/' + app + '.js')
+      //b.minify('./dist/' + app + '/' + app + '.js')
     } else {
       b.copy('./dist/' + app + '/app.js.map', './dist/' + app + '/' + app + '.js.map')
     }
