@@ -249,7 +249,7 @@ class SubjectsPage extends Component {
     if(hideExpand) {
       additionalActions.push(
         {label: 'Delete', action: this._removeItem.bind(this, node.id)},
-        {label: 'Merge', action: this._merge.bind(this, node.id)}
+        {label: 'Merge', action: this._merge.bind(this, node.id)}S
       )
     }
 
