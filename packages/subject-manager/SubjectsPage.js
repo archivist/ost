@@ -472,6 +472,7 @@ class SubjectsPage extends Component {
     let user = authenticationClient.getUser()
     let resourceClient = this.context.resourceClient
     let items = this.state.items
+    let position = parent === 'root' ? Object.keys(items.getRoots()).length : items.getChildren(parent).length
     let entityData = {
       name: 'New subject',
       synonyms: [],
@@ -483,7 +484,7 @@ class SubjectsPage extends Component {
         name: 'New subject',
         workname: '',
         parent: parent,
-        position: Object.keys(items.getRoots()).length,
+        position: position,
         description: ''
       }
     }
@@ -507,7 +508,7 @@ class SubjectsPage extends Component {
         position: entity.data.position,
         count: 0,
         description: entity.data.description,
-        parent: 'root'
+        parent: parent
       })
 
       this.extendProps({
