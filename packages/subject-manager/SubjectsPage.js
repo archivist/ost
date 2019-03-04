@@ -248,7 +248,8 @@ class SubjectsPage extends Component {
     if(hideExpand) {
       additionalActions.push(
         {label: 'Delete', action: this._removeItem.bind(this, node.id)},
-        {label: 'Merge', action: this._merge.bind(this, node.id)}
+        {label: 'Merge', action: this._merge.bind(this, node.id)},
+        {label: 'Add Child', action: this._newSubject.bind(this, node.id)}
       )
     }
 
@@ -465,7 +466,8 @@ class SubjectsPage extends Component {
   /*
     Create a new subject 
   */
-  _newSubject() {
+  _newSubject(parent) {
+    parent = parent || 'root'
     let authenticationClient = this.context.authenticationClient
     let user = authenticationClient.getUser()
     let resourceClient = this.context.resourceClient
@@ -480,7 +482,7 @@ class SubjectsPage extends Component {
       data: {
         name: 'New subject',
         workname: '',
-        parent: 'root',
+        parent: parent,
         position: Object.keys(items.getRoots()).length,
         description: ''
       }
