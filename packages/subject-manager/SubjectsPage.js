@@ -242,14 +242,14 @@ class SubjectsPage extends Component {
 
     let additionalActions = [
       {label: 'Edit', action: this._editItem.bind(this, node.id)},
-      {label: 'Documents', action: this._loadReferences.bind(this, node.id)}
+      {label: 'Documents', action: this._loadReferences.bind(this, node.id)},
+      {label: 'Add Child', action: this._newSubject.bind(this, node.id)}
     ]
 
     if(hideExpand) {
       additionalActions.push(
         {label: 'Delete', action: this._removeItem.bind(this, node.id)},
-        {label: 'Merge', action: this._merge.bind(this, node.id)},
-        {label: 'Add Child', action: this._newSubject.bind(this, node.id)}
+        {label: 'Merge', action: this._merge.bind(this, node.id)}
       )
     }
 
