@@ -467,7 +467,7 @@ class SubjectsPage extends Component {
     Create a new subject 
   */
   _newSubject(parent) {
-    parent = parent || 'root'
+    parent = (parent && typeof parent === 'string') || 'root'
     let authenticationClient = this.context.authenticationClient
     let user = authenticationClient.getUser()
     let resourceClient = this.context.resourceClient
