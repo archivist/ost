@@ -1,4 +1,4 @@
-import { Component, Grid } from 'substance'
+import { Component } from 'substance'
 
 class PersonItem extends Component {
 

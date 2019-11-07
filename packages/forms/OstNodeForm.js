@@ -1,4 +1,4 @@
-import { NodeForm } from 'archivist'
+import { NodeForm } from 'archivist-js'
 import { each } from 'lodash-es'
 import OstForms from './OstForms'
 
@@ -6,7 +6,7 @@ class OstNodeForm extends NodeForm {
   constructor(...args) {
     super(...args)
 
-    this.forms = new OstForms()
+    this.forms = new OstForms({configurator: this.context.configurator})
   }
 
   didMount() {
@@ -72,8 +72,14 @@ class OstNodeForm extends NodeForm {
       }
       field = this.forms._editables.currentName
       if(field) {
+        const currentName = this.forms.getValue('currentName')
+        let synonyms = this.forms.getValue('synonyms')
+        const currentNameIndex = synonyms.indexOf(currentName)
+        synonyms[currentNameIndex] = value
+        this.forms.setValue('synonyms', synonyms)
         this.forms.setValue('currentName', value)
         this._commit('currentName', value)
+        this.forms._editables.synonyms.rerender()
       }
     }
   }

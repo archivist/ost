@@ -1,7 +1,8 @@
-import { ProseArticle } from 'substance'
-import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, DocumentsPackage, IndentationPackage, MetadataEditorPackage, ResourcesPackage, TimecodeAnnotatorPackage, UsersPackage, WhitespacePackage } from 'archivist'
+import { ProseEditorPackage } from 'substance'
+import { ArchivistPackage, ArchivistSubConfigurator, CommentsPackage, IndentationPackage, MetadataEditorPackage, ResourcesPackage, TimecodeAnnotatorPackage, UsersPackage, WhitespacePackage } from 'archivist-js'
 import InterviewPackage from '../../packages/interview/package'
 import FormsPackage from '../../packages/forms/package'
+import DocumentsPackage from '../../packages/documents/package'
 import DefinitionManagerPackage from '../../packages/definition-manager/package'
 import PersonManagerPackage from '../../packages/person-manager/package'
 import PrisonManagerPackage from '../../packages/prison-manager/package'
@@ -22,6 +23,8 @@ import Subject from '../../packages/subjects/Subject'
 import Subjects from '../../packages/subjects/package'
 import Toponym from '../../packages/toponym/Toponym'
 
+const { ProseArticle } = ProseEditorPackage
+
 let appConfig = 'ARCHIVISTCONFIG'
 appConfig = JSON.parse(appConfig)
 
@@ -29,9 +32,10 @@ export default {
   name: 'archivist-publisher',
   configure: function(config) {
     // Use the default Archivist package
+    config.setDefaultLanguage(appConfig.defaultLanguage)
     config.import(ArchivistPackage)
     config.import(DocumentsPackage)
-    // Override Archivist form package 
+    // Override Archivist form package
     config.import(FormsPackage)
     // Manage person entity type
     config.import(PersonManagerPackage)
@@ -72,7 +76,8 @@ export default {
     let EntitiesConfigurator = new ArchivistSubConfigurator()
     EntitiesConfigurator.defineSchema({
       name: 'archivist-entities',
-      ArticleClass: ProseArticle
+      version: '1.0.0',
+      DocumentClass: ProseArticle
     })
     EntitiesConfigurator.addNode(Definition)
     EntitiesConfigurator.addNode(Person)
@@ -107,13 +112,13 @@ export default {
     config.setResourceClient(ResourceClient)
 
     config.setMenuItems([
-      {icon: 'fa-file-text', label: 'Documents', action: 'archive'},
-      {icon: 'fa-tags', label: 'Subjects', action: 'subjects'},
-      {icon: 'fa-users', label: 'Persons', action: 'persons'},
-      {icon: 'fa-th', label: 'Prisons', action: 'prisons'},
-      {icon: 'fa-globe', label: 'Toponyms', action: 'toponyms'},
-      {icon: 'fa-book', label: 'Definitions', action: 'definitions'},
-      {icon: 'fa-id-badge', label: 'Users', action: 'users'}
+      {icon: 'fa-file-text', label: 'documents', action: 'archive'},
+      {icon: 'fa-tags', label: 'subjects', action: 'subjects'},
+      {icon: 'fa-users', label: 'persons', action: 'persons'},
+      {icon: 'fa-th', label: 'prisons', action: 'prisons'},
+      {icon: 'fa-globe', label: 'toponyms', action: 'toponyms'},
+      {icon: 'fa-book', label: 'definitions', action: 'definitions'},
+      {icon: 'fa-id-badge', label: 'users', action: 'users'}
     ])
 
     config.setDefaultResourceTypes(['definition', 'person', 'prison', 'toponym'])

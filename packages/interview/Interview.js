@@ -1,17 +1,15 @@
 import { Document } from 'substance'
-import { EntityIndex } from 'archivist'
+import { EntityIndex } from 'archivist-js'
 import { map } from 'lodash-es'
 /*
   Archivist Interview model.
 */
 
 class Interview extends Document {
-  constructor(...args) {
-    super(...args)
-    this._initialize()
-  }
-
+  
   _initialize() {
+    super._initialize()
+
     this.create({
       type: 'container',
       id: 'body',

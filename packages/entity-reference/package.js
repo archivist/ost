@@ -1,18 +1,15 @@
-import { platform } from 'substance'
-import EntityReferenceTool from './EntityReferenceTool'
 import EntityReferenceCommand from './EntityReferenceCommand'
 
 export default {
   name: 'entity-reference',
   configure: function(config) {
-    config.addTool('entity-reference', EntityReferenceTool, {toolGroup: 'references'})
-    config.addCommand('entity-reference', EntityReferenceCommand, { nodeType: 'entity-reference' })
+    config.addCommand('entity-reference', EntityReferenceCommand, { nodeType: 'entity-reference', commandGroup: 'references' })
     config.addIcon('entity-reference', {'fontawesome': 'fa-book'})
+    config.addLabel('entity-reference', {
+      en: 'entity reference',
+      ru: 'связать с сущностью'
+    })
 
-    if (platform.isMac) {
-      config.addKeyboardShortcut('cmd+e', { command: 'entity-reference' })
-    } else {
-      config.addKeyboardShortcut('ctrl+e', { command: 'entity-reference' })
-    }
+    config.addKeyboardShortcut('CommandOrControl+E', { command: 'entity-reference' })
   }
 }

@@ -8,8 +8,9 @@ module.exports = {
       db: db,
       configurator: config,
       documentEngine: config.getEngine('document'),
-      snapshotEngine: config.getEngine('snapshot'),
-      fragmentStore: config.getStore('fragment')
+      fragmentStore: config.getStore('fragment'),
+      resourceEngine: config.getEngine('resource'),
+      snapshotEngine: config.getEngine('snapshot')
     })
 
     config.addEngine('indexer', indexer)

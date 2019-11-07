@@ -1,8 +1,8 @@
 'use strict';
 
 var Database = require('./packages/server/Database');
-var Configurator = require('archivist').ServerConfigurator;
-var StorePackage = require('archivist').ArchivistStorePackage;
+var Configurator = require('archivist-js').ServerConfigurator;
+var StorePackage = require('archivist-js').ArchivistStorePackage;
 
 var db = new Database();
 var configurator = new Configurator().import(StorePackage);

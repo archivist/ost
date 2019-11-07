@@ -1,5 +1,5 @@
-import { FontAwesomeIcon as Icon, Input } from 'substance'
-import { AbstractEntityPage } from 'archivist'
+import { FontAwesomeIcon as Icon } from 'substance'
+import { AbstractEntityPage } from 'archivist-js'
 
 const definitionTypes = [
   'общий комментарий',
@@ -10,6 +10,8 @@ const definitionTypes = [
 
 class DefinitionsPage extends AbstractEntityPage {
   renderFilters($$) {
+    const Input = this.getComponent('input')
+
     let filters = []
     let search = $$('div').addClass('se-search').append(
       $$(Icon, {icon: 'fa-search'})

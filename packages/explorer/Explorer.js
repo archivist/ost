@@ -1,4 +1,4 @@
-import { Component, Grid, Layout, SplitPane } from 'substance'
+import { Component, SplitPane } from 'substance'
 import { clone, concat, each, extend, findIndex, findLastIndex, isEmpty, isEqual, isUndefined } from 'lodash-es'
 
 // Sample data for debugging
@@ -26,12 +26,6 @@ class Explorer extends Component {
     this._loadData()
     this._loadTopics()
   }
-
-  // didUpdate(oldProps, oldState) {
-  //   // if(oldState.search !== this.state.search) {
-  //   //   this.searchData()
-  //   // }
-  // }
 
   willUpdateState(state) {
     let oldFilters = this.state.filters
@@ -80,6 +74,8 @@ class Explorer extends Component {
   }
 
   render($$) {
+    let Layout = this.getComponent('layout')
+
     let documentItems = this.state.items
     let el = $$('div').addClass('sc-explorer')
 
@@ -148,6 +144,8 @@ class Explorer extends Component {
   }
 
   renderEmpty($$) {
+    let Layout = this.getComponent('layout')
+
     let layout = $$(Layout, {
       width: 'medium',
       textAlign: 'center'
@@ -177,6 +175,8 @@ class Explorer extends Component {
   }
 
   renderFull($$) {
+    let Grid = this.getComponent('grid')
+    
     let items = this.state.items
     let total = this.state.total
     let resource = this.state.resource
@@ -447,7 +447,8 @@ class Explorer extends Component {
     if(op === ' ~~') metaFilter[prop] = '%' + value + '%'
     this.extendState({
       filters: extend({}, filters, metaFilter),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
@@ -463,7 +464,8 @@ class Explorer extends Component {
     metaFilters[id] = value
     this.extendState({
       filters: extend({}, filters, metaFilter),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
@@ -478,7 +480,8 @@ class Explorer extends Component {
     if(filterKey2) delete filters[filterKeys[filterKey2]]
     this.extendState({
       filters: extend({}, filters),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 
@@ -495,7 +498,8 @@ class Explorer extends Component {
     })
     this.extendState({
       filters: extend({}, filters),
-      metaFilters: metaFilters
+      metaFilters: metaFilters,
+      resource: false
     })
   }
 

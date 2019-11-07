@@ -1,4 +1,4 @@
-import { AbstractApplication } from 'archivist'
+import { AbstractApplication } from 'archivist-js'
 import { cloneDeep, forEach } from 'lodash-es'
 import ScholarRouter from './ScholarRouter'
 

@@ -6,7 +6,8 @@ let Promise = require('bluebird')
   Implements Database Conection API.
 */
 class Database {
-  constructor() {
+  constructor(dbUrl) {
+    this.db_url = dbUrl || config.get('db_url')
     this.connect()
   }
 
@@ -14,7 +15,6 @@ class Database {
     Connect to the db
   */
   connect() {
-    this.db_url = config.get('db_url')
     if (!this.db_url) {
       throw new Error('Could not find db connection string')
     }

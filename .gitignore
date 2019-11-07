@@ -38,6 +38,7 @@ config/production.json
 config/test.json
 config/dev.json
 ecosystem.json
+sync.js
 
 # Conversion data
 ost-data

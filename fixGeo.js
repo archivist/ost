@@ -137,6 +137,29 @@ function importDefinitions() {
   return entityStore.seed(definitionsData)
 }
 
+function fixLocations() {
+  let entityStore = configurator.getStore('entity')
+
+  return new Promise(function(resolve) {
+    db.connection.run("SELECT * from entities WHERE data->>'country' = 'Россия' AND (data->'point'->>0)::float < 42 AND (data->'point'->>1)::float > 30", function(err, res) {
+      if (err) {
+        console.error('Entity read error', err)
+      }
+
+      resolve(res)
+    })
+  }).then(res => {
+    let fixes = []
+    res.forEach(r=>{
+      r.data.point = r.data.point.reverse()
+      fixes.push(
+        entityStore.updateEntity(r.entityId,r)
+      )
+    })
+    return Promise.all(fixes)
+  })
+}
+
 function importLocations() {
   let exists = _fileExists(config.locations)
   if(!exists) return
@@ -582,38 +605,9 @@ function _getTimeFromId(id) {
   return date.toISOString()
 }
 
-importUsers()
+fixLocations()
   .then(function() {
-    console.log('Users has been imported!')
-    return importPersons()
-  })
-  .then(function() {
-    console.log('Persons has been imported!')
-    return importLocations()
-  })
-  .then(function() {
-    console.log('Locations has been imported!')
-    return importDefinitions()
-  })
-  .then(function() {
-    console.log('Definitions has been imported!')
-    return importSubjects()
-  })
-  .then(function() {
-    console.log('Subjects has been imported!')
-    return importDocuments()
-  })
-  .then(function() {
-    console.log('Documents has been imported!')
-    let indexer = configurator.getEngine('indexer')
-    return indexer.indexAll()
-  })
-  .then(function() {
-    console.log('Documents has been reindexed!')
-    return reindexEntities()
-  })
-  .then(function() {
-    console.log('Entities has been reindexed!')
+    console.log('Entities has been fixed!')
     db.shutdown()
     process.exit()
   })

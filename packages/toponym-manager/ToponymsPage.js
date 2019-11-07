@@ -1,4 +1,4 @@
-import { AbstractEntityPage } from 'archivist'
+import { AbstractEntityPage } from 'archivist-js'
 
 class ToponymsPage extends AbstractEntityPage {}
 

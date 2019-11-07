@@ -1,5 +1,4 @@
 /* Publisher Component styles */
-@import '../../node_modules/substance/dist/substance.next.css';
 @import '../../node_modules/leaflet/dist/leaflet.css';
 @import '../../node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css';
 @import './publisher.css';

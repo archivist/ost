@@ -1,4 +1,6 @@
-import { ContainerAnnotationCommand } from 'substance'
+import { ContainerAnnotationPackage } from 'substance'
+
+const { ContainerAnnotationCommand } = ContainerAnnotationPackage
 
 class SubjectCommand extends ContainerAnnotationCommand {
 

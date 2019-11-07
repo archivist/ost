@@ -3,7 +3,8 @@ import MetaNode from './MetaNode'
 import InterviewSeed from './InterviewSeed'
 
 import { BasePackage, ParagraphPackage, PersistencePackage, HeadingPackage, BlockquotePackage, LinkPackage, EmphasisPackage, StrongPackage} from 'substance'
-import { CommentPackage, TimecodePackage } from 'archivist'
+import { CommentPackage, TimecodePackage } from 'archivist-js'
+import WaypointPackage from '../waypoint/package'
 import SubjectPackage from '../subject/package'
 import DefinitionPackage from '../definition/package'
 import PersonPackage from '../person/package'
@@ -16,7 +17,8 @@ export default {
   configure: function(config) {
     config.defineSchema({
       name: 'archivist-interview',
-      ArticleClass: Interview,
+      version: '1.0.0',
+      DocumentClass: Interview,
       defaultTextType: 'paragraph'
     })
     config.addNode(MetaNode)
@@ -24,7 +26,6 @@ export default {
 
     // Import Substance Core packages
     config.import(BasePackage)
-    config.import(PersistencePackage)
     config.import(ParagraphPackage)
     config.import(HeadingPackage)
     config.import(BlockquotePackage)
@@ -33,6 +34,7 @@ export default {
     config.import(LinkPackage)
 
     // Import archivist specific packages
+    config.import(WaypointPackage) 
     config.import(CommentPackage)
     config.import(TimecodePackage)
     config.import(SubjectPackage)
@@ -41,5 +43,26 @@ export default {
     config.import(PrisonPackage)
     config.import(ToponymPackage)
     config.import(EntityReferencePackage)
+
+    config.addLabel('undo', {
+      en: 'undo',
+      ru: 'отмена'
+    })
+    config.addLabel('redo', {
+      en: 'redo',
+      ru: 'вернуть'
+    })
+    config.addLabel('strong', {
+      en: 'strong',
+      ru: 'жирный'
+    })
+    config.addLabel('emphasis', {
+      en: 'emphasis',
+      ru: 'наклонный'
+    })
+    config.addLabel('link', {
+      en: 'link',
+      ru: 'ссылка'
+    })
   }
 }

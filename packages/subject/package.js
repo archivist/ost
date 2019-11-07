@@ -1,5 +1,4 @@
 import SubjectReference from './SubjectReference'
-import SubjectTool from './SubjectTool'
 import SubjectCommand from './SubjectCommand'
 import SubjectComponent from './SubjectComponent'
 
@@ -7,9 +6,13 @@ export default {
   name: 'subject',
   configure: function(config) {
     config.addNode(SubjectReference)
-    config.addTool(SubjectReference.type, SubjectTool, { toolGroup: 'references' })
-    config.addCommand(SubjectReference.type, SubjectCommand, { nodeType: SubjectReference.type })
-    config.addComponent('container-annotation-fragment', SubjectComponent)
+    config.addCommand(SubjectReference.type, SubjectCommand, { nodeType: SubjectReference.type, commandGroup: 'references' })
+    config.addComponent(SubjectReference.type, SubjectComponent)
     config.addIcon(SubjectReference.type, {'fontawesome': 'fa-tags'})
+
+    config.addLabel('subject', {
+      en: 'subject reference',
+      ru: 'связать с рубрикой'
+    })
   }
 }

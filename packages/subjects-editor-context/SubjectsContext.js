@@ -35,8 +35,6 @@ class SubjectsContext extends Component {
       return this.renderList($$)
     } else if (mode === 'edit') {
       return this.renderSubjectSelector($$)
-    } else {
-      //return this.renderItem($$)
     }
   }
 
@@ -88,11 +86,13 @@ class SubjectsContext extends Component {
   }
 
   highlightNodes(activeNode) {
-    let subjects = this.state.subjects
+    let editorSession = this.context.editorSession
+    let subjects = editorSession.subjects
     subjects.resetSelection()
     let activeNodes = subjects.getAllChildren(activeNode)
     activeNodes.unshift(activeNode)
     this.send('showTopics', activeNodes)
+    this.setSelected(activeNode)
   }
 
   renderChildren($$, node, level) {
@@ -114,7 +114,7 @@ class SubjectsContext extends Component {
       .ref(node.id)
       .on('click', this.highlightNodes.bind(this, node.id))
 
-      if(node.id === this.props.topic) {
+      if(this.state.selected === node.id) {
         el.addClass('sm-active')
       }
 
@@ -124,10 +124,18 @@ class SubjectsContext extends Component {
     }
   }
 
+  setSelected(node) {
+    this.extendState({selected: node})
+    // let editorSession = this.context.editorSession
+    // let subjects = editorSession.subjects
+    // subjects.set([node, 'selected'], true)
+    // this.rerender()
+  }
+
   _showList() {
-    this.extendProps({
-      mode: 'list'
-    })
+    this.send('resetBrackets', 'subject')
+    this.send('switchContext', {mode: 'list'})
+    //this.extendState({selected: undefined})
   }
 }
 

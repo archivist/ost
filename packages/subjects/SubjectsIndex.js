@@ -61,7 +61,7 @@ class SubjectIndex extends NodeIndex {
     return new SubjectIndex(this.doc)
   }
 
-  _clear() {
+  clear() {
     this.index.clear()
   }
 }

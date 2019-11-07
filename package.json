@@ -3,25 +3,25 @@
   "description": "",
   "main": "dist/ost.cjs.js",
   "dependencies": {
-    "archivist": "archivist/archivist#960984b6073e0b825ac618a2d3b4bde4ddee65ab",
+    "archivist-js": "2.0.0-preview.9",
     "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "config": "^1.21.0",
     "express": "^4.14.0",
-    "leaflet": "^1.0.3",
-    "leaflet-control-geocoder": "^1.5.4",
-    "leaflet.markercluster": "^1.0.0",
+    "leaflet": "1.2.0",
+    "leaflet-control-geocoder": "1.5.4",
+    "leaflet.markercluster": "1.0.0",
     "lodash-es": "^4.17.4",
     "massive": "^2.5.0",
     "moment": "^2.17.1",
     "plyr": "^2.0.11",
-    "substance": "substance/substance#d0f842bdf54ee982394fab2a93e0aa40fbc78b93",
+    "substance": "container-annos",
     "ws": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^3.5.0",
     "font-awesome": "^4.7.0",
-    "substance-bundler": "^0.15.2",
+    "substance-bundler": "^0.18.3",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.0",
     "uglify-js": "^2.7.3",
@@ -35,5 +35,5 @@
     "test": "gulp test"
   },
   "license": "GPL-3.0",
-  "version": "2.0.0-alpha.1"
+  "version": "1.0.0-alpha.1"
 }

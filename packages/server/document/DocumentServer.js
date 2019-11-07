@@ -1,4 +1,4 @@
-let ArchivistDocumentServer = require('archivist').DocumentServer
+let ArchivistDocumentServer = require('archivist-js').DocumentServer
 let Promise = require('bluebird')
 let each = require('lodash/each')
 

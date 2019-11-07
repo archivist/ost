@@ -1,4 +1,4 @@
-let ArchivistResourceServer = require('archivist').ResourceServer
+let ArchivistResourceServer = require('archivist-js').ResourceServer
 
 /*
   ResourceServer module. Can be bound to an express instance
@@ -57,7 +57,7 @@ class ResourceServer extends ArchivistResourceServer {
     filters = filters ? JSON.parse(filters) : {}
 
     ///refs = refs ? JSON.parse(refs) : []
-    
+
     this.engine.getResourcesTreeFacets(filters, type)
       .then(function(entities) {
         res.json(entities)
@@ -87,7 +87,7 @@ class ResourceServer extends ArchivistResourceServer {
     let letter = req.query.letter
     let options = req.query.options
     options = options ? JSON.parse(options) : {}
-    
+
     this.engine.getPersonsList(letter, options)
       .then(function(persons) {
         res.json(persons)

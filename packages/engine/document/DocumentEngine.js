@@ -1,4 +1,4 @@
-let ArchivistDocumentEngine = require('archivist').DocumentEngine
+let ArchivistDocumentEngine = require('archivist-js').DocumentEngine
 let Err = require('substance').SubstanceError
 let filter = require('lodash/filter')
 let forEach = require('lodash/forEach')

@@ -1,4 +1,4 @@
-import { Component, Grid, Layout, SplitPane } from 'substance'
+import { Component, SplitPane } from 'substance'
 import { concat } from 'lodash-es'
 
 class PersonIndex extends Component {
@@ -29,6 +29,7 @@ class PersonIndex extends Component {
   render($$) {
     let el = $$('div').addClass('sc-persons-index')
     let Header = this.getComponent('header')
+    let Spinner = this.getComponent('spinner')
 
     el.append($$(Header))
 
@@ -49,26 +50,15 @@ class PersonIndex extends Component {
         )
       )
     } else {
-      el.append(
-        $$('div').addClass('se-loader').append(
-          $$('div').addClass('se-spinner').append(
-            $$('div').addClass('se-rect1'),
-            $$('div').addClass('se-rect2'),
-            $$('div').addClass('se-rect3'),
-            $$('div').addClass('se-rect4'),
-            $$('div').addClass('se-rect5')
-          ),
-          $$('h2').html(
-            'Loading...'
-          )
-        )
-      )
+      el.append($$(Spinner, {message: 'spinner-loading'}))
     }
 
     return el
   }
 
   renderList($$) {
+    let Grid = this.getComponent('grid')
+
     let items = this.state.items
     let total = this.state.total
     let PersonItem = this.getComponent('person-item')
@@ -143,7 +133,7 @@ class PersonIndex extends Component {
     let perPage = this.state.perPage
     let options = {
       order: this.state.order + ' ' + this.state.direction,
-      limit: perPage, 
+      limit: perPage,
       offset: pagination ? this.state.items.length : 0
     }
     let items = []

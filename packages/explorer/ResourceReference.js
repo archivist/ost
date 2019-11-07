@@ -1,4 +1,4 @@
-import { Component, Grid } from 'substance'
+import { Component } from 'substance'
 
 class ResourceReference extends Component {
 
@@ -87,6 +87,7 @@ class ResourceReference extends Component {
   }
 
   renderDocumentList($$) {
+    let Grid = this.getComponent('grid')
     let items = this.state.documents
     let resource = this.state.resource
     let isTopic = resource ? resource.entityType === 'subject' : false

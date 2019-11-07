@@ -1,6 +1,7 @@
-import { Component, EditorSession, JSONConverter, Layout, series } from 'substance'
+import { async, Component, EditorSession, JSONConverter } from 'substance'
 import Reader from './Reader'
 
+const {series} = async
 let converter = new JSONConverter()
 
 class ReaderLayout extends Component {
@@ -35,9 +36,9 @@ class ReaderLayout extends Component {
     }
 
     if (newProps.entityId !== this.props.entityId && newProps.entityId !== undefined) {
-      setTimeout(function(){
+      setTimeout(() => {
         this.refs.reader.highlightReferences([newProps.entityId])
-      }.bind(this), 10)
+      }, 10)
     }
   }
 
@@ -50,35 +51,20 @@ class ReaderLayout extends Component {
   }
 
   render($$) {
+    let Layout = this.getComponent('layout')
+    let Spinner = this.getComponent('spinner')
+
     let el = $$('div').addClass('sc-read-document')
     let Header = this.getComponent('header')
     el.append($$(Header))
     let main = $$(Layout, {
       width: 'medium',
       textAlign: 'center'
-    }).append(
-      $$('div').addClass('se-spinner').append(
-        $$('div').addClass('se-rect1'),
-        $$('div').addClass('se-rect2'),
-        $$('div').addClass('se-rect3'),
-        $$('div').addClass('se-rect4'),
-        $$('div').addClass('se-rect5')
-      ),
-      $$('h2').html(
-        'Loading...'
-      )
-    )
+    }).append($$(Spinner, {message: 'spinner-loading'}))
 
     this._updateLayout()
 
-    if (this.state.error) {
-      main = $$('div').append(
-        $$(Notification, {
-          type: 'error',
-          message: this.state.error.message
-        })
-      )
-    } else if (this.state.session) {
+    if (this.state.session) {
       main = $$(Reader, {
         configurator: this.props.configurator,
         editorSession: this.state.session
@@ -107,7 +93,7 @@ class ReaderLayout extends Component {
         return
       }
       //let docRecord = SampleDoc
-      let document = configurator.createArticle()
+      let document = configurator.createDocument()
       let doc = converter.importDocument(document, docRecord.data)
 
       let session = new EditorSession(doc, {

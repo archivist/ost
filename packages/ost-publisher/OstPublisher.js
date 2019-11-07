@@ -1,14 +1,15 @@
 // import { ContainerEditor, Highlights, Layout, ProseEditor, SplitPane, Toolbar } from 'substance'
 import { findIndex, forEach, map } from 'lodash-es'
 import OstPublisherContext from './OstPublisherContext'
-import { Publisher } from 'archivist'
+import { Publisher } from 'archivist-js'
 
 class OstPublisher extends Publisher {
   constructor(...args) {
     super(...args)
 
     this.handleActions({
-      'showTopics': this._showTopics
+      'showTopics': this._showTopics,
+      'resetBrackets': this._resetBrackets
     })
   }
 
@@ -39,6 +40,10 @@ class OstPublisher extends Publisher {
           }.bind(this))
         }
       })
+
+      // If there is no collaborator data we should add it
+      let author = change.info.userId
+      if(author) this._addCollaborator(author)
     }
 
     // TODO: figure out why selection flags changed after comment update 
@@ -47,7 +52,6 @@ class OstPublisher extends Publisher {
       let doc = editorSession.getDocument()
       let contextPanel = this.refs.contextPanel
 
-      //let entityIndex = doc.getIndex('entities')
       let schema = doc.getSchema()
       let nodes = schema.nodeRegistry.entries
       let highlights = {}
@@ -90,8 +94,14 @@ class OstPublisher extends Publisher {
         }
       }
 
-      this.contentHighlights.set(highlights)
+      let contextState = this.refs.contextPanel.getContextState()
+      if(contextState.contextId !== 'subjects' || contextState.mode !== 'edit') {
+        this._resetBrackets()
+      } else {
+        highlights['subject'] = this.contentHighlights._highlights.subject
+      }
 
+      this.contentHighlights.set(highlights)
     }
   }
 
@@ -146,12 +156,23 @@ class OstPublisher extends Publisher {
       paragraphs = paragraphs.concat(paras)
     })
     let firstPara = doc.getFirst(paragraphs)
-    this.refs.contentPanel.scrollTo(firstPara)
+    this.refs.contentPanel.scrollTo(`[data-id="${firstPara}"]`)
 
     setTimeout(function(){
       this.refs.brackets.highlight(topics)
       this.highlightReferences(topics, true)
     }.bind(this), 10)
+  }
+
+  _resetBrackets(type) {
+    if(type) {
+      let highlights = {}
+      highlights[type] = []
+      this.contentHighlights.set(highlights)
+    }
+    this.refs.brackets.resetBrackets()
+    let contextPanel = this.refs.contextPanel
+    contextPanel.resetSubjectsList()
   }
 }
 

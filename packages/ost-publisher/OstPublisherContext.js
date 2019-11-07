@@ -1,7 +1,7 @@
 // import { Component } from 'substance'
 // import { forEach } from 'lodash-es'
 
-import { PublisherContext } from 'archivist'
+import { PublisherContext } from 'archivist-js'
 
 class OstPublisherContext extends PublisherContext {
   
@@ -15,6 +15,13 @@ class OstPublisherContext extends PublisherContext {
     }
     this.extendState(state)
     console.log('Edit container resource', node.id, ',', mode, 'mode')
+  }
+
+  resetSubjectsList() {
+    let context = 'subjects'
+    if(this.refs[context]) {
+      this.refs[context].setSelected()
+    }
   }
 
 }

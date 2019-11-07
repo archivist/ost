@@ -1,7 +1,8 @@
-import { CollabSession, JSONConverter, series, substanceGlobals } from 'substance'
-import { PublisherLayout } from 'archivist'
+import { async, JSONConverter, substanceGlobals } from 'substance'
+import { PublisherLayout, PublisherSession } from 'archivist-js'
 import OstPublisher from './OstPublisher'
 
+const {series} = async
 let converter = new JSONConverter()
 
 class OstPublisherLayout extends PublisherLayout {
@@ -24,10 +25,10 @@ class OstPublisherLayout extends PublisherLayout {
         return
       }
 
-      let document = configurator.createArticle()
+      let document = configurator.createDocument()
       let doc = converter.importDocument(document, docRecord.data)
 
-      let session = new CollabSession(doc, {
+      let session = new PublisherSession(doc, {
         configurator: configurator,
         documentId: documentId,
         version: docRecord.version,
@@ -45,7 +46,8 @@ class OstPublisherLayout extends PublisherLayout {
 
       series([
         this._loadResources(documentId, session),
-        this._loadSubjects(session)
+        this._loadSubjects(session),
+        this._loadCollaborators(documentId, session)
       ], () => {
         this.setState({
           session: session
